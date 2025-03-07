@@ -1,10 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Front\HomeController;
 
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', function () {
-    return view('front.home');
-    // return view('livewire.front.home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
