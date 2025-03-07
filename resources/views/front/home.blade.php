@@ -1,5 +1,5 @@
 @extends('front.layouts.master')
-
+@section('title', 'Home')
 @section('content')
     <section class="swiper-container js-swiper-slider swiper-number-pagination slideshow"
         data-settings='{

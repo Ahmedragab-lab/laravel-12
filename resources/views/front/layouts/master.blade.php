@@ -8,7 +8,7 @@
     <body class="gradient-bg">
         @include('front.layouts.headermobile')
         @include('front.layouts.header')
-        <main>
+        <main class="pt-90">
             @yield('content')
         </main>
         @include('front.layouts.footer')
