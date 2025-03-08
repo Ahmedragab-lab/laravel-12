@@ -3,7 +3,7 @@
         <div class="shop-sidebar side-sticky bg-body" id="shopFilter">
           <div class="aside-header d-flex d-lg-none align-items-center">
             <h3 class="text-uppercase fs-6 mb-0">Filter By</h3>
-            <button class="btn-close-lg js-close-aside btn-close-aside ms-auto"></button>
+            <button class="btn-close-lg js-close-aside btn-close-aside ms-auto"></button> 
           </div>
 
           <div class="pt-4 pt-lg-0"></div>
