@@ -77,12 +77,13 @@
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">حذف</h1>
-                                                                        <button type="button" class="btn-close" data-dismiss="modal"
-                                                                            aria-label="Close"></button>
+                                                                        <h5 class="modal-title fs-5" id="exampleModalLabel">حذف</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        هل متاكد من الحذف
+                                                                        هل متاكد من حذف  {{ $brand->name }}
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
