@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Livewire\Livewire;
 
-Route::get('admin/login', function () {
-    // return 'Admin';
-    return view('auth.login');
+Route::prefix('admin')->group(function () {
+    Route::get('login', function () {
+        return view('auth.login');
+    });
 });
 
 Route::group(

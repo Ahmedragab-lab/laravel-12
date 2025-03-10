@@ -30,10 +30,7 @@ class Brands extends Component
         return view('livewire.admin.brands', compact('brands'))->extends('admin.layouts.master')->section('content');
     }
 
-    public function itemId(Brand $brand)
-    {
-        $this->brand_id = $brand->id;
-    }
+   
 
     public function delete(Brand $brand)
     {

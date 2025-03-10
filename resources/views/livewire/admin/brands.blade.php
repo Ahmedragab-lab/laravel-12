@@ -68,8 +68,7 @@
                                                         <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $brand->id }})'>
                                                             <i class="fa fa-edit"></i>
                                                         </button>
-                                                        <button type="button" data-toggle="modal" data-target="#delete-{{ $brand->id }}" class="btn btn-sm btn-danger"
-                                                            wire:click='itemId({{ $brand->id }})'>
+                                                        <button type="button" data-toggle="modal" data-target="#delete-{{ $brand->id }}" class="btn btn-sm btn-danger">
                                                             <i class="fa fa-trash"></i>
                                                         </button>
                                                         <div class="modal fade" id="delete-{{ $brand->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" wire:ignore.self
