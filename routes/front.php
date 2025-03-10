@@ -2,15 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
-use App\Livewire\Front\Shop;
-use App\Livewire\Front\cart;
-use App\Livewire\Front\contact;
 use App\Livewire\Front\About;
+use App\Livewire\Front\Cart;
+use App\Livewire\Front\Contact;
+use App\Livewire\Front\Shop;
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', Shop::class)->name('shop');
-Route::get('/cart', cart::class)->name('cart');
-Route::get('/contact', contact::class)->name('contact');
+Route::get('/cart', Cart::class)->name('cart');
+Route::get('/contact', Contact::class)->name('contact');
 Route::get('/about', About::class)->name('about');
 
 

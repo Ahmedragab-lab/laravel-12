@@ -1,5 +1,5 @@
 <div>
-<section class="contact-us container">
+    <section class="contact-us container">
       <div class="mw-930">
         <h2 class="page-title">About US</h2>
       </div>
