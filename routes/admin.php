@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ShiftsController;
 use App\Http\Controllers\Admin\UnitController;
+use App\Livewire\Admin\Brands;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Livewire\Livewire;
@@ -31,9 +32,9 @@ Route::group(
             });
             Route::get('/home', [HomeController::class, 'index'])->name('admin.home');
             Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+            Route::get('brands', Brands::class)->name('brands');
 
 
-            
             // Route::get('/car/list', CarList::class)->name('admin.car.list');
             // Route::get('/add/car', AddCar::class)->name('admin.add.car');
             // Route::get('/edit/car/{id}', EditCar::class)->name('admin.edit.car');

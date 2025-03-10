@@ -25,6 +25,12 @@
                 <span class="app-menu__label">@lang('settings.settings')</span>
             </a>
         </li>
+        <li>
+            <a class="app-menu__item {{ request()->is('*brands*') ? 'active' : '' }}" href="{{ route('brands') }}">
+                <i class="app-menu__icon fa fa-cogs"></i>
+                <span class="app-menu__label">البرندات</span>
+            </a>
+        </li>
         {{-- <li>
             <a class="app-menu__item {{ request()->is('*units*') ? 'active' : '' }}" href="{{ route('units') }}">
                 <i class="app-menu__icon fa fa-shopping-bag"></i>
