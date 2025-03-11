@@ -33,21 +33,11 @@ class Categories extends Component
         })
         ->latest('id')
         ->paginate(10);
-    
+
         return view('livewire.admin.categories', compact('categories'))
             ->extends('admin.layouts.master')
             ->section('content');
     }
-    
-    public function itemId(Category $category)
-    {
-        $this->name = $category->name;
-    }
 
-    public function delete(Category $category)
-    {
-        $category->delete();
-
-        session()->flash('success', 'تم الحذف بنجاح');
-    }
+  
 }
