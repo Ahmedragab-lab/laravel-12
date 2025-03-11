@@ -13,7 +13,9 @@
         "laravel/tinker": "^2.10.1",
         "laravel/ui": "^4.6",
         "livewire/livewire": "^3.6",
-        "mcamara/laravel-localization": "^2.3"
+        "mcamara/laravel-localization": "^2.3",
+        "yajra/laravel-datatables": "^12",
+        "yajra/laravel-datatables-oracle": "^12"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.5",

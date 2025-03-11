@@ -38,9 +38,18 @@ Route::group(
             Route::get('/settings', [SettingController::class, 'index'])->name('settings');
             Route::get('brands', Brands::class)->name('brands');
             Route::get('categories', Categories::class)->name('categories');
-            Route::get('/products_show', Products::class)->name('products');
             Route::get('/about_us', AboutUs::class)->name('AboutUs');
 
+            // Route::get('/products', Products::class)->name('products');
+            Route::controller(ProductController::class)->group(function(){
+                Route::post('/products/addBrand','addBrand')->name('addBrand');  // product add brand
+                Route::post('/products/addColor','addColor')->name('addColor');  // product add color
+                Route::post('/products/addSize','addSize')->name('addSize');  // product add size
+                Route::post('/products/addMainCategory','addMainCategory')->name('addMainCategory');  // product add MainCategory
+                Route::post('/products/addCategory','addCategory')->name('addCategory');  // product add Category
+                Route::delete('/products/bulk_delete','bulkDelete')->name('products.bulk_delete');
+                Route::resource('products',ProductController::class);
+            });
 
 
 

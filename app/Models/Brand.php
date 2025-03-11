@@ -12,7 +12,7 @@ class Brand extends Model
     {
         return $this->hasMany(Product::class);
     }
-    public function scopeActive($query)
+    public function scopeIsActive($query)
     {
         return $query->where('is_active', 1);
     }

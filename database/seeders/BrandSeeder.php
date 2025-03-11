@@ -16,22 +16,45 @@ class BrandSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Brand::truncate();
-        $brands = [
-            'Adidas',
-            'Balmain',
-            'Balenciaga',
-            'Burberry',
-            'Kenzo',
-            'Givenchy',
-            'Zara',
+        $brands=[
+            [
+                'name' => 'Adidas',
+                'logo' => 'brands/brand1.png',
+            ],
+            [
+                'name' => 'Balmain',
+                'logo' => 'brands/brand2.png',
+            ],
+            [
+                'name' => 'Balenciaga',
+                'logo' => 'brands/brand3.jpg',
+            ],
+            [
+                'name' => 'Burberry',
+                'logo' => 'brands/brand4.jpg',
+            ],
+            [
+                'name' => 'Kenzo',
+                'logo' => 'brands/brand5.jpg',
+            ],
+            [
+                'name' => 'Givenchy',
+                'logo' => 'brands/brand6.jpg',
+            ],
+            [
+                'name' => 'Zara',
+                'logo' => 'brands/brand7.jpg',
+            ],
         ];
+
 
         foreach ($brands as $brand) {
             DB::table('brands')->insert([
-                'name' => $brand,
-                'slug' => Str::slug($brand),
-                'image' => null,
+                'name' => $brand['name'],
+                'slug' => Str::slug($brand['name']),
+                'logo' => $brand['logo'],
                 'is_active' => true,
+                'creator' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

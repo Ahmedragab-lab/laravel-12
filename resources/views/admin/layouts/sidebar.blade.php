@@ -45,7 +45,7 @@
           </a>
           </li>
           <li>
-            <a class="app-menu__item {{ Route::is('products') ? 'active' : '' }}" href="{{ route('products') }}">
+            <a class="app-menu__item {{ Route::is('products') ? 'active' : '' }}" href="{{ route('products.index') }}">
                 <i class="app-menu__icon fa fa-list"></i>
                 <span class="app-menu__label">المنتجات</span>
             </a>
