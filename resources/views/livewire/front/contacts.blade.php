@@ -2,9 +2,8 @@
     <section class="contact-us container">
         <div class="mw-930">
             <div class="contact-us__form">
-                <form wire:submit.prevent="submit" class="needs-validation" novalidate>
                     <h3 class="mb-5">Get In Touch</h3>
-                    
+
                     <div class="form-floating my-4">
                         <input type="text" class="form-control" wire:model="name" placeholder="Name *" required>
                         <label for="contact_us_name">Name *</label>
@@ -29,10 +28,9 @@
                     </div>
 
                     <div class="my-4">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" wire:click="submit">Submit</button>
                     </div>
-                </form>
             </div>
         </div>
-        
+
 </div>
