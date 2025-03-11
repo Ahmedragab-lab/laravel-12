@@ -76,7 +76,7 @@ Route::group(
 
             //start Dr Clinic Routes
             Route::resource('departments', DepartmentController::class);
-            Route::resource('products', ProductController::class);
+            // Route::resource('products', ProductController::class);
 
 
             //

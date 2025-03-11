@@ -132,17 +132,20 @@ class ProductSeeder extends Seeder
                 'in_stock' => true,
                 'on_sale' => true // Original price is $129, but now it's $99.
             ],
-            // [
-            //     'name' => 'Cropped Faux Leather Jacket',
-            //     'description' => 'Trendy cropped faux leather jacket, versatile and fashionable.',
-            //     'price' => 29.00,
-            //     'category_name' => 'Dresses',
-            //     'brand_name' => 'Burberry',
-            //     'images' => [],
-            //     'is_featured' => false,
-            //     'in_stock' => true,
-            //     'on_sale' => false
-            // ],
+            [
+                'name' => 'Cropped Faux Leather Jacketk',
+                'description' => 'Trendy cropped faux leather jacket, versatile and fashionable.',
+                'price' => 29.00,
+                'category_name' => 'Dresses',
+                'brand_name' => 'Burberry',
+                'images' => [
+                    'assets/images/products/product_9.jpg',
+                    'assets/images/products/product_9-1.jpg'
+                ],
+                'is_featured' => false,
+                'in_stock' => true,
+                'on_sale' => false
+            ],
 
         ];
 
