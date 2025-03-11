@@ -33,14 +33,14 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" wire:click='resetInputs'>
-                                  اضف قسم جديد
+                                   قسم جديد
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <input type="text" id="data-table-search" class="form-control" autofocus
-                                        placeholder="@lang('site.search')" wire:model.live='search'>
+                                        placeholder="اسم القسم" wire:model.live='search'>
                                 </div>
                             </div>
                         </div><!-- end of row -->
@@ -52,6 +52,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>القسم</th>
+                                                <th>عدد المنتجات</th>
                                                 <th>{{ __('settings.created_at') }}</th>
                                                 <th>@lang('site.action')</th>
                                             </tr>
@@ -61,40 +62,19 @@
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $category->name }}</td>
+                                                    <td>{{ $category->products_count }}</td>
                                                     <td>{{ $category->created_at->format('Y-m-d') }}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $category->id }})'>
                                                             <i class="fa fa-edit"></i>
                                                         </button>
-                                                        <button type="button" data-toggle="modal" data-target="#delete-{{ $category->id }}" class="btn btn-sm btn-danger"
-                                                            wire:click='itemId({{ $category->id }})'>
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                        <div class="modal fade" id="delete-{{ $category->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" wire:ignore.self
-                                                            aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title fs-5" id="exampleModalLabel">حذف</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        هل متأكد من حذف  {{ $category->name }} ؟
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                                                                        <button wire:click='delete({{ $category->id }})' type="button" class="btn btn-danger" data-dismiss="modal">نعم</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        
+                                                        <x-delete-modal :item="$category" />
                                                     </td>
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan='4'>
+                                                    <td colspan='5'>
                                                         <div class="alert alert-warning">
                                                             @lang('No results')
                                                         </div>

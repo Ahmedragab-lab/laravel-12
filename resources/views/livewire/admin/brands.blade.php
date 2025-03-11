@@ -68,31 +68,7 @@
                                                         <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $brand->id }})'>
                                                             <i class="fa fa-edit"></i>
                                                         </button>
-                                                        <button type="button" data-toggle="modal" data-target="#delete-{{ $brand->id }}" class="btn btn-sm btn-danger">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                        <div class="modal fade" id="delete-{{ $brand->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" wire:ignore.self
-                                                            aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title fs-5" id="exampleModalLabel">حذف</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        هل متاكد من حذف  {{ $brand->name }}
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">الغاء</button>
-                                                                        <button wire:click='delete({{ $brand->id }})' type="button" class="btn btn-danger"
-                                                                            data-dismiss="modal">نعم</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <x-delete-modal :item="$brand" />
                                                     </td>
                                                 </tr>
                                             @empty

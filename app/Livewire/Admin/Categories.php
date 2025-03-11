@@ -11,8 +11,10 @@ class Categories extends Component
 {
     use LivewireResource;
 
-    public $name, $search;
-    public $categoryToDelete;
+    public $name;
+    public $search = '';
+    public $productSearch = '';
+
 
     public function rules()
     {
@@ -28,26 +30,27 @@ class Categories extends Component
 
     public function render()
     {
-        $categories = Category::when(!empty($this->search), function ($q) {
+        $categories = Category::with(['products' => function ($query) {
+            // Filter products if product search is provided
+            if (!empty($this->productSearch)) {
+                $query->where('name', 'LIKE', "%" . $this->productSearch . "%");
+            }
+        }])
+        ->withCount(['products' => function ($query) {
+            if (!empty($this->productSearch)) {
+                $query->where('name', 'LIKE', "%" . $this->productSearch . "%");
+            }
+        }])
+        ->when(!empty($this->search), function ($q) {
             $q->where('name', 'LIKE', "%" . $this->search . "%");
         })
         ->latest('id')
         ->paginate(10);
-    
+
         return view('livewire.admin.categories', compact('categories'))
             ->extends('admin.layouts.master')
             ->section('content');
     }
-    
-    public function itemId(Category $category)
-    {
-        $this->name = $category->name;
-    }
 
-    public function delete(Category $category)
-    {
-        $category->delete();
 
-        session()->flash('success', 'تم الحذف بنجاح');
-    }
 }

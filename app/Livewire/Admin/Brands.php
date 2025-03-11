@@ -29,12 +29,4 @@ class Brands extends Component
         })->latest('id')->paginate(10);
         return view('livewire.admin.brands', compact('brands'))->extends('admin.layouts.master')->section('content');
     }
-
-   
-
-    public function delete(Brand $brand)
-    {
-        $brand->delete();
-        session()->flash('success', 'تم الحذف بنجاح');
-    }
 }
