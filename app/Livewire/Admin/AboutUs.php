@@ -18,9 +18,10 @@ class AboutUs extends Component
         'our_mission' => 'required|string',
         'our_vision' => 'required|string',
         'the_company' => 'required|string',
-        'img' => 'nullable|image|max:1024',
+        'img' => 'nullable|image|max:1024', // Image validation rule
     ];
 
+    // Custom validation attributes for better naming in error messages
     public function validationAttributes()
     {
         return [
@@ -32,7 +33,7 @@ class AboutUs extends Component
         ];
     }
 
-    // معالجة التحديثات
+    // Method for validating updates to individual fields
     public function updated($fields)
     {
         $this->validateOnly($fields, [
@@ -43,26 +44,26 @@ class AboutUs extends Component
         ]);
     }
 
-    // تحديث البيانات
+    // Method to update the data
     public function update()
     {
         $data = $this->validate();
 
-        // التعامل مع صورة جديدة إذا تم رفعها
+        // Handle new image if uploaded
         if ($this->img) {
-            delete_file(setting('about_us_img'));
-            $data['img'] = store_file($this->img, 'about_us');
+            delete_file(setting('about_us_img')); // Delete the old image if exists
+            $data['img'] = store_file($this->img, 'about_us'); // Store the new image
         } else {
-            $data['img'] = setting('about_us_img');
+            $data['img'] = setting('about_us_img'); // Use the old image if no new one is uploaded
         }
 
-        setting($data)->save();
+        setting($data)->save(); // Save settings to the database
 
-        // عرض رسالة عند نجاح التحديث
+        // Show success message after saving the data
         LivewireAlert::title('Changes saved!')->success()->show();
     }
 
-    // تحميل البيانات عند أول استخدام
+    // Method to load data when the component is first used
     public function mount()
     {
         $this->our_story = setting('our_story');
@@ -72,7 +73,7 @@ class AboutUs extends Component
         $this->img = setting('about_us_img');
     }
 
-    // عرض واجهة المستخدم
+    // Render the component view
     public function render()
     {
         return view('livewire.admin.about-us');
