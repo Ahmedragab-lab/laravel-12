@@ -53,6 +53,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>البرند</th>
+                                                <th>عدد المنتجات</th>
                                                 <th>{{ __('settings.created_at') }}</th>
                                                 <th>@lang('site.action')</th>
                                             </tr>
@@ -62,7 +63,7 @@
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $brand->name }}</td>
-
+                                                    <td class="btn btn-success btn-sm">{{ $brand->products_count }}</td>
                                                     <td>{{ $brand->created_at->format('Y-m-d') }}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $brand->id }})'>

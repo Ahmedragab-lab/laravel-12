@@ -22,11 +22,9 @@ class Brands extends Component
     }
     public function render()
     {
-        $brands = Brand::where(function ($q) {
-            if ($this->search) {
-                $q->where('name', 'LIKE', "%" . $this->search . "%");
-            }
-        })->latest('id')->paginate(10);
+        $brands = Brand::with(['products'])->withCount('products')
+        ->when($this->search,fn($q) => $q->where('name', 'LIKE', "%" . $this->search . "%"))
+        ->latest('id')->paginate(10);
         return view('livewire.admin.brands', compact('brands'))->extends('admin.layouts.master')->section('content');
     }
 }

@@ -62,7 +62,7 @@
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $category->name }}</td>
-                                                    <td>{{ $category->products_count }}</td>
+                                                    <td class="btn btn-success btn-sm">{{ $category->products_count }}</td>
                                                     <td>{{ $category->created_at->format('Y-m-d') }}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $category->id }})'>
