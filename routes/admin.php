@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ShiftsController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\Categories;
+use App\Livewire\Admin\Products;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Livewire\Livewire;
@@ -36,6 +37,9 @@ Route::group(
             Route::get('/settings', [SettingController::class, 'index'])->name('settings');
             Route::get('brands', Brands::class)->name('brands');
             Route::get('categories', Categories::class)->name('categories');
+            Route::get('/products_show', Products::class)->name('products');
+
+
 
 
 

@@ -30,13 +30,19 @@
                 <i class="app-menu__icon fa fa-cogs"></i>
                 <span class="app-menu__label">البرندات</span>
             </a>
-
+            </li>
+            <li>
             <a class="app-menu__item {{ request()->is('*categories*') ? 'active' : '' }}" href="{{ route('categories') }}">
-    <i class="app-menu__icon fa fa-list"></i>
-    <span class="app-menu__label">الأقسام</span>
-</a>
-
-        </li>
+             <i class="app-menu__icon fa fa-list"></i>
+             <span class="app-menu__label">الأقسام</span>
+          </a>
+          </li>
+          <li>
+            <a class="app-menu__item {{ Route::is('products') ? 'active' : '' }}" href="{{ route('products') }}">
+                <i class="app-menu__icon fa fa-list"></i>
+                <span class="app-menu__label">المنتجات</span>
+            </a>
+         </li>
         {{-- <li>
             <a class="app-menu__item {{ request()->is('*units*') ? 'active' : '' }}" href="{{ route('units') }}">
                 <i class="app-menu__icon fa fa-shopping-bag"></i>
