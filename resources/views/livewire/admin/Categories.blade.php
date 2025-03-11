@@ -68,7 +68,7 @@
                                                         <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $category->id }})'>
                                                             <i class="fa fa-edit"></i>
                                                         </button>
-                                                        
+
                                                         <x-delete-modal :item="$category" />
                                                     </td>
                                                 </tr>
@@ -76,7 +76,7 @@
                                                 <tr>
                                                     <td colspan='5'>
                                                         <div class="alert alert-warning">
-                                                            @lang('No results')
+                                                           لا يوجد بيانات
                                                         </div>
                                                     </td>
                                                 </tr>

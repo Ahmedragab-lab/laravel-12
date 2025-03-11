@@ -30,22 +30,9 @@ class Categories extends Component
 
     public function render()
     {
-        $categories = Category::with(['products' => function ($query) {
-            // Filter products if product search is provided
-            if (!empty($this->productSearch)) {
-                $query->where('name', 'LIKE', "%" . $this->productSearch . "%");
-            }
-        }])
-        ->withCount(['products' => function ($query) {
-            if (!empty($this->productSearch)) {
-                $query->where('name', 'LIKE', "%" . $this->productSearch . "%");
-            }
-        }])
-        ->when(!empty($this->search), function ($q) {
-            $q->where('name', 'LIKE', "%" . $this->search . "%");
-        })
-        ->latest('id')
-        ->paginate(10);
+        $categories = Category::with(['products'])->withCount('products')
+        ->when($this->search,fn($q) => $q->where('name', 'LIKE', "%" . $this->search . "%"))
+        ->latest('id')->paginate(10);
 
         return view('livewire.admin.categories', compact('categories'))
             ->extends('admin.layouts.master')
