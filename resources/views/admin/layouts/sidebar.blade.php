@@ -7,6 +7,13 @@
         </div>
     </div>
     <ul class="app-menu">
+            <li>
+            <a class="app-menu__item {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
+                <i class="app-menu__icon fa fa-home"></i>
+                <span class="app-menu__label">الواجهه</span>
+            </a>
+        </li>
+
         <li>
             <a class="app-menu__item {{ request()->is('*home*') ? 'active' : '' }}" href="{{ route('admin.home') }}">
                 <i class="app-menu__icon fa fa-dashboard"></i>
