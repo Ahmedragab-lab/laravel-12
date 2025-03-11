@@ -16,14 +16,21 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
             $table->string('name');
-            $table->string('slug')->unique();
-            $table->json('images')->nullable();
-            $table->longText('description')->nullable();
+            $table->string('slug')->unique()->nullable();
+            $table->string('creator',100)->nullable();
+            $table->integer('stock')->nullable();
             $table->decimal('price', 10, 2)->default(0.00);
-            $table->boolean('is_active')->default(true);
-            $table->boolean('is_featured')->default(false);
-            $table->boolean('in_stock')->default(true);
-            $table->boolean('on_sale')->default(false);
+            $table->double('discount')->nullable();
+            $table->string('sku',100)->nullable();
+            $table->string('expiration_date',100)->nullable();
+            $table->string('image',100)->nullable();
+            $table->longText('description')->nullable();
+            $table->string('code',100)->nullable();
+
+            $table->boolean('is_featured')->default(1);
+            $table->boolean('in_stock')->default(1);
+            $table->boolean('on_sale')->default(1);
+            $table->string('status')->default(1);
             $table->timestamps();
         });
     }

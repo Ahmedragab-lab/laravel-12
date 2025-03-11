@@ -3,7 +3,7 @@
         <div class="shop-sidebar side-sticky bg-body" id="shopFilter">
           <div class="aside-header d-flex d-lg-none align-items-center">
             <h3 class="text-uppercase fs-6 mb-0">Filter By</h3>
-            <button class="btn-close-lg js-close-aside btn-close-aside ms-auto"></button> 
+            <button class="btn-close-lg js-close-aside btn-close-aside ms-auto"></button>
           </div>
 
           <div class="pt-4 pt-lg-0"></div>
@@ -156,39 +156,21 @@
                     <option value="5">Zara</option>
                   </select>
                   <div class="search-field__input-wrapper mb-3">
-                    <input type="text" name="search_text"
+                    <input type="text" name="search_text" wire:model.debounce.300ms="search"
                       class="search-field__input form-control form-control-sm border-light border-2"
                       placeholder="Search" />
                   </div>
                   <ul class="multi-select__list list-unstyled">
-                    <li class="search-suggestion__item multi-select__item text-primary js-search-select js-multi-select">
-                      <span class="me-auto">Adidas</span>
-                      <span class="text-secondary">2</span>
-                    </li>
-                    <li class="search-suggestion__item multi-select__item text-primary js-search-select js-multi-select">
-                      <span class="me-auto">Balmain</span>
-                      <span class="text-secondary">7</span>
-                    </li>
-                    <li class="search-suggestion__item multi-select__item text-primary js-search-select js-multi-select">
-                      <span class="me-auto">Balenciaga</span>
-                      <span class="text-secondary">10</span>
-                    </li>
-                    <li class="search-suggestion__item multi-select__item text-primary js-search-select js-multi-select">
-                      <span class="me-auto">Burberry</span>
-                      <span class="text-secondary">39</span>
-                    </li>
-                    <li class="search-suggestion__item multi-select__item text-primary js-search-select js-multi-select">
-                      <span class="me-auto">Kenzo</span>
-                      <span class="text-secondary">95</span>
-                    </li>
-                    <li class="search-suggestion__item multi-select__item text-primary js-search-select js-multi-select">
-                      <span class="me-auto">Givenchy</span>
-                      <span class="text-secondary">1092</span>
-                    </li>
-                    <li class="search-suggestion__item multi-select__item text-primary js-search-select js-multi-select">
-                      <span class="me-auto">Zara</span>
-                      <span class="text-secondary">48</span>
-                    </li>
+                    @foreach($brands as $brand)
+                        <li class="search-suggestion__item multi-select__item text-primary js-search-select js-multi-select"
+                            {{-- {{ in_array($brand->id, $selectedBrands) ? 'active' : '' }}" --}}
+                            {{-- wire:click="toggleBrand({{ $brand->id }})" --}}
+                            >
+                            <span class="me-auto">{{ $brand->name }}</span>
+                            <span class="text-secondary">{{ $brand->products_count }}</span>
+                        </li>
+                    @endforeach
+
                   </ul>
                 </div>
               </div>
@@ -359,6 +341,7 @@
           </div>
 
           <div class="products-grid row row-cols-2 row-cols-md-3" id="products-grid">
+            @forelse($products as $product)
             <div class="product-card-wrapper">
               <div class="product-card mb-3 mb-md-4 mb-xxl-5">
                 <div class="pc__img-wrapper">
@@ -423,8 +406,19 @@
                 </div>
               </div>
             </div>
-
-            <div class="product-card-wrapper">
+            @empty
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No products found. Try adjusting your filters.
+                </div>
+            </div>
+            @endforelse
+            <div class="row mt-4">
+                <div class="col-12">
+                    {{ $products->links() }}
+                </div>
+            </div>
+            {{-- <div class="product-card-wrapper">
               <div class="product-card mb-3 mb-md-4 mb-xxl-5">
                 <div class="pc__img-wrapper">
                   <div class="swiper-container background-img js-swiper-slider" data-settings='{"resizeObserver": true}'>
@@ -822,10 +816,10 @@
                   </button>
                 </div>
               </div>
-            </div>
+            </div> --}}
           </div>
 
-          <nav class="shop-pages d-flex justify-content-between mt-3" aria-label="Page navigation">
+          {{-- <nav class="shop-pages d-flex justify-content-between mt-3" aria-label="Page navigation">
             <a href="#" class="btn-link d-inline-flex align-items-center">
               <svg class="me-1" width="7" height="11" viewBox="0 0 7 11" xmlns="http://www.w3.org/2000/svg">
                 <use href="#icon_prev_sm" />
@@ -844,7 +838,7 @@
                 <use href="#icon_next_sm" />
               </svg>
             </a>
-          </nav>
+          </nav> --}}
         </div>
     </section>
 </div>

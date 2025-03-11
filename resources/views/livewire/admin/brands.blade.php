@@ -15,6 +15,26 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="small-label" for="">
+                                    لوجو
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="box-input">
+                                    <input type="file" class="form-control" wire:model='logo' id="" />
+                                </div>
+                                <div class="box-input">
+                                    <div class="col-md-3">
+                                        @if ($logo instanceof \Illuminate\Http\UploadedFile)
+                                            <img src="{{ $logo->temporaryUrl() }}" class="img-thumbnail" width="100" />
+                                        @elseif (is_string($logo) && !empty($logo))
+                                            <img src="{{ display_file($logo) }}" class="img-thumbnail" width="100" />
+                                        @else
+                                            <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="100" />
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small-label" for="">
                                     اسم البرند
                                     <span class="text-danger">*</span>
                                 </label>
@@ -33,17 +53,17 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" wire:click='resetInputs'>
-                                  اضف برند جديد
+                                   برند جديد
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    {{-- {{ var_export($search) }} --}}
                                     <input type="text" id="data-table-search" class="form-control" autofocus
-                                        placeholder="@lang('site.search')" wire:model.live='search'>
+                                        placeholder="اسم البرند" wire:model.live='search'>
                                 </div>
                             </div>
+
                         </div><!-- end of row -->
                         <div class="row">
                             <div class="col-md-12">
@@ -52,6 +72,7 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>لوجو</th>
                                                 <th>البرند</th>
                                                 <th>عدد المنتجات</th>
                                                 <th>{{ __('settings.created_at') }}</th>
@@ -62,6 +83,7 @@
                                             @forelse ($brands as $index => $brand)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
+                                                    <td><img src="{{ $brand->logo? display_file($brand->logo):asset('assets/no-image.png') }}" alt="" style="width: 50px"></td>
                                                     <td>{{ $brand->name }}</td>
                                                     <td class="btn btn-success btn-sm">{{ $brand->products_count }}</td>
                                                     <td>{{ $brand->created_at->format('Y-m-d') }}</td>

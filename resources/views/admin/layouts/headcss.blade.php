@@ -12,6 +12,7 @@
 <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
 <title>@yield('title')</title>
 <meta charset="utf-8">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Main CSS-->
@@ -53,7 +54,40 @@
         }
     </style>
 @endif
+<link rel="stylesheet" href="{{ asset('admin/plugins/simplebar/css/simplebar.css')}}">
+<link rel="stylesheet" href="{{ asset('admin/plugins/metismenu/css/metisMenu.min.css')}}">
+
+
+<!-- Font-icon css-->
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{{-- <link rel="stylesheet" href="{{ asset('admin/css/app-style.css')}}"> --}}
+<link rel="stylesheet" href="{{ asset('admin/css/custom.css')}}">
+
+{{--  --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+{{-- <script src="{{ asset('admin/js/jquery.min.js')}}"></script> --}}
+<script src="{{ asset('admin') }}/js/jquery-3.3.1.min.js"></script>
+<script>
+    $.ajaxSetup({
+        cache:false,
+        contentType: false,
+        processData: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        }
+    });
+    $( document ).ajaxSuccess((e,res)=>console.log((res.responseJSON && res.responseJSON) || res));
+    $( document ).ajaxError(function( event, res ) {
+        console.log(res.responseJSON.errors || res);
+    });
+    function toaster(icon, message){
+        Toast.fire({
+            icon: icon,
+            title: message,
+        })
+    }
+</script>
 
 
 

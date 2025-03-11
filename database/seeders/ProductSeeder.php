@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
-
+use Carbon\Carbon;
 class ProductSeeder extends Seeder
 {
     /**
@@ -17,171 +17,67 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('color_product')->truncate();
+        DB::table('product_size')->truncate();
         Product::truncate();
 
-        $products = [
-            [
-                'name' => 'Cropped Faux Leather Jacket',
-                'description' => 'A stylish cropped faux leather jacket perfect for casual outings.',
-                'price' => 29.00,
-                'category_name' => 'Jackets', 
-                'brand_name' => 'Adidas',
-                'images' => [
-                    'images/home/demo3/product-1.jpg',
-                    'images/home/demo3/product-1-1.jpg'
-                ],
-                'is_featured' => true,
-                'in_stock' => true,
-                'on_sale' => false
-            ],
-            [
-                'name' => 'Calvin Shorts',
-                'description' => 'Comfortable and versatile shorts for everyday wear.',
-                'price' => 62.00,
-                'category_name' => 'Shorts', 
-                'brand_name' => 'Balenciaga',
-                'images' => [
-                    'images/home/demo3/product-2.jpg',
-                    'images/home/demo3/product-2-1.jpg'
-                ],
-                'is_featured' => false,
-                'in_stock' => true,
-                'on_sale' => false    
-            ],
-            [
-                'name' => 'Kirby T-Shirt',
-                'description' => 'A trendy and soft t-shirt for a casual look.',
-                'price' => 62.00,
-                'category_name' => 'Shirts & Tops', 
-                'brand_name' => 'Burberry',
-                'images' => [
-                    'images/home/demo3/product-3.jpg',
-                    'images/home/demo3/product-3-1.jpg'
-                ],
-                'is_featured' => false,
-                'in_stock' => true,
-                'on_sale' => false    
-            ],
-            [
-                'name' => 'Cableknit Shawl',
-                'description' => 'Cozy and elegant cableknit shawl for added warmth and style.',
-                'price' => 99.00,
-                'category_name' => 'Jumpers & Cardigans', 
-                'brand_name' => 'Zara',
-                'images' => [
-                    'images/home/demo3/product-4.jpg',
-                    'images/home/demo3/product-4-1.jpg'
-                ],
-                'is_featured' => true,
-                'in_stock' => true,
-                'on_sale' => true    
-            ],
-            [
-                'name' => 'Colorful Jacket',
-                'description' => 'Stylish and vibrant colorful jacket perfect for casual outings.',
-                'price' => 29.00,
-                'category_name' => 'Dresses',
-                'brand_name' => 'Balmain', 
-                'images' => [
-                    'assets/images/products/product_5.jpg',
-                    'assets/images/products/product_5-1.jpg'
-                ],
-                'is_featured' => false,
-                'in_stock' => true,
-                'on_sale' => false
-            ],
-            [
-                'name' => 'Shirt In Botanical Cheetah Print',
-                'description' => 'Stylish shirt featuring a bold botanical cheetah print design.',
-                'price' => 62.00,
-                'category_name' => 'Shirts & Tops',
-                'brand_name' => 'Zara',
-                'images' => [
-                    'assets/images/products/product_6.jpg',
-                    'assets/images/products/product_6-1.jpg'
-                ],
-                'is_featured' => false,
-                'in_stock' => true,
-                'on_sale' => false
-            ],
-            [
-                'name' => 'Cotton Jersey T-Shirt',
-                'description' => 'Comfortable and casual cotton jersey T-shirt.',
-                'price' => 17.00,
-                'category_name' => 'Dresses',
-                'brand_name' => 'Adidas',
-                'images' => [
-                    'assets/images/products/product_7.jpg',
-                    'assets/images/products/product_7-1.jpg'
-                ],
-                'is_featured' => false,
-                'in_stock' => true,
-                'on_sale' => false
-            ],
-            [
-                'name' => 'Zessi Dresses',
-                'description' => 'Elegant and stylish Zessi dress, perfect for special occasions.',
-                'price' => 99.00,
-                'category_name' => 'Dresses',
-                'brand_name' => 'Balmain',
-                'images' => [
-                    'assets/images/products/product_8.jpg',
-                    'assets/images/products/product_8-1.jpg'
-                ],
-                'is_featured' => false,
-                'in_stock' => true,
-                'on_sale' => true // Original price is $129, but now it's $99.
-            ],
-            [
-                'name' => 'Cropped Faux Leather Jacketk',
-                'description' => 'Trendy cropped faux leather jacket, versatile and fashionable.',
-                'price' => 29.00,
-                'category_name' => 'Dresses',
-                'brand_name' => 'Burberry',
-                'images' => [
-                    'assets/images/products/product_9.jpg',
-                    'assets/images/products/product_9-1.jpg'
-                ],
-                'is_featured' => false,
-                'in_stock' => true,
-                'on_sale' => false
-            ],
-
+        $product_names = [
+            "Men's Wash Denim Pant - Ad003 - 7arnf",
+            "CUSTOM MADE FASHION SNEAKERS",
+            "Cotton Panjabi (Yellow)",
+            "China Cotton Fabric Formal Shirt",
+            "Karchupi One Piece",
+            "Gold Plated Color Beats Locket Pendant",
+            "Women's Fashionable Shirt",
+            "Kids toys collection1",
+            "Plastic Remote Control World Racing",
+            "kodomo bath (gentle soft)",
+            "Nokshipitha",
+            "Teer sugar",
+            "Radhuni biryani masala",
+            "Shrimp shutki",
+            "Pran Tomato Ketchup",
+            "Black Seed",
+            "Kheshari Dal",
+            "Pran Mustard Oil",
+            "Maggi Coconut Milk Powder",
+            "Ruchi Mixed Fruit Jam",
         ];
-
-        foreach ($products as $product) {
-            $category = Category::where('name', $product['category_name'])->first();
-            $brand = Brand::where('name', $product['brand_name'])->first();
-
-            if ($category && $brand) {
-                $productData = [
-                    'name' => $product['name'],
-                    'description' => $product['description'],
-                    'price' => $product['price'],
-                    'slug' => Str::slug($product['name']),
-                    'category_id' => $category->id, 
-                    'brand_id' => $brand->id,
-                    'images' => json_encode($product['images']),
-                    'is_active' => true,
-                    'is_featured' => $product['is_featured'],
-                    'in_stock' => $product['in_stock'],
-                    'on_sale' => $product['on_sale'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
-                
-                Product::create($productData);
-            } else {
-                // Log if a category or brand wasn't found
-                if (!$category) {
-                    \Log::warning("Category '{$product['category_name']}' not found for product '{$product['name']}'");
-                }
-                if (!$brand) {
-                    \Log::warning("Brand '{$product['brand_name']}' not found for product '{$product['name']}'");
-                }
+        $colors = range(1, 10);
+        $sizes = range(1, 5);
+        foreach ($product_names as $name) {
+            $product = new Product();
+            $product->category_id = rand(1, Category::count());
+            $product->brand_id = rand(1, Brand::count());
+            $product->name = $name;
+            $product->creator = 1;
+            $product->stock = rand(700, 1000);
+            $product->price = rand(200, 600);
+            $product->discount = rand(0, 20);
+            $product->sku = 'SKU' . rand(500, 5000);
+            $product->expiration_date = Carbon::now()->format('Y-m-d');
+            $product->image = "products/" . rand(1, 20) . ".jpg";
+            $product->description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, molestias!";
+            $product->created_at = Carbon::now();
+            $product->slug = Str::slug($product->name) . '-' . $product->id;
+            $product->code = 'PRO-' . Carbon::now()->format('Ym') . $product->id;
+            $product->save();
+            
+            $randomColors = array_rand($colors, rand(1, 3));
+            foreach ((array)$randomColors as $color) {
+                DB::table('color_product')->insert([
+                    'color_id' => $colors[$color],
+                    'product_id' => $product->id
+                ]);
+            }
+            $randomSizes = array_rand($sizes, rand(1, 3));
+            foreach ((array)$randomSizes as $size) {
+                DB::table('product_size')->insert([
+                    'size_id' => $sizes[$size],
+                    'product_id' => $product->id
+                ]);
             }
         }
-
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
