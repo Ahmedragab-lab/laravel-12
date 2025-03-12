@@ -381,7 +381,6 @@
                                   <span>Available Colors:</span>
                                   @foreach($product->color as $color)
                                   <a href="#" 
-                            wire:click.prevent="toggleColor({{ $color->id }})"
                             class="swatch-color js-filter {{ in_array($color->id, $selectedColors) ? 'swatch_active' : '' }}" 
                             style="color: {{ $color->name }}"></a>
 
@@ -391,13 +390,13 @@
 
                           {{-- Product Sizes --}}
                           @if ($product->size->isNotEmpty())
-                              <div class="product-sizes d-flex mt-2">
-                                  <span>Available Sizes:</span>
-                                  @foreach($product->size as $size)
-                                      <span class="badge bg-secondary ms-1">{{ $size->name }}</span>
-                                  @endforeach
-                              </div>
-                          @endif
+    <div class="product-sizes d-flex mt-2">
+        <span>Available Sizes:</span>
+        @foreach($product->size as $size)
+            <span class="badge {{ in_array($size->id, $selectedSizes) ? 'bg-primary' : 'bg-secondary' }} ms-1">{{ $size->name }}</span>
+        @endforeach
+    </div>
+@endif
 
                           {{-- Reviews --}}
                           <div class="product-card__review d-flex align-items-center mt-2">
