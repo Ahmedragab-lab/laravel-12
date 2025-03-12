@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\UnitController;
 use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Products;
-use App\Livewire\Admin\AboutUs;
+// use App\Livewire\Admin\AboutUs;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Livewire\Livewire;
@@ -38,7 +38,7 @@ Route::group(
             Route::get('/settings', [SettingController::class, 'index'])->name('settings');
             Route::get('brands', Brands::class)->name('brands');
             Route::get('categories', Categories::class)->name('categories');
-            Route::get('/about_us', AboutUs::class)->name('AboutUs');
+            // Route::get('/about_us', AboutUs::class)->name('AboutUs');
 
             // Route::get('/products', Products::class)->name('products');
             Route::controller(ProductController::class)->group(function(){

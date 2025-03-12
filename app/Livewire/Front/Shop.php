@@ -4,6 +4,7 @@ namespace App\Livewire\Front;
 
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Color;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Str;
@@ -16,6 +17,7 @@ class Shop extends Component
     use WithFileUploads;
     protected $paginationTheme = 'bootstrap';
     public $search = '';
+    public $selectedColors = [];  // متغير لتخزين الألوان المختارة
     // public $selectedBrands = [];
     // protected $queryString = [
     //     'search' => ['except' => ''],
@@ -24,16 +26,33 @@ class Shop extends Component
     public function render()
     {
         $brands = Brand::isActive()->withCount('products')->get();
-        $products = Product::with(['category', 'brand'])
+        $colors = Color::all();  // جلب الألوان من الجدول
+        $products = Product::with(['category', 'brand', 'color'])
         // ->when($this->search, fn ($q) => $q->where('name', 'like', '%' . $this->search . '%'))
         // ->when($this->selectedBrands, fn ($q) => $q->whereIn('brand_id', $this->selectedBrands))
+        ->when($this->selectedColors, function ($q) {
+            $q->whereHas('color', function ($query) {
+                $query->whereIn('colors.id', $this->selectedColors);
+            });
+        })
         ->latest('id')
         ->paginate(6);
         // $products = Product::latest()->paginate(9);
-        return view('livewire.front.shop', compact('brands', 'products'))
+        return view('livewire.front.shop', compact('brands', 'products', 'colors'))
         ->extends('front.layouts.master')
         ->section('content');
     }
+    public function toggleColor($colorId)
+    {
+        if (in_array($colorId, $this->selectedColors)) {
+            $this->selectedColors = array_diff($this->selectedColors, [$colorId]);
+        } else {
+            $this->selectedColors[] = $colorId;
+        }
+
+        $this->resetPage();
+    }
+    
 
     // public function updatedSearch()
     // {
