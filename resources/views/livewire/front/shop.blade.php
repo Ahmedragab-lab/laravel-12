@@ -114,12 +114,15 @@
                 aria-labelledby="accordion-heading-size" data-bs-parent="#size-filters">
                 <div class="accordion-body px-0 pb-0">
                   <div class="d-flex flex-wrap">
-                    <a href="#" class="swatch-size btn btn-sm btn-outline-light mb-3 me-3 js-filter">XS</a>
-                    <a href="#" class="swatch-size btn btn-sm btn-outline-light mb-3 me-3 js-filter">S</a>
-                    <a href="#" class="swatch-size btn btn-sm btn-outline-light mb-3 me-3 js-filter">M</a>
-                    <a href="#" class="swatch-size btn btn-sm btn-outline-light mb-3 me-3 js-filter">L</a>
-                    <a href="#" class="swatch-size btn btn-sm btn-outline-light mb-3 me-3 js-filter">XL</a>
-                    <a href="#" class="swatch-size btn btn-sm btn-outline-light mb-3 me-3 js-filter">XXL</a>
+                    <!-- kkkk -->
+                    @foreach($sizes as $size)
+    <a href="#" 
+       wire:click.prevent="toggleSize({{ $size->id }})"
+       class="swatch-size btn btn-sm mb-3 me-3 js-filter {{ in_array($size->id, $selectedSizes) ? 'btn-primary text-white' : 'btn-outline-light' }}"> 
+       {{ $size->name }}
+    </a>
+@endforeach
+
                   </div>
                 </div>
               </div>

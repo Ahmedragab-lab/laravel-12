@@ -5,6 +5,7 @@ namespace App\Livewire\Front;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Color;
+use App\Models\Size;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Str;
@@ -18,6 +19,7 @@ class Shop extends Component
     protected $paginationTheme = 'bootstrap';
     public $search = '';
     public $selectedColors = [];  // متغير لتخزين الألوان المختارة
+    public $selectedSizes = [];
     // public $selectedBrands = [];
     // protected $queryString = [
     //     'search' => ['except' => ''],
@@ -27,7 +29,8 @@ class Shop extends Component
     {
         $brands = Brand::isActive()->withCount('products')->get();
         $colors = Color::all();  // جلب الألوان من الجدول
-        $products = Product::with(['category', 'brand', 'color'])
+        $sizes = Size::all();
+        $products = Product::with(['category', 'brand', 'color','size'])
         // ->when($this->search, fn ($q) => $q->where('name', 'like', '%' . $this->search . '%'))
         // ->when($this->selectedBrands, fn ($q) => $q->whereIn('brand_id', $this->selectedBrands))
         ->when($this->selectedColors, function ($q) {
@@ -35,10 +38,15 @@ class Shop extends Component
                 $query->whereIn('colors.id', $this->selectedColors);
             });
         })
+        ->when($this->selectedSizes, function ($q) {
+            $q->whereHas('size', function ($query) {
+                $query->whereIn('sizes.id', $this->selectedSizes);
+            });
+        })
         ->latest('id')
         ->paginate(6);
         // $products = Product::latest()->paginate(9);
-        return view('livewire.front.shop', compact('brands', 'products', 'colors'))
+        return view('livewire.front.shop', compact('brands', 'products', 'colors','sizes'))
         ->extends('front.layouts.master')
         ->section('content');
     }
@@ -51,9 +59,16 @@ class Shop extends Component
         }
 
         $this->resetPage();
+    }    
+    public function toggleSize($sizeId)
+    {
+        if (in_array($sizeId, $this->selectedSizes)) {
+            $this->selectedSizes = array_diff($this->selectedSizes, [$sizeId]);
+        } else {
+            $this->selectedSizes[] = $sizeId;
+        }
+        $this->resetPage();
     }
-    
-
     // public function updatedSearch()
     // {
     //     $this->resetPage();
