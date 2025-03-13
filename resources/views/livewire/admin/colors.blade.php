@@ -75,30 +75,30 @@
                                 </thead>
                                 <tbody>
                                 @forelse ($colors as $index => $color)
-    <tr>
-        <td>{{ $index + 1 }}</td>
-        <td>
-            <span style="display: inline-block; width: 20px; height: 20px; background-color: {{ $color->color_code }}; border-radius: 50%;"></span>
-        </td>
-        <td>{{ $color->name . '.' }}</td>
-        <td class="btn btn-success btn-sm">{{ $color->related_products_count }}</td>
-        <td>{{ $color->created_at->format('Y-m-d') }}</td>
-        <td>
-            <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $color->id }})'>
-                <i class="fa fa-edit"></i>
-            </button>
-            <x-delete-modal :item="$color" />
-        </td>
-    </tr>
-@empty
-    <tr>
-        <td colspan="6">
-            <div class="alert alert-warning">
-               لا يوجد بيانات
-            </div>
-        </td>
-    </tr>
-@endforelse
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>
+                                            <span style="display: inline-block; width: 20px; height: 20px; background-color: {{ $color->color_code }}; border-radius: 50%;"></span>
+                                        </td>
+                                        <td>{{ $color->name . '.' }}</td>
+                                        <td class="btn btn-success btn-sm">{{ $color->related_products_count }}</td>
+                                        <td>{{ $color->created_at->format('Y-m-d') }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $color->id }})'>
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <x-delete-modal :item="$color" />
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6">
+                                            <div class="alert alert-warning">
+                                            لا يوجد بيانات
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
 
                                 </tbody>
                             </table>

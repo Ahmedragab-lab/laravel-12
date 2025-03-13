@@ -86,7 +86,7 @@
                 <a href="#" 
                    wire:click.prevent="toggleColor({{ $color->id }})"
                    class="swatch-color js-filter {{ in_array($color->id, $selectedColors) ? 'swatch_active' : '' }}" 
-                   style="color: {{ $color->name }}"></a>
+                   style="color: {{ $color->color_code }}"></a>
             @endforeach
 
                 </div>
@@ -116,12 +116,12 @@
                   <div class="d-flex flex-wrap">
                     <!-- kkkk -->
                     @foreach($sizes as $size)
-    <a href="#" 
-       wire:click.prevent="toggleSize({{ $size->id }})"
-       class="swatch-size btn btn-sm mb-3 me-3 js-filter {{ in_array($size->id, $selectedSizes) ? 'btn-primary text-white' : 'btn-outline-light' }}"> 
-       {{ $size->name }}
-    </a>
-@endforeach
+                      <a href="#" 
+                        wire:click.prevent="toggleSize({{ $size->id }})"
+                        class="swatch-size btn btn-sm mb-3 me-3 js-filter {{ in_array($size->id, $selectedSizes) ? 'btn-primary text-white' : 'btn-outline-light' }}"> 
+                        {{ $size->name }}
+                      </a>
+                  @endforeach
 
                   </div>
                 </div>
@@ -382,7 +382,7 @@
                                   @foreach($product->color as $color)
                                   <a href="#" 
                             class="swatch-color js-filter {{ in_array($color->id, $selectedColors) ? 'swatch_active' : '' }}" 
-                            style="color: {{ $color->name }}"></a>
+                            style="color: {{ $color->color_code }}"></a>
 
                                   @endforeach
                               </div>
