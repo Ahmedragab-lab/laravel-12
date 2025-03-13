@@ -29,12 +29,12 @@ class CategorySeeder extends Seeder
             'Men',
             'Jumpers & Cardigans',
         ];
-
+        $x= 1;
         foreach ($categories as $category) {
             Category::create([
                 'name' => $category,
                 'slug' => Str::slug($category),
-                'image' => null,
+                'image' => "categories/" .'category_'. $x++ . ".png",
                 'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
