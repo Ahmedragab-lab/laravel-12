@@ -41,6 +41,13 @@
             <li>
             <a class="app-menu__item {{ request()->is('*categories*') ? 'active' : '' }}" href="{{ route('categories') }}">
              <i class="app-menu__icon fa fa-list"></i>
+             <span class="app-menu__label">الالوان</span>
+          </a>
+          </li>
+          
+          <li>
+            <a class="app-menu__item {{ request()->is('*colors*') ? 'active' : '' }}" href="{{ route('colors') }}">
+             <i class="app-menu__icon fa fa-list"></i>
              <span class="app-menu__label">الأقسام</span>
           </a>
           </li>
