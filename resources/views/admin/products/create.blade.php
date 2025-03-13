@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="tile shadow">
                 <form method="post" action="{{ route('products.store') }}" enctype="multipart/form-data"
-                    id='product-form ' class="insert_form product_insert_form ">
+                    id='product-form' class="insert_form product_insert_form ">
                     @csrf
                     @method('post')
                     <div class="row">
@@ -50,31 +50,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        {{-- <div class="col-md-3">
-                            <div class="form-group">
-                                <label>@lang('products.Category')<span class="text-danger">*</span></label>
-                                @include('admin.components.select', [
-                                    'name' => 'product_category_id',
-                                    'attributes' => 'multiple',
-                                    'class' => 'multiple-select product_category',
-                                    'collection' => $categories,
-                                    'action' => route('admin.addCategory'),
-                                    'fields' => [
-                                        [
-                                            'name' => 'main_category_id',
-                                            'type' => 'select',
-                                            'option_route' => route('admin.get_main_category_json'),
-                                        ],
-                                        ['name' => 'name', 'type' => 'text'],
-                                        ['name' => 'icon', 'type' => 'file'],
-                                    ],
-                                ])
-                            </div>
-                            @error('product_category_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div> --}}
-
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>البرندات<span class="text-danger">*</span></label>
@@ -127,9 +102,6 @@
                             @enderror
                         </div>
                     </div>
-
-
-
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -155,7 +127,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>@lang('products.price')<span class="text-danger">*</span></label>
@@ -166,19 +137,6 @@
                                 ])
                             </div>
                             @error('price')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>@lang('products.free_delivery')<span class="text-danger">*</span></label>
-                                <select name="free_delivery" class="form-control">
-                                    <option value="false">Off</option>
-                                    <option value="true">On</option>
-                                </select>
-                            </div>
-                            @error('free_delivery')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -196,16 +154,17 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>@lang('products.Alert_Quantity')<span class="text-danger">*</span></label>
-                                @include('admin.components.input', [
-                                    'name' => 'alert_quantity',
-                                    'type' => 'number',
-                                ])
+                                <label>@lang('products.status')<span class="text-danger">*</span></label>
+                                <select name="status" class="form-control">
+                                    <option value=0>Off</option>
+                                    <option value=1>On</option>
+                                </select>
                             </div>
-                            @error('alert_quantity')
+                            @error('status')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
 
                     </div>
                     {{-- images  --}}
@@ -218,7 +177,7 @@
                             @error('image')<span class="text-danger">{{ $message }}</span>@enderror
                         </div>
                         <div class="col-md-3">
-                            <img src="{{ asset('images/no-image.jpg') }}" alt="" class="img-thumbnail img-preview" width="200px">
+                            <img src="{{ asset('no-image.jpg') }}" alt="" class="img-thumbnail img-preview" width="100px">
                         </div>
                     </div>
 
@@ -228,23 +187,11 @@
                             <div class="form-group ">
                                 <label for="" class=" col-form-label">@lang('products.desc')</label>
                                 <div class="">
-                                    <textarea name="description" class="form-control " id="editor"></textarea>
+                                    <textarea name="description" class="form-control ckeditor"></textarea>
                                     <span class="text-danger description"></span>
                                 </div>
                             </div>
                             @error('description')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group ">
-                                <label for="" class=" col-form-label">@lang('products.feat')</label>
-                                <div class="">
-                                    <textarea name="features" class="form-control " id="editor1"></textarea>
-                                    <span class="text-danger description"></span>
-                                </div>
-                            </div>
-                            @error('features')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -261,19 +208,16 @@
             </div><!-- end of tile -->
         </div><!-- end of col -->
     </div><!-- end of row -->
-    @include('admin.products.crop-image-modal')
-    @include('admin.products.model-crop')
 @endsection
 @push('js')
-    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
-    <script>
-        CKEDITOR.config.language = "{{ app()->getLocale() }}";
-        CKEDITOR.replace('editor');
-        CKEDITOR.replace('editor1');
-    </script>
 
-    {{-- <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.min.js') }}"></script> --}}
-    {{-- {!! JsValidator::formRequest('App\Http\Requests\Admin\ProductRequest', '#product-form') !!} --}}
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+	<script type="text/javascript">
+		CKEDITOR.config.language ="{{ app()->getLocale() }}";
+	</script>
+
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.min.js') }}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\Admin\ProductRequest', '#product-form') !!}
 
 
 @endpush

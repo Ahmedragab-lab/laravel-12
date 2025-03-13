@@ -15,14 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
-            $table->string('name');
+            $table->string('product_name');
             $table->string('slug')->unique()->nullable();
-            $table->string('creator',100)->nullable();
-            $table->integer('stock')->nullable();
-            $table->decimal('price', 10, 2)->default(0.00);
-            $table->double('discount')->nullable();
-            $table->string('sku',100)->nullable();
             $table->string('expiration_date',100)->nullable();
+            $table->double('discount')->nullable();
+            $table->decimal('price', 10, 2)->default(0.00);
+            $table->integer('stock')->nullable();
+
+            $table->string('creator',100)->nullable();
+            $table->string('sku',100)->nullable();
             $table->string('image',100)->nullable();
             $table->longText('description')->nullable();
             $table->string('code',100)->nullable();
