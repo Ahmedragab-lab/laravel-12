@@ -128,16 +128,13 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $maincategories = Category::where('status', 1)->get();
-        $brands = Brand::where('status', 1)->get();
+        $categories = Category::where('is_active', 1)->get();
+        $brands = Brand::where('is_active', 1)->get();
         $colors = Color::where('status', 1)->get();
         $sizes  = Size::where('status', 1)->get();
-        return view('admin.products.edit',compact('product','maincategories','brands','colors','sizes'));
+        return view('admin.products.edit',compact('product','categories','brands','colors','sizes'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Product $product)
     {
         // dd($product->id);
@@ -178,26 +175,12 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Product $product)
     {
         //
     }
-
-
-
-
-
-
-
-
-
-
     public function addBrand(Request $request)
     {
-        // dd($request->all());
         $this->validate($request,[
             'name' => ['required'],
             'logo' => ['nullable']
@@ -214,8 +197,11 @@ class ProductController extends Controller
             'value' => $brand->id,
         ]);
     }
-    public function addColor(ColorRequest $request)
+    public function addColor(Request $request)
     {
+        $this->validate($request,[
+            'name' => ['required'],
+        ]);
         $color = Color::create($request->all());
         $color->slug = Str::slug($color->name);
         $color->creator = Auth::user()->id;
@@ -227,7 +213,6 @@ class ProductController extends Controller
     }
     public function addSize(Request $request)
     {
-        // dd($request->all());
         $this->validate($request,[
             'name' => ['required'],
         ]);
@@ -235,33 +220,29 @@ class ProductController extends Controller
         $size->slug = Str::slug($size->name);
         $size->creator = Auth::user()->id;
         $size->save();
-        // return 'success';
         return response()->json([
             'html' => "<option value='".$size->id."'>".$size->name."</option>",
             'value' => $size->id,
         ]);
     }
-
-
-
-
-
     public function addCategory(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name' => ['required'],
-            'icon' => ['required'],
+            'image' => ['nullable'],
         ]);
-        $category = Category::create($request->except('icon'));
-        if (request('icon')) {
-            $category->icon = store_file(request('icon'), 'categories');
+        $data = [
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'creator' => Auth::user()->id,
+            'is_active' => true
+        ];
+        if ($request->has('image')) {
+            $data['image'] = store_file($request->image, 'categories');
         }
-        $category->slug = Str::slug($category->name);
-        $category->creator = Auth::user()->id;
-        $category->save();
-
+        $category = Category::create($data);
         return response()->json([
-            'html' => "<option value='".$category->id."'>".$category->name."</option>",
+            'html' => "<option value='{$category->id}'>{$category->name}</option>",
             'value' => $category->id,
         ]);
     }

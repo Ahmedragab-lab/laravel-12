@@ -45,7 +45,6 @@ Route::group(
                 Route::post('/products/addBrand','addBrand')->name('addBrand');  // product add brand
                 Route::post('/products/addColor','addColor')->name('addColor');  // product add color
                 Route::post('/products/addSize','addSize')->name('addSize');  // product add size
-                Route::post('/products/addMainCategory','addMainCategory')->name('addMainCategory');  // product add MainCategory
                 Route::post('/products/addCategory','addCategory')->name('addCategory');  // product add Category
                 Route::delete('/products/bulk_delete','bulkDelete')->name('products.bulk_delete');
                 Route::resource('products',ProductController::class);

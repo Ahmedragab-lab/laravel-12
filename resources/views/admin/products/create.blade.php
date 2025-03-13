@@ -31,26 +31,26 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        {{-- <div class="col-md-3">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label>@lang('products.MainCategory')<span class="text-danger">*</span></label>
+                                <label>@lang('products.Category')<span class="text-danger">*</span></label>
                                 @include('admin.components.select', [
-                                    'name' => 'product_main_category_id',
+                                    'name' => 'category_id',
                                     'attributes' => '',
-                                    'class' => 'multiple-select product_main_category',
-                                    'collection' => $maincategories,
-                                    'action' => route('admin.addMainCategory'),
+                                    'class' => 'multiple-select ',
+                                    'collection' => $categories,
+                                    'action' => route('addCategory'),
                                     'fields' => [
                                         ['name' => 'name', 'type' => 'text'],
-                                        ['name' => 'icon', 'type' => 'file'],
+                                        ['name' => 'image', 'type' => 'file'],
                                     ],
                                 ])
                             </div>
-                            @error('product_main_category_id')
+                            @error('category_id')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-3">
+                        {{-- <div class="col-md-3">
                             <div class="form-group">
                                 <label>@lang('products.Category')<span class="text-danger">*</span></label>
                                 @include('admin.components.select', [
