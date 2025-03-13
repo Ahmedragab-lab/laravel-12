@@ -27,17 +27,7 @@ class Colors extends Component
     {
         $this->data['slug'] = Str::slug($this->name);
 
-        if ($this->image && $this->image instanceof UploadedFile) { 
-            if ($this->obj) {
-                if ($this->obj->image !== $this->image) { 
-                    delete_file($this->obj->image);
-                    $this->data['image'] = store_file($this->image, 'colors');
-                }
-            } else {
-                $this->data['image'] = store_file($this->image, 'colors');
-            }
-        }
-    }
+           }
 
     public function render()
     {
