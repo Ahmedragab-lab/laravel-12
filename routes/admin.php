@@ -14,6 +14,7 @@ use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Products;
 use App\Livewire\Admin\Colors;
+use App\Livewire\Admin\Sizes;
 
 // use App\Livewire\Admin\AboutUs;
 use Illuminate\Support\Facades\Route;
@@ -40,7 +41,8 @@ Route::group(
             Route::get('/settings', [SettingController::class, 'index'])->name('settings');
             Route::get('brands', Brands::class)->name('brands');
             Route::get('categories', Categories::class)->name('categories');
-            Route::get('colors', colors::class)->name('colors');
+            Route::get('colors', Colors::class)->name('colors');
+            Route::get('sizes', Sizes::class)->name('sizes');
 
             // Route::get('/about_us', AboutUs::class)->name('AboutUs');
 

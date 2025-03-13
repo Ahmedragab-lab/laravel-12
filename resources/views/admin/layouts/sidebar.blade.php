@@ -52,6 +52,13 @@
           </a>
           </li>
           <li>
+            <a class="app-menu__item {{ request()->is('*sizes*') ? 'active' : '' }}" href="{{ route('sizes') }}">
+             <i class="app-menu__icon fa fa-list"></i>
+             <span class="app-menu__label">المقاسات</span>
+          </a>
+          </li>
+         
+          <li>
             <a class="app-menu__item {{ Route::is('products') ? 'active' : '' }}" href="{{ route('products.index') }}">
                 <i class="app-menu__icon fa fa-list"></i>
                 <span class="app-menu__label">المنتجات</span>
