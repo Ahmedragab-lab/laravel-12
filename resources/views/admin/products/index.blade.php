@@ -109,7 +109,7 @@
             {data: 'record_select', name: 'record_select', searchable: false, sortable: false, width: '1%'},
             {data: 'DT_RowIndex', name: '', orderable: false, searchable: false},
             {data: 'image', name: 'image',orderable: false,width: '10%'},
-            {data: 'name', name: 'name',width: '10%'},
+            {data: 'product_name', name: 'product_name',width: '10%'},
             {data: 'category', name: 'category', orderable: false,width: '20%'},
             {data: 'price', name: 'price'},
             {data: 'brand', name: 'brand',orderable: false,width: '10%'},

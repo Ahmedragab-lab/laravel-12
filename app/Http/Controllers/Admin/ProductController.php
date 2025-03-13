@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ColorRequest;
+use App\Http\Requests\Admin\ProductRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Size;
@@ -62,57 +63,27 @@ class ProductController extends Controller
         $sizes  = Size::latest()->get();
         return view('admin.products.create',compact('categories','brands','colors','sizes'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        $input['name']     = $request->product_name;
-        $input['brand_id'] = $request->brand_id;
-        $input['code']     = '';
-        $input['tax'] = $request->tax;
-        $input['price'] = $request->price;
-        $input['sku'] = '';
-        $input['stock'] = $request->stock;
-        $input['discount'] = $request->discount;
-        $input['expiration_date'] = $request->expiration_date;
-        $input['minimum_amount'] = $request->alert_quantity;
-        $input['free_delivery'] = $request->free_delivery;
-        $input['description'] = $request->description;
-        $input['features'] = $request->features;
-        if (request('thumb_image')) {
-            $input['thumb_image'] = store_file(request('thumb_image'), 'products');
+        // dd($request->all());
+        $input = $request->except('image','name','color_id','size_id','proengsoft_jsvalidation');
+        if (request('image')) {
+            $input['image'] = store_file(request('image'), 'products');
         }
-        $input['status'] = $request->status;
+        // $input['status'] = $request->status;
         $input['creator'] = Auth::user()->id;
+        $input['slug'] = Str::slug($request->product_name);
+        $input['code'] = 'ECO-' . Carbon::now()->year . '-' . uniqid();
+
         $product  =  Product::create($input);
 
-        // $product->code = 'ECO-' . Carbon::now()->year . Carbon::now()->month . $product->id . Carbon::now()->day;
-        $product->code = 'ECO-' . Carbon::now()->year ;
-        $product->slug = Str::slug($product->name);
-        $product->save();
-
-        if ($request->has('product_main_category_id')) {
-            $product->main_category()->attach($request->product_main_category_id);
-        }
-
-        if ($request->has('product_category_id')) {
-            $product->category()->attach($request->product_category_id);
-        }
-        if ($request->has('writer_id')) {
-            $product->writer()->attach($request->writer_id);
-        }
         if ($request->has('color_id')) {
             $product->color()->attach($request->color_id);
         }
         if ($request->has('size_id')) {
             $product->size()->attach($request->size_id);
         }
-        if ($request->has('vendor_id')) {
-            $product->vendor()->attach($request->vendor_id);
-        }
-        return redirect()->route('admin.products.index');
+        return redirect()->route('products.index')->with('success','Product created successfully');
     }
 
     /**

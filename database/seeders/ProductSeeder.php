@@ -49,7 +49,7 @@ class ProductSeeder extends Seeder
             $product = new Product();
             $product->category_id = rand(1, Category::count());
             $product->brand_id = rand(1, Brand::count());
-            $product->name = $name;
+            $product->product_name = $name;
             $product->creator = 1;
             $product->stock = rand(700, 1000);
             $product->price = rand(200, 600);
@@ -59,10 +59,10 @@ class ProductSeeder extends Seeder
             $product->image = "products/" . rand(1, 20) . ".jpg";
             $product->description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, molestias!";
             $product->created_at = Carbon::now();
-            $product->slug = Str::slug($product->name) . '-' . $product->id;
+            $product->slug = Str::slug($product->product_name) . '-' . $product->id;
             $product->code = 'PRO-' . Carbon::now()->format('Ym') . $product->id;
             $product->save();
-            
+
             $randomColors = array_rand($colors, rand(1, 3));
             foreach ((array)$randomColors as $color) {
                 DB::table('color_product')->insert([
