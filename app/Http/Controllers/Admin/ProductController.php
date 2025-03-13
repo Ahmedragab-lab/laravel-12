@@ -66,7 +66,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         // dd($request->all());
-        $input = $request->except('image','name','color_id','size_id','proengsoft_jsvalidation');
+        $input = $request->except('image','name','color_id','size_id','proengsoft_jsvalidation','products_images');
         if (request('image')) {
             $input['image'] = store_file(request('image'), 'products');
         }
@@ -82,6 +82,24 @@ class ProductController extends Controller
         }
         if ($request->has('size_id')) {
             $product->size()->attach($request->size_id);
+        }
+        if ($request->file('products_images') && count($request->file('products_images')) > 0) {
+            $i = 1;
+            foreach ($request->file('products_images') as $key =>$file) {
+                $file_name =  time().$file->getClientOriginalName();
+                $file_size = $file->getSize();
+                $file_type = $file->getMimeType();
+                $files[] = store_file($file, 'products_images');
+                $product->image()->create([
+                    'file_name' => $file_name,
+                    'file_nametype' => 'products_images',
+                    'file_size' => $file_size,
+                    'file_type' => $file_type,
+                    'file_status' => true,
+                    'file_sort' => $i,
+                ]);
+                $i++;
+            }
         }
         return redirect()->route('products.index')->with('success','Product created successfully');
     }
