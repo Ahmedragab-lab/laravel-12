@@ -15,6 +15,29 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="small-label" for="">
+                                    <!--  -->
+                                    صوره
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="box-input">
+                                    <input type="file" class="form-control" wire:model='image' id="" />
+                                </div>
+                                <div class="box-input">
+                                    <div class="col-md-3">
+                                        @if ($image instanceof \Illuminate\Http\UploadedFile)
+                                            <img src="{{ $image->temporaryUrl() }}" class="img-thumbnail" width="100" />
+                                        @elseif (is_string($image) && !empty($image))
+                                            <img src="{{ display_file($image) }}" class="img-thumbnail" width="100" />
+                                        @else
+                                            <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="100" />
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small-label" for="">
+
+                                <!--  -->
                                     اسم القسم
                                     <span class="text-danger">*</span>
                                 </label>
@@ -41,7 +64,9 @@
                                 <div class="form-group">
                                     <input type="text" id="data-table-search" class="form-control" autofocus
                                         placeholder="اسم القسم" wire:model.live='search'>
+                                        
                                 </div>
+                                
                             </div>
                         </div><!-- end of row -->
                         <div class="row">
@@ -51,6 +76,7 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>صوره</th>
                                                 <th>القسم</th>
                                                 <th>عدد المنتجات</th>
                                                 <th>{{ __('settings.created_at') }}</th>
@@ -61,6 +87,7 @@
                                             @forelse ($categories as $index => $category)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
+                                                    <td><img src="{{ $category->image? display_file($category->image):asset('assets/no-image.png') }}" alt="" style="width: 50px"></td>
                                                     <td>{{ $category->name }}</td>
                                                     <td class="btn btn-success btn-sm">{{ $category->products_count }}</td>
                                                     <td>{{ $category->created_at->format('Y-m-d') }}</td>
