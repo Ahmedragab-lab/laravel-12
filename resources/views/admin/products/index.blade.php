@@ -18,7 +18,14 @@
                     {{-- @if (auth()->product()->hasPermission('read_products')) --}}
                         <a href="{{ route('products.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.create')</a>
                     {{-- @endif --}}
-
+                    @if($brand)
+                        <div class="alert alert-info">
+                            Showing products for brand: {{ $brand->name }}
+                            <a href="{{ route('products.index') }}" class="btn btn-sm btn-outline-secondary ml-2">
+                                <i class="fas fa-times"></i> Clear filter
+                            </a>
+                        </div>
+                    @endif
                     {{-- @if (auth()->product()->hasPermission('delete_products')) --}}
                         <button type="button" class="btn btn-danger" id="btn_delete_all" data-toggle="modal"
                                 data-target="#bulkdelete" ><i class="fa fa-trash"></i>
@@ -90,7 +97,7 @@
     ],
         autoWidth: true,
         responsive: true,
-        serverSide: false,
+        serverSide: true,
         processing: true,
         Savestate :true,
         select: true,
@@ -104,6 +111,9 @@
         },
         ajax: {
             url: '{{ route('products.index') }}',
+            data: function(d) {
+                d.brand_id = "{{ request('brand_id') }}";
+            }
         },
         columns: [
             {data: 'record_select', name: 'record_select', searchable: false, sortable: false, width: '1%'},
@@ -119,7 +129,7 @@
             {data: 'created_at', name: 'created_at', orderable: true,searchable: false, width: '10%'},
             // {data: 'actions', name: 'actions', searchable: false, sortable: false, orderable: false, width: '10%'},
         ],
-        order: [[9, 'desc']],
+        order: [[10, 'desc']],
     });
 
     $('#data-table-search').keyup(function () {

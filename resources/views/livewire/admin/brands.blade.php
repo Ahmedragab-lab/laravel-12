@@ -85,7 +85,12 @@
                                                     <td>{{ $index + 1 }}</td>
                                                     <td><img src="{{ $brand->logo? display_file($brand->logo):asset('assets/no-image.png') }}" alt="" style="width: 50px"></td>
                                                     <td>{{ $brand->name }}</td>
-                                                    <td class="btn btn-success btn-sm">{{ $brand->products_count }}</td>
+                                                    {{-- <td class="btn btn-success btn-sm">{{ $brand->products_count }}</td> --}}
+                                                    <td>
+                                                        <a href="{{ route('products.index', ['brand_id' => $brand->id]) }}" class="btn btn-success btn-sm">
+                                                            {{ $brand->products_count }}
+                                                        </a>
+                                                    </td>
                                                     <td>{{ $brand->created_at->format('Y-m-d') }}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $brand->id }})'>

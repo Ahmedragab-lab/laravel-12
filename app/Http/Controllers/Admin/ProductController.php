@@ -17,40 +17,86 @@ use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 class ProductController extends Controller
 {
-    public function index(){
+    // public function index(){
+    //     if (request()->ajax()) {
+    //         $products = Product::with(['category','brand','color', 'image','size','admin']);
+    //         if (request()->filled('brand_id')) {
+    //             $products->where('brand_id', request()->brand_id);
+    //         }
+    //         // return DataTables::of($products)
+    //         //     ->addIndexColumn()
+    //         //     ->addColumn('record_select', 'admin.products.data_table.record_select')
+    //         //     ->editColumn('created_at', function (Product $product) {
+    //         //         return $product->created_at->format('Y-m-d');
+    //         //     })
+    //         //     ->addColumn('image', function (Product $product) {
+    //         //         return view('admin.products.data_table.image', compact('product'));
+    //         //     })
+    //         //     ->addColumn('colors', function (Product $product) {
+    //         //         return view('admin.products.data_table.colors',compact('product'));
+    //         //     })
+    //         //     ->addColumn('sizes', function (Product $product) {
+    //         //         return view('admin.products.data_table.sizes',compact('product'));
+    //         //     })
+    //         //     ->addColumn('brand', function (Product $product) {
+    //         //         return $product->brand?->name;
+    //         //     })
+    //         //     ->addColumn('category', function (Product $product) {
+    //         //         return $product->category?->name;
+    //         //     })
+    //         //     ->editColumn('creator', function (Product $product) {
+    //         //         return $product->admin?->name;
+    //         //     })
+    //         //     // ->addColumn('actions', function (Product $product) {
+    //         //     //     return view('admin.products.data_table.actions',compact('product'));
+    //         //     // })
+    //         //     ->rawColumns(['record_select'])
+    //         //     ->toJson();
+    //         // }
+    //         return DataTables::of($products)
+    //             ->addIndexColumn()
+    //             ->addColumn('record_select', 'admin.products.data_table.record_select')
+    //             ->editColumn('created_at', fn(Product $product) => $product->created_at->format('Y-m-d'))
+    //             ->addColumn('image', fn(Product $product) => view('admin.products.data_table.image', compact('product')))
+    //             ->addColumn('colors', fn(Product $product) => view('admin.products.data_table.colors', compact('product')))
+    //             ->addColumn('sizes', fn(Product $product) => view('admin.products.data_table.sizes', compact('product')))
+    //             ->addColumn('brand', fn(Product $product) => optional($product->brand)->name)
+    //             ->addColumn('category', fn(Product $product) => optional($product->category)->name)
+    //             ->editColumn('creator', fn(Product $product) => optional($product->admin)->name)
+    //             ->rawColumns(['record_select'])
+    //             ->toJson();
+
+    //     // $brand = null;
+    //     // if (request()->has('brand_id')) {
+    //     //     $brand = Brand::find(request()->brand_id);
+    //     // }
+    //     }
+    //     $brand = request()->filled('brand_id') ? Brand::find(request()->brand_id) : null;
+    //     return view('admin.products.index', compact('brand'));
+    // }
+    public function index()
+    {
+        // dd(request('brand_id'));
         if (request()->ajax()) {
-            $products = Product::with(['category','color', 'image','size'])->select();
+            $products = Product::with(['category', 'brand', 'color', 'image', 'size', 'admin']);
+            if (request()->filled('brand_id')) {
+                $products = $products->where('brand_id', request('brand_id'));
+            }
             return DataTables::of($products)
                 ->addIndexColumn()
                 ->addColumn('record_select', 'admin.products.data_table.record_select')
-                ->editColumn('created_at', function (Product $product) {
-                    return $product->created_at->format('Y-m-d');
-                })
-                ->addColumn('image', function (Product $product) {
-                    return view('admin.products.data_table.image', compact('product'));
-                })
-                ->addColumn('colors', function (Product $product) {
-                    return view('admin.products.data_table.colors',compact('product'));
-                })
-                ->addColumn('sizes', function (Product $product) {
-                    return view('admin.products.data_table.sizes',compact('product'));
-                })
-                ->addColumn('brand', function (Product $product) {
-                    return $product->brand?->name;
-                })
-                ->addColumn('category', function (Product $product) {
-                    return $product->category?->name;
-                })
-                ->editColumn('creator', function (Product $product) {
-                    return $product->admin?->name;
-                })
-                // ->addColumn('actions', function (Product $product) {
-                //     return view('admin.products.data_table.actions',compact('product'));
-                // })
+                ->editColumn('created_at', fn(Product $product) => $product->created_at->format('Y-m-d'))
+                ->addColumn('image', fn(Product $product) => view('admin.products.data_table.image', compact('product')))
+                ->addColumn('colors', fn(Product $product) => view('admin.products.data_table.colors', compact('product')))
+                ->addColumn('sizes', fn(Product $product) => view('admin.products.data_table.sizes', compact('product')))
+                ->addColumn('brand', fn(Product $product) => optional($product->brand)->name)
+                ->addColumn('category', fn(Product $product) => optional($product->category)->name)
+                ->editColumn('creator', fn(Product $product) => optional($product->admin)->name)
                 ->rawColumns(['record_select'])
                 ->toJson();
         }
-        return view('admin.products.index');
+        $brand = request()->filled('brand_id') ? Brand::find(request('brand_id')) : null;
+        return view('admin.products.index', compact('brand'));
     }
     /**
      * Show the form for creating a new resource.
