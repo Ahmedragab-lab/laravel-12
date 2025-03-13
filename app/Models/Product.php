@@ -43,7 +43,7 @@ class Product extends Model
     }
     public function image(): MorphMany
     {
-        return $this->MorphMany(Image::class, 'imagable');
+        return $this->MorphMany(Image::class, 'imagable')->where('file_nametype','products_images');
     }
 
 

@@ -77,4 +77,7 @@ $(function() {
 </script>
 <script src="{{ asset('admin') }}/js/custom.js"></script>
 
-
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+	<script type="text/javascript">
+		CKEDITOR.config.language ="{{ app()->getLocale() }}";
+	</script>
