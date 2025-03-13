@@ -351,7 +351,7 @@
                                   <div class="swiper-slide">
                                       <a href="details.html">
                                       <img loading="lazy" 
-                                            src="{{ asset('uploads/' . $product->image) }}" 
+                                            src="{{ $product->image? display_file($product->image):asset('assets/no-image.png') }}"
                                             width="330" 
                                             height="400" 
                                             alt="{{ $product->name }}" 
