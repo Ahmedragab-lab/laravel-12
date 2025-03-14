@@ -41,11 +41,10 @@ class Product extends Model
     {
         return $this->morphOne(Image::class, 'imagable')->orderBy('file_sort', 'desc');
     }
-    public function image(): MorphMany
+    public function images(): MorphMany
     {
         return $this->MorphMany(Image::class, 'imagable')->where('file_nametype','products_images');
     }
-
 
     public static function scopeActive($query)
     {

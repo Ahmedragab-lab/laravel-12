@@ -136,7 +136,7 @@ class ProductController extends Controller
                 $file_size = $file->getSize();
                 $file_type = $file->getMimeType();
                 $files[] = store_file($file, 'products_images');
-                $product->image()->create([
+                $product->images()->create([
                     'file_name' => $file_name,
                     'file_nametype' => 'products_images',
                     'file_size' => $file_size,
