@@ -127,7 +127,7 @@
             {data: 'sizes', name: 'sizes', orderable: false,width: '10%'},
             {data: 'creator', name: 'creator', orderable: true,searchable: false, width: '5%'},
             {data: 'created_at', name: 'created_at', orderable: true,searchable: false, width: '10%'},
-            {data: 'actions', name: 'actions', searchable: false, sortable: false, orderable: false, width: '10%'},
+            {data: 'actions', name: 'actions', searchable: false, sortable: false, orderable: false, width: '20%'},
         ],
         order: [[9, 'desc']],
     });
