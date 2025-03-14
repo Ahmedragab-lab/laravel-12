@@ -15,6 +15,7 @@ use App\Models\Category;
 use App\Models\Size;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\File;
 class ProductController extends Controller
 {
     // public function index(){
@@ -216,8 +217,36 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        //
+        if($product->images()->count() > 0){
+            foreach ($product->images as $media){
+                delete_file($media->file_name);
+            }
+        }
+        $product->delete();
+        return redirect()->back()->with('success','Product deleted successfully');
     }
+    public function bulkDelete(Request $request)
+    {
+        try {
+            if ($request->delete_select_id) {
+                $delete_select_id = explode(",", $request->delete_select_id);
+                foreach ($delete_select_id as $products_ids) {
+                    $Product = Product::findorfail($products_ids);
+                    if($Product->images()->count() > 0){
+                        foreach ($Product->images as $media){
+                            delete_file($media->file_name);
+                        }
+                    }
+                }
+            } else {
+                return redirect()->back()->with('error', 'لم يتم تحديد أي عنصر');
+            }
+            Product::destroy($delete_select_id);
+            return redirect()->back()->with('success', 'تم حذف العناصر بنجاح');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'عفوا حدث خطاء ما ' . $e->getMessage());
+        }
+    }// end of bulkDelete
     public function addBrand(Request $request)
     {
         $this->validate($request,[
