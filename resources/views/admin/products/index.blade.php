@@ -69,7 +69,7 @@
                                     <th>المقاسات</th>
                                     <th>المسؤال</th>
                                     <th>تاريخ انشاء</th>
-                                    {{-- <th>@lang('site.action')</th> --}}
+                                    <th>@lang('site.action')</th>
                                 </tr>
                             </thead>
                         </table>
@@ -83,8 +83,8 @@
 @push('js')
 <script>
     let productsTable = $('#products-table').DataTable({
-    // dom: 'lBrtip',
-    dom: 'Bprltip',
+    dom: 'lBrtip',
+    // dom: 'Bprltip',
     buttons: ['excel','pdf',
         {
             extend: 'print',
@@ -127,9 +127,9 @@
             {data: 'sizes', name: 'sizes', orderable: false,width: '10%'},
             {data: 'creator', name: 'creator', orderable: true,searchable: false, width: '5%'},
             {data: 'created_at', name: 'created_at', orderable: true,searchable: false, width: '10%'},
-            // {data: 'actions', name: 'actions', searchable: false, sortable: false, orderable: false, width: '10%'},
+            {data: 'actions', name: 'actions', searchable: false, sortable: false, orderable: false, width: '10%'},
         ],
-        order: [[10, 'desc']],
+        order: [[9, 'desc']],
     });
 
     $('#data-table-search').keyup(function () {

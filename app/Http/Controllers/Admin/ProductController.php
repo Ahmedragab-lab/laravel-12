@@ -78,11 +78,11 @@ class ProductController extends Controller
     {
         // dd(request('brand_id'));
         if (request()->ajax()) {
-            $products = Product::with(['category', 'brand', 'color', 'image', 'size', 'admin']);
+            $products = Product::with(['category', 'brand', 'color', 'images', 'size', 'admin']);
             if (request()->filled('brand_id')) {
                 $products = $products->where('brand_id', request('brand_id'));
             }
-            return DataTables::of($products)
+            return DataTables::of($products)->with(['brand_id' => request('brand_id')])
                 ->addIndexColumn()
                 ->addColumn('record_select', 'admin.products.data_table.record_select')
                 ->editColumn('created_at', fn(Product $product) => $product->created_at->format('Y-m-d'))
@@ -92,7 +92,11 @@ class ProductController extends Controller
                 ->addColumn('brand', fn(Product $product) => optional($product->brand)->name)
                 ->addColumn('category', fn(Product $product) => optional($product->category)->name)
                 ->editColumn('creator', fn(Product $product) => optional($product->admin)->name)
-                ->rawColumns(['record_select'])
+                ->addColumn('actions', function (Product $product) {
+                    return view('admin.products.data_table.actions',compact('product'));
+                })
+
+                ->rawColumns(['record_select','actions'])
                 ->toJson();
         }
         $brand = request()->filled('brand_id') ? Brand::find(request('brand_id')) : null;

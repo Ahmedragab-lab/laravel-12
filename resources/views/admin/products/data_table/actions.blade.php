@@ -14,7 +14,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    {{ $product->product_name }}
                     {!! DNS1D::getBarcodeHTML($product->code . '', 'C128') !!}
+                    {{ $product->created_at->format('Y-m-d') }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">إلغاء</button>
@@ -25,9 +27,9 @@
     </div>
 {{-- end modal barcode --}}
 {{-- @if (auth()->user()->hasPermission('update_users')) --}}
-<a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-warning btn-sm mb-2" title="@lang('site.edit')"><i class="fa fa-edit"></i> </a>
+<a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm mb-2" title="@lang('site.edit')"><i class="fa fa-edit"></i> </a>
 {{-- @endif --}}
-<a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-info btn-sm mb-2" title="@lang('site.show')"><i class="fa fa-eye"></i> </a>
+<a href="{{ route('products.edit', $product->id) }}" class="btn btn-info btn-sm mb-2" title="@lang('site.show')"><i class="fa fa-eye"></i> </a>
 {{-- @if (auth()->user()->hasPermission('delete_users')) --}}
 <button type="button" class="btn btn-danger btn-sm delete mb-2" data-toggle="modal" data-target="#delete{{ $product->id }}" title="@lang('site.delete')">
     <i class="fa fa-trash"></i>
@@ -43,7 +45,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST">
+            <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                 <div class="modal-body">
                     @csrf
                     @method('DELETE')
@@ -68,7 +70,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('admin.products.bulk_delete','ids') }}" method="POST">
+            <form action="{{ route('products.bulk_delete','ids') }}" method="POST">
                 <div class="modal-body">
                     @csrf
                     @method('DELETE')
