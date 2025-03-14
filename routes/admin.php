@@ -21,11 +21,11 @@ use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Livewire\Livewire;
 
-Route::prefix('admin')->group(function () {
-    Route::get('login', function () {
-        return view('auth.login');
-    });
-});
+// Route::prefix('admin')->group(function () {
+//     Route::get('login', function () {
+//         return view('auth.login');
+//     });
+// });
 
 Route::group(
     [
@@ -37,7 +37,7 @@ Route::group(
             Livewire::setUpdateRoute(function ($handle) {
                 return Route::post('/livewire/update', $handle);
             });
-            Route::get('/home', [HomeController::class, 'index'])->name('admin.home');
+            Route::get('/', [HomeController::class, 'index'])->name('admin.home');
             Route::get('/settings', [SettingController::class, 'index'])->name('settings');
             Route::get('brands', Brands::class)->name('brands');
             Route::get('categories', Categories::class)->name('categories');
