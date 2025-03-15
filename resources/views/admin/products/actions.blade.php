@@ -37,16 +37,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">delete all user</h5>
+                <h5 class="modal-title" id="exampleModalLabel">delete products</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('admin.products.bulk_delete','ids') }}" method="POST">
+            <form action="{{ route('products.bulk_delete','ids') }}" method="POST">
                 <div class="modal-body">
                     @csrf
                     @method('DELETE')
-                    are you sure to delete user all ?
+                    are you sure to delete products all ?
                 </div>
                 <input type="hidden" id="delete_all" name="delete_select_id" value="">
                 <div class="modal-footer">

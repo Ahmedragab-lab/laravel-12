@@ -36,32 +36,38 @@
             <a class="app-menu__item {{ request()->is('*brands*') ? 'active' : '' }}" href="{{ route('brands') }}">
                 <i class="app-menu__icon fa fa-cogs"></i>
                 <span class="app-menu__label">البرندات</span>
+                <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Brand::count() }}</span>
             </a>
             </li>
             <li>
             <a class="app-menu__item {{ request()->is('*categories*') ? 'active' : '' }}" href="{{ route('categories') }}">
              <i class="app-menu__icon fa fa-list"></i>
              <span class="app-menu__label">الأقسام</span>
+             <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Category::count() }}</span>
           </a>
           </li>
-          
+
           <li>
             <a class="app-menu__item {{ request()->is('*colors*') ? 'active' : '' }}" href="{{ route('colors') }}">
              <i class="app-menu__icon fa fa-list"></i>
              <span class="app-menu__label">الالوان</span>
+             <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Color::count() }}</span>
           </a>
           </li>
           <li>
             <a class="app-menu__item {{ request()->is('*sizes*') ? 'active' : '' }}" href="{{ route('sizes') }}">
              <i class="app-menu__icon fa fa-list"></i>
              <span class="app-menu__label">المقاسات</span>
+             <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Size::count() }}</span>
           </a>
           </li>
-         
+
           <li>
             <a class="app-menu__item {{ Route::is('products') ? 'active' : '' }}" href="{{ route('products.index') }}">
                 <i class="app-menu__icon fa fa-list"></i>
                 <span class="app-menu__label">المنتجات</span>
+
+                <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
             </a>
          </li>
         {{-- <li>

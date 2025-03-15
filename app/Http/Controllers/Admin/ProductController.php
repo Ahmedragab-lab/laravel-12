@@ -15,6 +15,7 @@ use App\Models\Category;
 use App\Models\Size;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\File;
 class ProductController extends Controller
 {
     // public function index(){
@@ -174,36 +175,17 @@ class ProductController extends Controller
         return view('admin.products.edit',compact('product','categories','brands','colors','sizes'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
         // dd($product->id);
-        // $product = Product::findOrFail($id);
-        // return ' hell';
-        $input['name']     = $request->product_name;
-        $input['brand_id'] = $request->brand_id;
-        $input['code']     = $product->code;
-        $input['tax'] = $request->tax;
-        $input['price'] = $request->price;
-        $input['sku'] = '';
-        $input['stock'] = $request->stock;
-        $input['discount'] = $request->discount;
-        $input['expiration_date'] = $request->expiration_date;
-        $input['minimum_amount'] = $request->alert_quantity;
-        $input['free_delivery'] = $request->free_delivery;
-        $input['description'] = $request->description;
-        $input['features'] = $request->features;
-        $input['status'] = $request->status;
-        $input['creator'] = Auth::user()->id;
-        if ($request->file('thumb_image')) {
-            if ($product->thumb_image != 'products/LOGO.png') {
-                delete_file($product->getRawOriginal('thumb_image'));
+        $input = $request->except('image','name','color_id','size_id','proengsoft_jsvalidation','products_images');
+        if ($request->file('image')) {
+            if ($product->image != 'products/LOGO.png') {
+                delete_file($product->getRawOriginal('image'));
             }
-            $input['thumb_image'] = store_file(request('thumb_image'), 'products');
+            $input['image'] = store_file(request('image'), 'products');
         }
         $product->update($input);
-        if ($request->has('product_main_category_id')) {
-            $product->main_category()->sync($request->product_main_category_id);
-        }
         if ($request->has('color_id')) {
             $product->color()->sync($request->color_id);
         }
@@ -211,13 +193,59 @@ class ProductController extends Controller
         if ($request->has('size_id')) {
             $product->size()->sync($request->size_id);
         }
-        return redirect()->route('admin.products.index');
+        if ($request->file('products_images') && count($request->file('products_images')) > 0) {
+            $i = $product->images()->count() +1;
+            foreach ($request->file('products_images') as $key =>$file) {
+                $file_name =  time().$file->getClientOriginalName();
+                $file_size = $file->getSize();
+                $file_type = $file->getMimeType();
+                $files[] = store_file($file, 'products_images');
+                $product->images()->create([
+                    'file_name' => $file_name,
+                    'file_nametype' => 'products_images',
+                    'file_size' => $file_size,
+                    'file_type' => $file_type,
+                    'file_status' => true,
+                    'file_sort' => $i,
+                ]);
+                $i++;
+            }
+        }
+        return redirect()->route('products.index')->with('success','Product updated successfully');
     }
 
     public function destroy(Product $product)
     {
-        //
+        if($product->images()->count() > 0){
+            foreach ($product->images as $media){
+                delete_file($media->file_name);
+            }
+        }
+        $product->delete();
+        return redirect()->back()->with('success','Product deleted successfully');
     }
+    public function bulkDelete(Request $request)
+    {
+        try {
+            if ($request->delete_select_id) {
+                $delete_select_id = explode(",", $request->delete_select_id);
+                foreach ($delete_select_id as $products_ids) {
+                    $Product = Product::findorfail($products_ids);
+                    if($Product->images()->count() > 0){
+                        foreach ($Product->images as $media){
+                            delete_file($media->file_name);
+                        }
+                    }
+                }
+            } else {
+                return redirect()->back()->with('error', 'لم يتم تحديد أي عنصر');
+            }
+            Product::destroy($delete_select_id);
+            return redirect()->back()->with('success', 'تم حذف العناصر بنجاح');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'عفوا حدث خطاء ما ' . $e->getMessage());
+        }
+    }// end of bulkDelete
     public function addBrand(Request $request)
     {
         $this->validate($request,[
@@ -284,6 +312,18 @@ class ProductController extends Controller
             'html' => "<option value='{$category->id}'>{$category->name}</option>",
             'value' => $category->id,
         ]);
+    }
+
+
+    public function remove_cert(Request $request)
+    {
+        $product = Product::findOrFail($request->product_id);
+        $media = $product->images()->whereId($request->image_id)->first();
+        if (File::exists('uploads/products_images/'. $media->file_name)){
+            unlink('uploads/products_images/'. $media->file_name);
+        }
+        $media->delete();
+        return true;
     }
 
 

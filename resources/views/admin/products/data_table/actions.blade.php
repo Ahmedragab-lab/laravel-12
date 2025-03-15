@@ -27,9 +27,9 @@
     </div>
 {{-- end modal barcode --}}
 {{-- @if (auth()->user()->hasPermission('update_users')) --}}
-<a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm mb-2" title="@lang('site.edit')"><i class="fa fa-edit"></i> </a>
+<a href="{{ route('products.edit', $product->id) }}" class="btn btn-info btn-sm mb-2" title="@lang('site.edit')"><i class="fa fa-edit"></i> </a>
 {{-- @endif --}}
-<a href="{{ route('products.edit', $product->id) }}" class="btn btn-info btn-sm mb-2" title="@lang('site.show')"><i class="fa fa-eye"></i> </a>
+{{-- <a href="{{ route('products.show', $product->id) }}" class="btn btn-info btn-sm mb-2" title="@lang('site.show')"><i class="fa fa-eye"></i> </a> --}}
 {{-- @if (auth()->user()->hasPermission('delete_users')) --}}
 <button type="button" class="btn btn-danger btn-sm delete mb-2" data-toggle="modal" data-target="#delete{{ $product->id }}" title="@lang('site.delete')">
     <i class="fa fa-trash"></i>
@@ -65,7 +65,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">delete all user</h5>
+                <h5 class="modal-title" id="exampleModalLabel">delete all products</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -74,7 +74,7 @@
                 <div class="modal-body">
                     @csrf
                     @method('DELETE')
-                    are you sure to delete user all ?
+                    are you sure to delete products all ?
                 </div>
                 <input type="hidden" id="delete_all" name="delete_select_id" value="">
                 <div class="modal-footer">

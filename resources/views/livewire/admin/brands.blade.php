@@ -51,11 +51,22 @@
                 <div class="col-md-8">
                     <div class="tile shadow">
                         <div class="row">
+
                             <div class="col-md-2">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" wire:click='resetInputs'>
                                    برند جديد
                                     <i class="fa fa-plus"></i>
                                 </button>
+                            </div>
+                            <div class="col-md-1">
+                                <select  class="form-control" wire:model.live='perPage'>
+                                    <option value="">---</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
@@ -73,9 +84,9 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>لوجو</th>
-                                                <th>البرند</th>
+                                                <th wire:click="setSortBy('name')">اسم البرند {!! getSortIcon($sortBy, $sortDir,$name='name') !!}</th>
                                                 <th>عدد المنتجات</th>
-                                                <th>{{ __('settings.created_at') }}</th>
+                                                <th wire:click="setSortBy('created_at')">تاريخ الانشاء {!! getSortIcon($sortBy, $sortDir,$name='created_at') !!}</th>
                                                 <th>@lang('site.action')</th>
                                             </tr>
                                         </thead>
@@ -91,7 +102,11 @@
                                                             {{ $brand->products_count }}
                                                         </a>
                                                     </td>
-                                                    <td>{{ $brand->created_at->format('Y-m-d') }}</td>
+                                                    <td>
+                                                        {{ $brand->created_at->format('Y-m-d') }} <br>
+                                                        {{ $brand->created_at->format('h:i') }}
+                                                        {{ $brand->created_at->format('A') === 'AM' ? 'صباحا ' : 'مساء' }} <br>
+                                                    </td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $brand->id }})'>
                                                             <i class="fa fa-edit"></i>

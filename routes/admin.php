@@ -53,6 +53,7 @@ Route::group(
                 Route::post('/products/addSize','addSize')->name('addSize');  // product add size
                 Route::post('/products/addCategory','addCategory')->name('addCategory');  // product add Category
                 Route::delete('/products/bulk_delete','bulkDelete')->name('products.bulk_delete');
+                Route::post('/products/remove_cert','remove_cert')->name('products.remove_cert');
                 Route::resource('products',ProductController::class);
             });
 

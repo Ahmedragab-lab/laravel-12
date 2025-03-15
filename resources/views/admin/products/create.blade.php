@@ -104,8 +104,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>@lang('products.Expiration_Date')<span class="text-danger">*</span></label>
@@ -167,11 +165,6 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
-
-                    </div>
-                    {{-- images  --}}
-                    <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>@lang('products.image') </label>
@@ -183,7 +176,6 @@
                             <img src="{{ asset('no-image.jpg') }}" alt="" class="img-thumbnail img-preview" width="100px">
                         </div>
                     </div>
-
 
                     <div class="row">
                         <div class="col-md-6">
