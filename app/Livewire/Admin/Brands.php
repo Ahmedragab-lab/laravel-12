@@ -12,6 +12,18 @@ class Brands extends Component
     use livewireResource;
     public $name, $search,$brand_id,$logo;
     public $brand;
+    public $filter = '';
+    public $sortBy = 'created_at';
+    public $sortDir = 'DESC';
+    public $perPage = 10;
+    public function setSortBy($sortByField){
+        if($this->sortBy === $sortByField){
+            $this->sortDir = ($this->sortDir == "ASC") ? 'DESC' : "ASC";
+            return;
+        }
+        $this->sortBy = $sortByField;
+        $this->sortDir = 'DESC';
+    }
     public function rules()
     {
         return [
@@ -38,7 +50,7 @@ class Brands extends Component
     {
         $brands = Brand::with(['products'])->withCount('products')
         ->when($this->search,fn($q) => $q->where('name', 'LIKE', "%" . $this->search . "%"))
-        ->latest('id')->paginate(10);
+        ->orderBy($this->sortBy,$this->sortDir)->paginate($this->perPage);
         return view('livewire.admin.brands', compact('brands'))->extends('admin.layouts.master')->section('content');
     }
 }

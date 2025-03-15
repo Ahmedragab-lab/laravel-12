@@ -25,7 +25,17 @@ function formatTimeForDisplay($dateTimeString){
     return $time . ' ' . $newDateTimeType;
  }
 
-
+// livewire sorting function
+function getSortIcon($sortBy, $sortDir,$name)
+{
+    if ($sortBy !== $name ) {
+        return '<i class="fa fa-sort"></i>';
+    } elseif ($sortDir === 'ASC') {
+        return '<i class="fa fa-sort-asc"></i>';
+    } else {
+        return '<i class="fa fa-sort-desc"></i>';
+    }
+}
 
 
 
