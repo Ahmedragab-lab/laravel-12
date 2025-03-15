@@ -4,38 +4,38 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    // protected $redirectTo = '/home';
-    protected $redirectTo = '/admin/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    // Override the login method to include user type validation
+    protected function validateLogin(Request $request)
     {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+            'user_type' => 'required|in:admin,user',
+        ]);
+    }
+
+    // Add user type to the credentials used for authentication
+    protected function credentials(Request $request)
+    {
+        $credentials = $request->only($this->username(), 'password');
+        $credentials['type'] = $request->user_type;
+        
+        return $credentials;
+    }
+
+    // Redirect users based on their type after login
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->type === 'admin') {
+            return redirect()->route('admin.home');
+        }
+        
+        return redirect()->route('home');
     }
 }

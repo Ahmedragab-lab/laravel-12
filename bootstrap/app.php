@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'localeSessionRedirect'   => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
             'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
             'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+            'user.only'               => \App\Http\Middleware\UserOnly::class,  
+            'admin.only'              => \App\Http\Middleware\AdminOnly::class, 
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -21,16 +21,16 @@ use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Livewire\Livewire;
 
-// Route::prefix('admin')->group(function () {
-//     Route::get('login', function () {
-//         return view('auth.login');
-//     });
-// });
+Route::prefix('admin')->group(function () {
+    Route::get('login', function () {
+        return view('admin.login');
+    });
+});
 
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth']
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth','admin.only']
     ],
     function () {
         Route::prefix('/admin')->group(function () {

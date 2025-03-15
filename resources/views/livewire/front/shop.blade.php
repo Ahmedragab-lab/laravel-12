@@ -391,6 +391,7 @@
                                             <use href="#icon_next_sm" />
                                         </svg></span>
                                 </div>
+                                <!--Add To Cart button  -->
                                 <button
                                     class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
                                     data-aside="cartDrawer" title="Add To Cart">Add To Cart</button>

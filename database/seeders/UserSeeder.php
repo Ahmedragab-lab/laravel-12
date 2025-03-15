@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => bcrypt('123456'),
             // 'phone' => '01021493036',
-            // 'type' => 'super_admin',
+            'type' => 'admin', // Set the type as 'admin'
             // 'image'=> 'no-image.jpg',
             'active'=> 1,
             'username'=>'username',
@@ -30,6 +30,21 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
         // $superadmin->addRole('admin');
+        $superadmin = User::create([
+            'name' => 'Omar Ahmed',
+            'email' => 'user@user.com',
+            'password' => bcrypt('123456'),
+            // 'phone' => '01021493036',
+            'type' => 'user', // Set the type as 'admin'
+            // 'image'=> 'no-image.jpg',
+            'active'=> 1,
+            'username'=>'username',
+            'com_code'=>'1',
+            'remember_token' => Str::random(10),
+            'email_verified_at' => now(),
+        ]);
+        // $superadmin->addRole('admin');
+
 
     }
 }
