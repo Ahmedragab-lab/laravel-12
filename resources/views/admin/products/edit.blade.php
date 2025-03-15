@@ -1,9 +1,11 @@
 @extends('admin.layouts.master')
 @push('css')
-{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" crossorigin="anonymous"> --}}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css" crossorigin="anonymous">
-<link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="{{ asset('fileinput/css/fileinput.min.css') }}">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" crossorigin="anonymous"> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css"
+        crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css" media="all"
+        rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('fileinput/css/fileinput.min.css') }}">
 @endpush
 @section('content')
     <div>
@@ -17,7 +19,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile shadow">
-                <form method="post" action="{{ route('products.update',$product->id) }}" enctype="multipart/form-data"
+                <form method="post" action="{{ route('products.update', $product->id) }}" enctype="multipart/form-data"
                     id='product-form' class="insert_form product_insert_form ">
                     @csrf
                     @method('put')
@@ -44,6 +46,7 @@
                                     'class' => 'multiple-select ',
                                     'collection' => $categories,
                                     'action' => route('addCategory'),
+                                    'value' => $product->category_id,
                                     'fields' => [
                                         ['name' => 'name', 'type' => 'text'],
                                         ['name' => 'image', 'type' => 'file'],
@@ -63,6 +66,7 @@
                                     'class' => 'multiple-select',
                                     'collection' => $brands,
                                     'action' => route('addBrand'),
+                                    'value' => $product->brand_id,
                                     'fields' => [
                                         ['name' => 'name', 'type' => 'text'],
                                         ['name' => 'logo', 'type' => 'file'],
@@ -82,6 +86,7 @@
                                     'class' => 'multiple-select',
                                     'collection' => $colors,
                                     'action' => route('addColor'),
+                                    'value' => $product->color,
                                     'fields' => [['name' => 'name', 'type' => 'text']],
                                 ])
                             </div>
@@ -98,6 +103,7 @@
                                     'class' => 'multiple-select',
                                     'collection' => $sizes,
                                     'action' => route('addSize'),
+                                    'value' => $product->size,
                                     'fields' => [['name' => 'name', 'type' => 'text']],
                                 ])
                             </div>
@@ -113,6 +119,7 @@
                                 @include('admin.components.input', [
                                     'name' => 'expiration_date',
                                     'type' => 'date',
+                                    'value' => $product->expiration_date,
                                 ])
                             </div>
                             @error('expiration_date')
@@ -125,6 +132,7 @@
                                 @include('admin.components.input', [
                                     'name' => 'discount',
                                     'type' => 'number',
+                                    'value' => $product->discount,
                                 ])
                             </div>
                             @error('discount')
@@ -138,6 +146,7 @@
                                     'name' => 'price',
                                     'type' => 'number',
                                     'attr' => "step='0.01'",
+                                    'value' => $product->price,
                                 ])
                             </div>
                             @error('price')
@@ -150,6 +159,7 @@
                                 @include('admin.components.input', [
                                     'name' => 'stock',
                                     'type' => 'number',
+                                    'value' => $product->stock,
                                 ])
                             </div>
                             @error('stock')
@@ -160,8 +170,8 @@
                             <div class="form-group">
                                 <label>@lang('products.status')<span class="text-danger">*</span></label>
                                 <select name="status" class="form-control">
-                                    <option value=0>Off</option>
-                                    <option value=1>On</option>
+                                    <option {{ $product->status == 0 ? 'selected' : '' }} value=0>Off</option>
+                                    <option {{ $product->status == 1 ? 'selected' : '' }} value=1>On</option>
                                 </select>
                             </div>
                             @error('status')
@@ -176,12 +186,20 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>@lang('products.image') </label>
-                                <input class="form-control img " name="image"  type="file" accept="image/*" >
+                                <input class="form-control img " name="image" type="file" accept="image/*">
                             </div>
-                            @error('image')<span class="text-danger">{{ $message }}</span>@enderror
+                            @error('image')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-md-3">
-                            <img src="{{ asset('no-image.jpg') }}" alt="" class="img-thumbnail img-preview" width="100px">
+                            @if ($product->image)
+                                <img src="{{ display_file($product->image) }}" alt="{{ $product->name }}"
+                                    class="img-thumbnail img-preview" width="200px">
+                            @else
+                                <img src="{{ asset('no-image.jpg') }}" alt="" class="img-thumbnail img-preview"
+                                    width="200px">
+                            @endif
                         </div>
                     </div>
 
@@ -191,7 +209,7 @@
                             <div class="form-group ">
                                 <label for="" class=" col-form-label">@lang('products.desc')</label>
                                 <div class="">
-                                    <textarea name="description" class="form-control ckeditor"></textarea>
+                                    <textarea name="description" class="form-control ckeditor">{{ $product->description }}</textarea>
                                     <span class="text-danger description"></span>
                                 </div>
                             </div>
@@ -203,13 +221,15 @@
                     <div class="row">
 
                         <div class="col-md-12">
-                            {{--files--}}
-                          <div class="form-group">
-                              <label for="">صور المنتجات لا تزعل</label>
-                              <input type="file" name="products_images[]" id="products_images" class="form-control file-input-overview"
-                              multiple accept="image/*">
-                              @error('products_images.*')<div class="text-danger">{{ $message }}</div>@enderror
-                          </div>
+                            {{-- files --}}
+                            <div class="form-group">
+                                <label for="">صور المنتجات لا تزعل</label>
+                                <input type="file" name="products_images[]" id="products_images"
+                                    class="form-control file-input-overview" multiple accept="image/*">
+                                @error('products_images.*')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
 
@@ -226,26 +246,48 @@
     </div><!-- end of row -->
 @endsection
 @push('js')
-<script src="{{ asset('fileinput/js/plugins/piexif.min.js') }}"></script>
-<script src="{{ asset('fileinput/js/plugins/sortable.min.js') }}"></script>
-<script src="{{ asset('fileinput/js/fileinput.min.js') }}"></script>
-<script src="{{ asset('fileinput/themes/bs5/theme.min.js') }}"></script>
-<script>
-    $("#products_images").fileinput({
-    theme: "bs5",
-    maxFileCount: 5,
-    allowedFileExtensions: ['jpg', 'png', 'gif','jpeg','svg'],
-    showCancel: true,
-    showRemove: false,
-    showUpload: false,
-    overwriteInitial: false
-});
-</script>
+    <script src="{{ asset('fileinput/js/plugins/piexif.min.js') }}"></script>
+    <script src="{{ asset('fileinput/js/plugins/sortable.min.js') }}"></script>
+    <script src="{{ asset('fileinput/js/fileinput.min.js') }}"></script>
+    <script src="{{ asset('fileinput/themes/bs5/theme.min.js') }}"></script>
+    <script>
+        $("#products_images").fileinput({
+            theme: "bs5",
+            maxFileCount: 5,
+            allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg', 'svg'],
+            showCancel: true,
+            showRemove: false,
+            showUpload: false,
+            overwriteInitial: false,
+            initialPreview: [
+                @if ($product->images()->count() > 0)
+                    @foreach ($product->images as $image)
+                        "{{ asset('uploads/products_images/' . $image->file_name) }}",
+                    @endforeach
+                @endif
+            ],
+            initialPreviewAsData: true,
+            initialPreviewConfig: [
+                @if ($product->images()->count() > 0)
+                    @foreach ($product->images as $media)
+                        {
+                            caption: "{{ $media->file_name }}",
+                            size: "{{ $media->size }}", // Assuming you have a size attribute
+                            width: "120px",
+                            url: "{{ route('products.remove_cert', ['image_id' => $media->id, 'product_id' => $product->id, '_token' => csrf_token()]) }}",
+                            key: {{ $media->id }},
+                            type: "{{ in_array(pathinfo($media->file_name, PATHINFO_EXTENSION), ['jpg', 'png', 'gif', 'jpeg', 'svg']) ? 'image' : 'pdf' }}"
+                        },
+                    @endforeach
+                @endif
+            ],
+        }).on('filesorted', function(event, params) {
+            console.log(params.previewId, params.oldIndex, params.newIndex, params.stack);
+        });
+    </script>
 
 
     <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.min.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\Admin\ProductRequest', '#product-form') !!}
-
-
 @endpush
 {{--  --}}
