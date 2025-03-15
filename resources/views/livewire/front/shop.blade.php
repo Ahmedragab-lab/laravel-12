@@ -14,7 +14,7 @@
                         <button class="accordion-button p-0 border-0 fs-5 text-uppercase" type="button"
                             data-bs-toggle="collapse" data-bs-target="#accordion-filter-1" aria-expanded="true"
                             aria-controls="accordion-filter-1">
-                            Product Categories
+                            Product Categories {{ json_encode($selectedCategories) }}
                             <svg class="accordion-button__icon type2" viewBox="0 0 10 6"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g aria-hidden="true" stroke="none" fill-rule="evenodd">
@@ -28,36 +28,16 @@
                         aria-labelledby="accordion-heading-1" data-bs-parent="#categories-list">
                         <div class="accordion-body px-0 pb-0 pt-3">
                             <ul class="list list-inline mb-0">
-                                <li class="list-item">
-                                    <a href="#" class="menu-link py-1">Dresses</a>
-                                </li>
-                                <li class="list-item">
-                                    <a href="#" class="menu-link py-1">Shorts</a>
-                                </li>
-                                <li class="list-item">
-                                    <a href="#" class="menu-link py-1">Sweatshirts</a>
-                                </li>
-                                <li class="list-item">
-                                    <a href="#" class="menu-link py-1">Swimwear</a>
-                                </li>
-                                <li class="list-item">
-                                    <a href="#" class="menu-link py-1">Jackets</a>
-                                </li>
-                                <li class="list-item">
-                                    <a href="#" class="menu-link py-1">T-Shirts & Tops</a>
-                                </li>
-                                <li class="list-item">
-                                    <a href="#" class="menu-link py-1">Jeans</a>
-                                </li>
-                                <li class="list-item">
-                                    <a href="#" class="menu-link py-1">Trousers</a>
-                                </li>
-                                <li class="list-item">
-                                    <a href="#" class="menu-link py-1">Men</a>
-                                </li>
-                                <li class="list-item">
-                                    <a href="#" class="menu-link py-1">Jumpers & Cardigans</a>
-                                </li>
+                                @foreach($categories as $category)
+                                    <li class="list-item" wire:key="{{ $category->id }}">
+                                        <label for="{{ $category->slug }}">
+                                            <input type="checkbox" value="{{ $category->id }}"
+                                                   wire:model.live="selectedCategories"
+                                                   id="{{ $category->slug }}">
+                                            <span>{{ $category->name }}</span>
+                                        </label>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -140,7 +120,7 @@
                         <button class="accordion-button p-0 border-0 fs-5 text-uppercase" type="button"
                             data-bs-toggle="collapse" data-bs-target="#accordion-filter-brand" aria-expanded="true"
                             aria-controls="accordion-filter-brand">
-                            Brands
+                            Brands {{ json_encode($selectedBrands) }}
                             <svg class="accordion-button__icon type2" viewBox="0 0 10 6"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g aria-hidden="true" stroke="none" fill-rule="evenodd">
@@ -153,29 +133,18 @@
                     <div id="accordion-filter-brand" class="accordion-collapse collapse show border-0"
                         aria-labelledby="accordion-heading-brand" data-bs-parent="#brand-filters">
                         <div class="search-field multi-select accordion-body px-0 pb-0">
-                            <select class="d-none" multiple name="total-numbers-list">
-                                <option value="1">Adidas</option>
-                                <option value="2">Balmain</option>
-                                <option value="3">Balenciaga</option>
-                                <option value="4">Burberry</option>
-                                <option value="5">Kenzo</option>
-                                <option value="5">Givenchy</option>
-                                <option value="5">Zara</option>
-                            </select>
-                            <div class="search-field__input-wrapper mb-3">
-                                <input type="text" name="search_text" wire:model.debounce.300ms="search"
-                                    class="search-field__input form-control form-control-sm border-light border-2"
-                                    placeholder="Search" />
-                            </div>
-                            <ul class="multi-select__list list-unstyled">
-                                @foreach ($brands as $brand)
-                                    <li class="search-suggestion__item multi-select__item text-primary js-search-select js-multi-select"
-                                        {{-- {{ in_array($brand->id, $selectedBrands) ? 'active' : '' }}" --}} {{-- wire:click="toggleBrand({{ $brand->id }})" --}}>
-                                        <span class="me-auto">{{ $brand->name }}</span>
-                                        <span class="text-secondary">{{ $brand->products_count }}</span>
+                            
+                            <ul class="list list-inline mb-0">
+                                @foreach($brands as $brand)
+                                    <li class="list-item" wire:key="{{ $brand->id }}">
+                                        <label for="{{ $brand->slug }}">
+                                            <input type="checkbox" value="{{ $brand->id }}"
+                                                   wire:model.live="selectedBrands"
+                                                   id="{{ $brand->slug }}">
+                                            <span>{{ $brand->name }}</span>
+                                        </label>
                                     </li>
                                 @endforeach
-
                             </ul>
                         </div>
                     </div>
