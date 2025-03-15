@@ -32,6 +32,7 @@ class Shop extends Component
     public $minPrice = 10;
     #[Url]
     public $maxPrice = 1000;
+    protected $listeners = ['refresh' => '$refresh'];
     public function render()
     {
         $categories = Category::all();
@@ -52,7 +53,7 @@ class Shop extends Component
                 $query->whereIn('sizes.id', $this->selectedSizes);
             });
         })
-        ->when($this->minPrice && $this->maxPrice, function($q) {
+        ->when($this->minPrice !== null && $this->maxPrice !== null, function ($q) {
             return $q->whereBetween('price', [$this->minPrice, $this->maxPrice]);
         })
         ->latest('id')
@@ -61,6 +62,28 @@ class Shop extends Component
         return view('livewire.front.shop', compact('brands', 'products', 'colors','sizes','categories'))
         ->extends('front.layouts.master')
         ->section('content');
+    }
+    public function updatedSelectedCategories()
+    {
+        $this->resetPage();
+        $this->dispatch('refreshPage', ['url' => route('shop')]);
+    }
+
+    public function updatedSelectedBrands()
+    {
+        $this->resetPage();
+        $this->dispatch('refreshPage', ['url' => route('shop')]);
+    }
+    public function updatedMinPrice()
+    {
+        $this->resetPage();
+        $this->dispatch('refreshPage', ['url' => route('shop')]);
+    }
+
+    public function updatedMaxPrice()
+    {
+        $this->resetPage();
+        $this->dispatch('refreshPage', ['url' => route('shop')]);
     }
     public function toggleColor($colorId)
     {
@@ -71,6 +94,9 @@ class Shop extends Component
         }
 
         $this->resetPage();
+        $this->dispatch('refreshPage', [
+            'url' => route('shop')
+        ]);
     }
     public function toggleSize($sizeId)
     {
@@ -80,5 +106,8 @@ class Shop extends Component
             $this->selectedSizes[] = $sizeId;
         }
         $this->resetPage();
+        $this->dispatch('refreshPage', [
+            'url' => route('shop')
+        ]);
     }
 }
