@@ -16,7 +16,7 @@ class UserOnly
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->type === 'user') { 
+        if (Auth::check() &&( Auth::user()->type === 'user'||Auth::user()->type === 'admin')) { 
             return $next($request);
         }
         return redirect()->route('admin.home')->with('error', 'Unauthorized access');
