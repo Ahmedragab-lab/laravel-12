@@ -477,16 +477,16 @@
                 </div>
             </div>
         </div>
-        <script>
+        <!-- <script>
             document.addEventListener('DOMContentLoaded', function() {
                 window.addEventListener('refreshPage', event => {
                     if (event.detail.url) {
                         window.location.href = event.detail.url;
                     } else {
-                        window.location.reload();
+                        // window.location.reload();
                     }
                 });
             });
-        </script>
+        </script> -->
     </section>
 </div>

@@ -21,10 +21,13 @@ use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Livewire\Livewire;
 
-Route::prefix('admin')->group(function () {
-    Route::get('login', function () {
-        return view('admin.login');
-    });
+// Route::prefix('admin')->group(function () {
+//     Route::get('login', function () {
+//         return view('admin.login');
+//     });
+// });
+Livewire::setUpdateRoute(function ($handle) {
+    return Route::post('/livewire/update', $handle);
 });
 
 Route::group(
@@ -33,10 +36,7 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth','admin.only']
     ],
     function () {
-        Route::prefix('/admin')->group(function () {
-            Livewire::setUpdateRoute(function ($handle) {
-                return Route::post('/livewire/update', $handle);
-            });
+            Route::prefix('/admin')->group(function () {
             Route::get('/', [HomeController::class, 'index'])->name('admin.home');
             Route::get('/settings', [SettingController::class, 'index'])->name('settings');
             Route::get('brands', Brands::class)->name('brands');
