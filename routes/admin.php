@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\Finance_calendersController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductController2;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ShiftsController;
@@ -14,21 +15,13 @@ use App\Livewire\Admin\Brands;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Products;
 use App\Livewire\Admin\Colors;
+use App\Livewire\Admin\Products2;
 use App\Livewire\Admin\Sizes;
-
+use App\Models\Product;
 // use App\Livewire\Admin\AboutUs;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Livewire\Livewire;
-
-// Route::prefix('admin')->group(function () {
-//     Route::get('login', function () {
-//         return view('admin.login');
-//     });
-// });
-Livewire::setUpdateRoute(function ($handle) {
-    return Route::post('/livewire/update', $handle);
-});
 
 Route::group(
     [
@@ -36,7 +29,10 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth','admin.only']
     ],
     function () {
-            Route::prefix('/admin')->group(function () {
+        Route::prefix('/admin')->group(function () {
+            Livewire::setUpdateRoute(function ($handle) {
+                return Route::post('/livewire/update', $handle);
+            });
             Route::get('/', [HomeController::class, 'index'])->name('admin.home');
             Route::get('/settings', [SettingController::class, 'index'])->name('settings');
             Route::get('brands', Brands::class)->name('brands');
@@ -56,6 +52,8 @@ Route::group(
                 Route::post('/products/remove_cert','remove_cert')->name('products.remove_cert');
                 Route::resource('products',ProductController::class);
             });
+            // Route::get('/products2',[ProductController2::class,'index'])->name('products2');
+            Route::get('/products2',Products2::class)->name('products2');
 
 
 

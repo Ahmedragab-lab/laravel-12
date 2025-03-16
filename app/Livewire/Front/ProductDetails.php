@@ -13,12 +13,7 @@ class ProductDetails extends Component
     public $productImages = [];
     public function mount($slug){
         $this->slug = $slug;
-        $this->product = Product::where('slug', $slug)->first();
-
-        if ($this->product) {
-            $this->product_id = $this->product->id;
-            $this->productImages = $this->product->images;
-        }
+        $this->product = Product::where('slug', $slug)->firstOrFail();
     }
     public function render()
     {
