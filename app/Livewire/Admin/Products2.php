@@ -2,14 +2,22 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Size;
+use App\Models\Brand;
+use App\Models\Color;
 use App\Models\Product;
-use App\Traits\livewireResource;
 use Livewire\Component;
-
+use App\Models\Category;
+use Illuminate\Support\Str;
+use App\Traits\livewireResource;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
+use Illuminate\Http\UploadedFile;
 class Products2 extends Component
 {
     use livewireResource;
-    public $name, $search,$brand_id,$logo;
+    public $search ,$name;
+    public $product_name, $category_id, $brand_id, $expiration_date, $discount, $price, $stock, $description;
+    public $new_category_name = '',$new_category_image = null;
     public $brand;
     public $filter = '';
     public $sortBy = 'created_at';
@@ -27,7 +35,7 @@ class Products2 extends Component
     {
         return [
             // 'name' => 'required|unique:brands,name,' . $this->obj?->id,
-            // 'logo' => 'nullable',
+            'product_name' => 'required',
             'category_id' => 'required',
             'brand_id' => 'required',
             'product_name' => 'required',
@@ -41,7 +49,39 @@ class Products2 extends Component
     }
     public function render()
     {
+        $categories = Category::latest()->get();
+        $brands = Brand::latest()->get();
+        $colors = Color::latest()->get();
+        $sizes  = Size::latest()->get();
         $products = Product::with(['category','brand','color','size','images'])->orderBy($this->sortBy,$this->sortDir)->paginate($this->perPage);
-        return view('livewire.admin.products2.index', compact('products'))->extends('admin.layouts.master')->section('content');
+        return view('livewire.admin.products2.index', compact('products','categories','brands','colors','sizes'))->extends('admin.layouts.master')->section('content');
     }
+
+
+    public function mount(){
+
+    }
+    public function saveCategory()
+    {
+        $this->validate([
+            'new_category_name' => 'required|string|max:255|unique:categories,name',
+            'new_category_image' => 'nullable',
+        ]);
+        $category = Category::create([
+            'name' => $this->new_category_name,
+            'slug' => Str::slug($this->new_category_name),
+        ]);
+        if ($this->new_category_image && $this->new_category_image instanceof UploadedFile) {
+            $imagePath = store_file($this->new_category_image, 'categories');
+            $category->update([
+                'image' => $imagePath
+            ]);
+        }
+        $this->category_id = $category->id;
+        $this->new_category_name = '';
+        $this->new_category_image = null;
+        // LivewireAlert::title('تم الاضافة بنجاح')->success()->show();
+        session()->flash('success', 'تم الاضافة بنجاح');
+    }
+
 }

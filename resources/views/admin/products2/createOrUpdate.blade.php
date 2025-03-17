@@ -1,4 +1,5 @@
 <div>
+    <x-messages></x-messages>
     <div>
         <h2>@lang('products.products')</h2>
     </div>
@@ -10,7 +11,45 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile shadow">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.name')<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="" wire:model.live="product_name">{{ $product_name }}
+                        </div>
+                        @error('product_name')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.Category')<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <select name="category_id" id="category_id" wire:model.live="category_id" class="form-control">
+                                    <option value="">اختر القسم</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCategoryModal">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @error('category_id')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+                    @include('admin.products2.__addCategoryModal')
+                </div>
             </div><!-- end of tile -->
         </div><!-- end of col -->
     </div><!-- end of row -->
 </div>
+<script>
+    Livewire.on('categoryAdded', () => {
+        // If you're using Select2 or similar, re-initialize it here
+    });
+
+</script>
+@push('js')
+@endpush
