@@ -19,6 +19,7 @@ class Products2 extends Component
     public $product_name, $category_id, $brand_id, $expiration_date, $discount, $price, $stock, $description;
     public $new_category_name = '',$new_category_image = null;
     public $new_brand_name = '',$new_brand_image = null;
+    public $new_color_name = '',$new_color_code = '';
     public $brand;
     public $filter = '';
     public $sortBy = 'created_at';
@@ -107,4 +108,21 @@ class Products2 extends Component
         // LivewireAlert::title('تم الاضافة بنجاح')->success()->show();
         session()->flash('success', 'تم الاضافة بنجاح');
     }
+    public function saveColor()
+    {
+        $this->validate([
+            'new_color_name' => 'required|string|max:255|unique:colors,name',
+        ]);
+        $color = Color::create([
+            'name' => $this->new_color_name,
+            'color_code'=> $this->new_color_code,
+            'slug' => Str::slug($this->new_color_name),
+            'creator'=> auth()->user()->id,
+        ]);
+        $this->color_id = $color->id;
+        $this->new_color_name = '';
+        // LivewireAlert::title('تم الاضافة بنجاح')->success()->show();
+        session()->flash('success', 'تم الاضافة بنجاح');
+    }
+
 }
