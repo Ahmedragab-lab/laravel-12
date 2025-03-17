@@ -18,6 +18,7 @@ class Products2 extends Component
     public $search ,$name;
     public $product_name, $category_id, $brand_id, $expiration_date, $discount, $price, $stock, $description;
     public $new_category_name = '',$new_category_image = null;
+    public $new_brand_name = '',$new_brand_image = null;
     public $brand;
     public $filter = '';
     public $sortBy = 'created_at';
@@ -83,5 +84,26 @@ class Products2 extends Component
         // LivewireAlert::title('تم الاضافة بنجاح')->success()->show();
         session()->flash('success', 'تم الاضافة بنجاح');
     }
-
+    public function saveBrand()
+    {
+        $this->validate([
+            'new_brand_name' => 'required|string|max:255|unique:brands,name',
+            'new_brand_image' => 'nullable',
+        ]);
+        $brand = Brand::create([
+            'name' => $this->new_brand_name,
+            'slug' => Str::slug($this->new_brand_name),
+        ]);
+        if ($this->new_brand_image && $this->new_brand_image instanceof UploadedFile) {
+            $imagePath = store_file($this->new_brand_image, 'brands');
+            $brand->update([
+                'logo' => $imagePath
+            ]);
+        }
+        $this->brand_id = $brand->id;
+        $this->new_brand_name = '';
+        $this->new_brand_image = null;
+        // LivewireAlert::title('تم الاضافة بنجاح')->success()->show();
+        session()->flash('success', 'تم الاضافة بنجاح');
+    }
 }

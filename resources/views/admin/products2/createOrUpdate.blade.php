@@ -25,7 +25,7 @@
                             <label>@lang('products.Category')<span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <select name="category_id" id="category_id" wire:model.live="category_id" class="form-control">
-                                    <option value="">اختر القسم</option>
+                                    <option value="">اختر البراند</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
@@ -39,7 +39,29 @@
                         </div>
                         @error('category_id')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
+                    
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.brand')<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <select name="category_id" id="category_id" wire:model.live="brand_id" class="form-control">
+                                    <option value="">اختر البراند</option>
+                                    @foreach ($brands as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addbrandModal">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @error('category_id')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
                     @include('admin.products2.__addCategoryModal')
+                    @include('admin.products2.__addBrandModal')
+
                 </div>
             </div><!-- end of tile -->
         </div><!-- end of col -->
