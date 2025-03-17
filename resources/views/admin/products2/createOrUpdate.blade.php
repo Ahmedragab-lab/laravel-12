@@ -80,10 +80,32 @@
                         </div>
                         @error('color_id')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
+                    <!-- size -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.size')<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <select name="size_id" id="size_id" wire:model.live="size_id" class="form-control">
+                                    <option value="">اختر مقاس</option>
+                                    @foreach ($sizes as $size)
+                                        <option
+                                         value="{{ $size->id }}">{{ $size->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addsizeModal">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @error('size_id')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+
                     @include('admin.products2.__addCategoryModal')
                     @include('admin.products2.__addBrandModal')
                     @include('admin.products2.__addColorModal')
-
+                    @include('admin.products2.__addSizeModal')
                 </div>
             </div><!-- end of tile -->
         </div><!-- end of col -->
