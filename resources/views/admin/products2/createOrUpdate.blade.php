@@ -44,7 +44,7 @@
                         <div class="form-group">
                             <label>@lang('products.brand')<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <select name="category_id" id="category_id" wire:model.live="brand_id" class="form-control">
+                                <select name="brand_id" id="brand_id" wire:model.live="brand_id" class="form-control">
                                     <option value="">اختر البراند</option>
                                     @foreach ($brands as $brand)
                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        @error('category_id')<span class="text-danger">{{ $message }}</span>@enderror
+                        @error('brand_id')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
                     @include('admin.products2.__addCategoryModal')
                     @include('admin.products2.__addBrandModal')

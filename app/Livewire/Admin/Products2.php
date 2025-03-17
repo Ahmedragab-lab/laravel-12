@@ -93,6 +93,7 @@ class Products2 extends Component
         $brand = Brand::create([
             'name' => $this->new_brand_name,
             'slug' => Str::slug($this->new_brand_name),
+            'creator'=> auth()->user()->id,
         ]);
         if ($this->new_brand_image && $this->new_brand_image instanceof UploadedFile) {
             $imagePath = store_file($this->new_brand_image, 'brands');
