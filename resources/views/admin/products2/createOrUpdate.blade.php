@@ -19,7 +19,7 @@
                         </div>
                         @error('product_name')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
-
+                   <!-- category -->
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>@lang('products.Category')<span class="text-danger">*</span></label>
@@ -39,12 +39,12 @@
                         </div>
                         @error('category_id')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
-                    
+                    <!--brand  -->
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>@lang('products.brand')<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <select name="category_id" id="category_id" wire:model.live="brand_id" class="form-control">
+                                <select name="brand_id" id="brand_id" wire:model.live="brand_id" class="form-control">
                                     <option value="">اختر البراند</option>
                                     @foreach ($brands as $brand)
                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -57,11 +57,55 @@
                                 </div>
                             </div>
                         </div>
-                        @error('category_id')<span class="text-danger">{{ $message }}</span>@enderror
+                        @error('brand_id')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
+                    <!-- color -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.color')<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <select name="color_id" id="color_id" wire:model.live="color_id" class="form-control">
+                                    <option value="">اختر اللون</option>
+                                    @foreach ($colors as $color)
+                                        <option
+                                         value="{{ $color->id }}">{{ $color->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addcolorModal">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @error('color_id')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+                    <!-- size -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.size')<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <select name="size_id" id="size_id" wire:model.live="size_id" class="form-control">
+                                    <option value="">اختر مقاس</option>
+                                    @foreach ($sizes as $size)
+                                        <option
+                                         value="{{ $size->id }}">{{ $size->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addsizeModal">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @error('size_id')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+
                     @include('admin.products2.__addCategoryModal')
                     @include('admin.products2.__addBrandModal')
-
+                    @include('admin.products2.__addColorModal')
+                    @include('admin.products2.__addSizeModal')
                 </div>
             </div><!-- end of tile -->
         </div><!-- end of col -->
