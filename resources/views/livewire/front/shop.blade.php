@@ -399,8 +399,10 @@
                                 <!--Add To Cart button  -->
                                 <button
                                     class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                                    data-aside="cartDrawer" title="Add To Cart">Add To Cart</button>
-                            </div>
+                                    data-aside="cartDrawer" title="Add To Cart" wire:click.prevent="addToCart({{$product->id }})">Add To Cart
+                                </button>
+                                </div>
+                                <a href="#" wire:click.prevent="addToCart({{ $product->id }})">aaaaaaa</a>
 
                             <div class="pc__info position-relative">
                                 <p class="pc__category">{{ $product->category?->name }}</p>

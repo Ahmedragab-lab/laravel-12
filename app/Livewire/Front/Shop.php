@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Front;
 
+use App\Helpers\CartMangement;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -32,7 +33,12 @@ class Shop extends Component
     public $minPrice = 10;
     #[Url]
     public $maxPrice = 1000;
-    protected $listeners = ['refresh' => '$refresh'];
+    // protected $listeners = ['refresh' => '$refresh'];
+    public function addToCart($product_id){
+        dd($product_id);
+      $total_count = CartMangement::addItemToCart($product_id);
+      $this->dispatch('update-cart-count', total_count : $total_count)->to(Navbar::class);
+    }
     public function render()
     {
         $categories = Category::all();
@@ -63,28 +69,28 @@ class Shop extends Component
         ->extends('front.layouts.master')
         ->section('content');
     }
-    public function updatedSelectedCategories()
-    {
-        $this->resetPage();
-        $this->dispatch('refreshPage', ['url' => route('shop')]);
-    }
+    // public function updatedSelectedCategories()
+    // {
+    //     $this->resetPage();
+    //     $this->dispatch('refreshPage', ['url' => route('shop')]);
+    // }
 
-    public function updatedSelectedBrands()
-    {
-        $this->resetPage();
-        $this->dispatch('refreshPage', ['url' => route('shop')]);
-    }
-    public function updatedMinPrice()
-    {
-        $this->resetPage();
-        $this->dispatch('refreshPage', ['url' => route('shop')]);
-    }
+    // public function updatedSelectedBrands()
+    // {
+    //     $this->resetPage();
+    //     $this->dispatch('refreshPage', ['url' => route('shop')]);
+    // }
+    // public function updatedMinPrice()
+    // {
+    //     $this->resetPage();
+    //     $this->dispatch('refreshPage', ['url' => route('shop')]);
+    // }
 
-    public function updatedMaxPrice()
-    {
-        $this->resetPage();
-        $this->dispatch('refreshPage', ['url' => route('shop')]);
-    }
+    // public function updatedMaxPrice()
+    // {
+    //     $this->resetPage();
+    //     $this->dispatch('refreshPage', ['url' => route('shop')]);
+    // }
     public function toggleColor($colorId)
     {
         if (in_array($colorId, $this->selectedColors)) {
