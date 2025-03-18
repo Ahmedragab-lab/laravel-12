@@ -132,7 +132,7 @@
                             <input type="number" class="form-control" wire:model="stock" step="1" min="0" placeholder="Enter stock">
                         </div>
                         @error('stock')<span class="text-danger">{{ $message }}</span>@enderror
-                    </div>        
+                   </div>        
                     <!-- Status Field -->
                     <div class="col-md-3">
                         <div class="form-group">
@@ -144,6 +144,21 @@
                         </div>
                         @error('status')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
+                  <!-- Image Selector Field -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.image')<span class="text-danger">*</span></label>
+                            <input type="file" class="form-control" wire:model="image">
+                            @error('image')<span class="text-danger">{{ $message }}</span>@enderror
+                        </div>
+                        <!-- Image Preview -->
+                        @if ($image)
+                            <div class="mt-2">
+                                <img src="{{ $image->temporaryUrl() }}" alt="Image Preview" class="img-thumbnail" width="150">
+                            </div>
+                        @endif
+                    </div>
+
    
                    </div>         
                    @include('admin.products2.__addCategoryModal')
