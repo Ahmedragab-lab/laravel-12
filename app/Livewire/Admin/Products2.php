@@ -16,7 +16,7 @@ class Products2 extends Component
 {
     use livewireResource;
     public $search ,$name;
-    public $product_name, $category_id, $brand_id, $expiration_date, $discount, $price, $stock, $description;
+    public $product_name, $category_id, $brand_id, $expiration_date, $discount, $price, $stock,$status, $description;
     public $new_category_name = '',$new_category_image = null;
     public $new_brand_name = '',$new_brand_image = null;
     public $new_color_name = '',$new_color_code = '';
@@ -49,6 +49,7 @@ class Products2 extends Component
             'discount' => 'nullable',
             'price' => 'nullable',
             'stock' => 'nullable',
+            'status'=> 'nullable',
             // 'image' => 'nullable',
             'description' => 'nullable',
         ];
@@ -153,20 +154,19 @@ class Products2 extends Component
             'color_id' => 'required|exists:colors,id',
        ]);
     
-        // حفظ المنتج
         $product = Product::create([
             'product_name' => $this->product_name,
             'category_id' => $this->category_id,
             'brand_id' => $this->brand_id,
-            // 'expiration_date' => $this->expiration_date,
-            // 'discount' => $this->discount,
-            // 'price' => $this->price,
-            // 'stock' => $this->stock,
+            'expiration_date' => $this->expiration_date,
+            'discount' => $this->discount,
+            'price' => $this->price,
+            'stock' => $this->stock,
             // 'description' => $this->description,
-            'slug' => Str::slug($this->product_name)
+            'slug' => Str::slug($this->product_name),
+            'status'=>$this->status,
         ]);
     
-        // تحقق من وجود مقاسات وألوان محددة قبل الحفظ
         if (!empty($this->size_id)) {
             $product->size()->sync($this->size_id);
         }
@@ -175,10 +175,8 @@ class Products2 extends Component
             $product->color()->sync($this->color_id);
         }
     
-        // مسح المدخلات بعد الحفظ
         $this->reset(['product_name', 'category_id', 'brand_id', 'expiration_date', 'discount', 'price', 'stock', 'description', 'size_id', 'color_id']);
     
-        // إظهار رسالة النجاح
         session()->flash('success', 'تم حفظ المنتج بنجاح.');
     }
     

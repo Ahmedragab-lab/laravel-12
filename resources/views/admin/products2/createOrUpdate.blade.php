@@ -25,7 +25,7 @@
                             <label>@lang('products.Category')<span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <select name="category_id" id="category_id" wire:model.live="category_id" class="form-control">
-                                    <option value="">اختر البراند</option>
+                                    <option value="">اختر القسم</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
@@ -101,13 +101,60 @@
                         </div>
                         @error('size_id')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
-
-                    @include('admin.products2.__addCategoryModal')
+                    <!-- Date Selector -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.expiration_date')<span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" wire:model="expiration_date">
+                        </div>
+                        @error('expiration_date')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+                    <!-- Price Field -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.price')<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" wire:model="price" step="1" min="0" placeholder="Enter price">
+                        </div>
+                        @error('price')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+                   <!-- discount Field -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.discount')<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" wire:model="discount" step="1" min="0" placeholder="Enter discount">
+                        </div>
+                        @error('discount')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+                    <!-- stock Field -->
+                   <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.stock')<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" wire:model="stock" step="1" min="0" placeholder="Enter stock">
+                        </div>
+                        @error('stock')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>        
+                    <!-- Status Field -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>@lang('products.status')<span class="text-danger">*</span></label>
+                            <select name="status" class="form-control" wire:model="status">
+                                <option value="0">Off</option>
+                                <option value="1">On</option>
+                            </select>
+                        </div>
+                        @error('status')<span class="text-danger">{{ $message }}</span>@enderror
+                    </div>
+   
+                   </div>         
+                   @include('admin.products2.__addCategoryModal')
                     @include('admin.products2.__addBrandModal')
                     @include('admin.products2.__addColorModal')
                     @include('admin.products2.__addSizeModal')
-                </div>
-            </div><!-- end of tile -->
+
+
+
+                    
+          <!-- end of tile -->
         </div><!-- end of col -->
     </div><!-- end of row -->
     <!-- Save Button -->
