@@ -21,6 +21,8 @@ class Products2 extends Component
     public $new_brand_name = '',$new_brand_image = null;
     public $new_color_name = '',$new_color_code = '';
     public $new_size_name = '';
+    public $size_id = null;
+    public $color_id = null;
 
     public $brand;
     public $filter = '';
@@ -47,7 +49,7 @@ class Products2 extends Component
             'discount' => 'nullable',
             'price' => 'nullable',
             'stock' => 'nullable',
-            'image' => 'nullable',
+            // 'image' => 'nullable',
             'description' => 'nullable',
         ];
     }
@@ -141,5 +143,43 @@ class Products2 extends Component
         // LivewireAlert::title('تم الاضافة بنجاح')->success()->show();
         session()->flash('success', 'تم الاضافة بنجاح');
     }
-
+    public function saveProduct()
+    {
+        $this->validate([
+            'product_name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
+            'size_id' => 'required|exists:sizes,id',
+            'color_id' => 'required|exists:colors,id',
+       ]);
+    
+        // حفظ المنتج
+        $product = Product::create([
+            'product_name' => $this->product_name,
+            'category_id' => $this->category_id,
+            'brand_id' => $this->brand_id,
+            // 'expiration_date' => $this->expiration_date,
+            // 'discount' => $this->discount,
+            // 'price' => $this->price,
+            // 'stock' => $this->stock,
+            // 'description' => $this->description,
+            'slug' => Str::slug($this->product_name)
+        ]);
+    
+        // تحقق من وجود مقاسات وألوان محددة قبل الحفظ
+        if (!empty($this->size_id)) {
+            $product->size()->sync($this->size_id);
+        }
+    
+        if (!empty($this->color_id)) {
+            $product->color()->sync($this->color_id);
+        }
+    
+        // مسح المدخلات بعد الحفظ
+        $this->reset(['product_name', 'category_id', 'brand_id', 'expiration_date', 'discount', 'price', 'stock', 'description', 'size_id', 'color_id']);
+    
+        // إظهار رسالة النجاح
+        session()->flash('success', 'تم حفظ المنتج بنجاح.');
+    }
+    
 }

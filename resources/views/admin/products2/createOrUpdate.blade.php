@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label>@lang('products.size')<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <select name="size_id" id="size_id" wire:model.live="size_id" class="form-control">
+                                <select name="size_id" id="size_id" wire:model="size_id" class="form-control">
                                     <option value="">اختر مقاس</option>
                                     @foreach ($sizes as $size)
                                         <option
@@ -110,6 +110,14 @@
             </div><!-- end of tile -->
         </div><!-- end of col -->
     </div><!-- end of row -->
+    <!-- Save Button -->
+<div class="col-md-12 mt-3">
+    <div class="form-group text-center">
+        <button type="button" class="btn btn-success" wire:click="saveProduct">
+            @lang('site.save')
+        </button>
+    </div>
+</div>
 </div>
 <script>
     Livewire.on('categoryAdded', () => {
