@@ -30,6 +30,7 @@ class LoginController extends Controller
     // Redirect users based on their type after login
     protected function authenticated(Request $request, $user)
     {
+        // $request->getRequestUri();
         if ($user->type === 'admin') {
             return redirect()->route('admin.home');
         }
