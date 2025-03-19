@@ -13,7 +13,27 @@
                 <div class="col-md-4">
                     <div class="tile shadow">
                         <div class="row">
-                            <div class="col-md-12">
+                        <div class="col-md-12">
+                        <label class="small-label" for="">
+                            صورة المستخدم
+                              <span class="text-danger">*</span>
+                                </label>
+                                <div class="box-input">
+                                    <input type="file" class="form-control" wire:model='image' id="" />
+                                </div>
+                                <div class="box-input">
+                                    <div class="col-md-3">
+                                        @if ($image instanceof \Illuminate\Http\UploadedFile)
+                                            <img src="{{ $image->temporaryUrl() }}" class="img-thumbnail" width="100" />
+                                        @elseif (is_string($image) && !empty($image))
+                                            <img src="{{ display_file($image) }}" class="img-thumbnail" width="100" />
+                                        @else
+                                            <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="100" />
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+     <div class="col-md-12">
                                 <label>الاسم</label>
                                 <input type="text" class="form-control" wire:model='name' />
                             </div>

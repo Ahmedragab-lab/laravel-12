@@ -11,7 +11,7 @@ class Users extends Component
 {
     use livewireResource;
 
-    public $name, $email, $password, $type, $logo, $search;
+    public $name, $email, $password, $type, $image, $search;
     public $user;
     public $filter = '';
     public $sortBy = 'created_at';
@@ -35,25 +35,21 @@ class Users extends Component
             'email' => 'required|email|unique:users,email,' . $this->obj?->id,
             'password' => 'nullable|min:6',
             'type' => 'required|in:user,admin',
-            'logo' => 'nullable',
+            'image' => 'nullable|image|max:2048', // Validating image
         ];
     }
 
     public function beforeSubmit()
     {
-        $this->data['slug'] = Str::slug($this->name);
-        if ($this->logo && $this->logo instanceof UploadedFile) {
-            if ($this->obj) {
-                if ($this->obj->logo !== $this->logo) {
-                    delete_file($this->obj->logo);
-                    $this->data['logo'] = store_file($this->logo, 'users');
-                }
-            } else {
-                $this->data['logo'] = store_file($this->logo, 'users');
+        if ($this->image && $this->image instanceof UploadedFile) {
+            if ($this->obj && $this->obj->image !== $this->image) {
+                delete_file($this->obj->image);
             }
+            
+            $this->image = $this->data['image'] = store_file($this->image, 'users');
         }
     }
-
+    
     public function render()
     {
         $users = User::when($this->search, fn($q) => $q->where('name', 'LIKE', "%" . $this->search . "%"))
