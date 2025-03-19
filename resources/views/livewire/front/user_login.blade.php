@@ -1,3 +1,5 @@
+@extends('front.layouts.master')
+@section('content')
 <div>
 <section class="login-register container">
       <ul class="nav nav-tabs mb-5" id="login_register" role="tablist">
@@ -9,7 +11,8 @@
       <div class="tab-content pt-2" id="login_register_tab_content">
         <div class="tab-pane fade show active" id="tab-item-login" role="tabpanel" aria-labelledby="login-tab">
           <div class="login-form">
-            <form method="POST" action="{{ route('login') }}" name="login-form" class="needs-validation" novalidate="">
+            <form method="POST" action="{{ route('login_user_post') }}" name="login-form" class="needs-validation" novalidate="">
+            @csrf
               <div class="form-floating mb-3">
                 <input class="form-control form-control_gray " name="email" value="" required="" autocomplete="email"
                   autofocus="">
@@ -37,3 +40,4 @@
       </div>
     </section>
 </div>
+@endsection
