@@ -60,8 +60,8 @@
                                             <th>براند</th>
                                             <th>الالوان</th>
                                             <th>المقاسات</th>
-                                            <th>الحاله</th>
                                             <th>المسؤال</th>
+                                            <th>الحاله</th>
                                             <th>تاريخ انشاء</th>
                                             <th>@lang('site.action')</th>
                                         </tr>
@@ -103,7 +103,12 @@
                                                 <td>{{ $product->admin?->name }}</td>
                                                 <td>{{ $product->status == 1 ? 'متاح' : 'غير متاح' }}</td>
                                                 <td>{{ $product->created_at->format('Y-m-d') }}</td>
-                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $product->id }})'>
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <x-delete-modal :item="$product" />
+                                                </td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -124,4 +129,32 @@
     @elseif($screen =='show')
         <h1>hi show</h1>
     @endif
+    @push('js')
+    <script>
+        console.log('hello');
+        document.addEventListener('livewire:initialized', () => {
+            initSelect2();
+            Livewire.hook('morph.updated', ({ el }) => {
+                initSelect2();
+            });
+        });
+
+        function initSelect2() {
+            $('.select2.multiple').select2({
+                placeholder: "اختر ",
+                allowClear: true,
+                multiple: true // Enable multi-select
+            }).on('change', function (e) {
+                const data = $(this).select2("val");
+                if('color_id'){
+                    @this.set('color_id', data);
+                }else if('size_id'){
+                    @this.set('size_id', data);
+                }
+            });
+        }
+
+    </script>
+
+    @endpush
 </div>

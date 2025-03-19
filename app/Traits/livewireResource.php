@@ -61,12 +61,36 @@ trait livewireResource
             $this->obj = $this->model::create($this->data);
             $this->afterCreate();
         }
+        $this->handleAttachments();
         $this->afterSubmit();
         $this->obj = null;
         $this->resetInputs();
         $this->screen = 'index';
         // $this->dispatch('alert', ['ss','sss']);
         session()->flash('success', 'تم الحفظ بنجاح');
+    }
+    protected function handleAttachments()
+    {
+        if (!empty($this->attachments) && $this->obj && method_exists($this->obj, 'attachments')) {
+            // Remove existing attachments
+            $this->obj->attachments->each(function ($attachment) {
+                if (!in_array($attachment->file,$this->attachments)){
+                    delete_file($attachment->file);
+                    $attachment->delete();
+                }
+            });
+
+            // Add new attachments
+            foreach ($this->attachments as $attachment) {
+                if ($attachment instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
+                    $this->obj->attachments()->create([
+                        'department_id' => $this->obj->id,
+                        'file' => store_file($attachment, 'attachments'),
+                        'name' => $attachment->getClientOriginalName(),
+                    ]);
+                }
+            }
+        }
     }
 
     public function afterSubmit()
@@ -108,13 +132,13 @@ trait livewireResource
         if (!$this->beforeDelete($id)) {
             return;
         }
-    
+
         $delete = $this->model::findOrFail($id);
         $delete->delete();
-    
+
         session()->flash('success', 'تم الحذف بنجاح');
     }
-    
+
 
     public function updatedScreen()
     {
@@ -126,5 +150,10 @@ trait livewireResource
     public function resetInputs()
     {
         $this->reset($this->keys);
+    }
+
+    public function removeAttachment($key)
+    {
+        unset($this->attachments[$key]);
     }
 }

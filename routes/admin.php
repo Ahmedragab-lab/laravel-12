@@ -55,8 +55,8 @@ Route::group(
                 Route::post('/products/remove_cert','remove_cert')->name('products.remove_cert');
                 Route::resource('products',ProductController::class);
             });
-            // Route::get('/products2',[ProductController2::class,'index'])->name('products2');
-            Route::get('/products2',Products2::class)->name('products2');
+            Route::get('/products2',[ProductController2::class,'index'])->name('products2');
+            // Route::get('/products2',Products2::class)->name('products2');
 
 
 

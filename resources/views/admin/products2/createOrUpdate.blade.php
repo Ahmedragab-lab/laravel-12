@@ -59,49 +59,51 @@
                         </div>
                         @error('brand_id')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
+
                     <!-- color -->
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>@lang('products.color')<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <select name="color_id" id="color_id" wire:model.live="color_id" class="form-control">
+                                <select name="color_id[]" id="color_id" wire:model.live="color_id" class="form-control select2 multiple" multiple>
                                     <option value="">اختر اللون</option>
                                     @foreach ($colors as $color)
                                         <option
                                          value="{{ $color->id }}">{{ $color->name }}</option>
                                     @endforeach
                                 </select>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addcolorModal">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
+                            </div>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addcolorModal">
+                                    <i class="fa fa-plus"></i>
+                                </button>
                             </div>
                         </div>
                         @error('color_id')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
                     <!-- size -->
-                    <div class="col-md-3">
+                    <div class="col-md-3" >
                         <div class="form-group">
                             <label>@lang('products.size')<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <select name="size_id" id="size_id" wire:model="size_id" class="form-control">
+                                <select name="size_id[]" id="size_id" wire:model="size_id" class="form-control select2 multiple" multiple >
                                     <option value="">اختر مقاس</option>
                                     @foreach ($sizes as $size)
                                         <option
                                          value="{{ $size->id }}">{{ $size->name }}</option>
                                     @endforeach
                                 </select>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addsizeModal">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
+                            </div>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addsizeModal">
+                                    <i class="fa fa-plus"></i>
+                                </button>
                             </div>
                         </div>
                         @error('size_id')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
-                    <!-- Date Selector -->
+
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>@lang('products.expiration_date')<span class="text-danger">*</span></label>
@@ -132,7 +134,7 @@
                             <input type="number" class="form-control" wire:model="stock" step="1" min="0" placeholder="Enter stock">
                         </div>
                         @error('stock')<span class="text-danger">{{ $message }}</span>@enderror
-                   </div>        
+                   </div>
                     <!-- Status Field -->
                     <div class="col-md-3">
                         <div class="form-group">
@@ -159,8 +161,29 @@
                         @endif
                     </div>
 
-   
-                   </div>         
+                    <div class="col-md-12">
+                        <div class="inp-holder" wire:ignore>
+                            <label for="">الوصف</label>
+                            <textarea wire:model="description" class="ckeditor form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="inp-holder">
+                            <label>المرفقات</label>
+                            <input type="file" multiple class="form-control" wire:model.live="products_images">
+                        </div>
+                        {{-- {{ $obj }} --}}
+                        @if ($products_images)
+                            @foreach ($products_images as $key =>$attachment)
+                                <x-file-preview :file="$attachment" :key="$key"/>
+                            @endforeach
+                        @endif
+                    </div>
+
+
+
+
+                   </div>
                    @include('admin.products2.__addCategoryModal')
                     @include('admin.products2.__addBrandModal')
                     @include('admin.products2.__addColorModal')
@@ -168,24 +191,17 @@
 
 
 
-                    
+
           <!-- end of tile -->
         </div><!-- end of col -->
     </div><!-- end of row -->
     <!-- Save Button -->
 <div class="col-md-12 mt-3">
     <div class="form-group text-center">
-        <button type="button" class="btn btn-success" wire:click="saveProduct">
+        <button type="button" class="btn btn-success" wire:click="submit">
             @lang('site.save')
         </button>
     </div>
 </div>
 </div>
-<script>
-    Livewire.on('categoryAdded', () => {
-        // If you're using Select2 or similar, re-initialize it here
-    });
 
-</script>
-@push('js')
-@endpush
