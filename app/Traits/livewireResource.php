@@ -125,7 +125,7 @@ trait livewireResource
         }
         $this->whileEditing();
 
-        $this->screen = 'create';
+        $this->screen = 'edit';
     }
 
     public function afterUpdate()
