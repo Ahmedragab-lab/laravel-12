@@ -41,16 +41,7 @@ class Products2 extends Component
         $this->sortBy = $sortByField;
         $this->sortDir = 'DESC';
     }
-    protected $listeners = ['updateSelect2'];
 
-    public function updateSelect2($field, $values)
-    {
-        if ($field === 'color_id') {
-            $this->color_id = $values;
-        } elseif ($field === 'size_id') {
-            $this->size_id = $values;
-        }
-    }
     public function rules()
     {
         return [
@@ -148,11 +139,17 @@ class Products2 extends Component
         if ($this->obj) {
             $this->color_id = $this->obj->color->pluck('id')->toArray();
             $this->size_id = $this->obj->size->pluck('id')->toArray();
+            $this->products_images = $this->obj->images()->get();
         }
+        // $this->dispatch('refreshSelect2');
     }
 
     public function mount(){
-
+        if ($this->obj) {
+            $this->color_id = $this->obj->color->pluck('id')->toArray();
+            $this->size_id = $this->obj->size->pluck('id')->toArray();
+            $this->products_images = $this->obj->images()->get();
+        }
     }
     public function saveCategory()
     {

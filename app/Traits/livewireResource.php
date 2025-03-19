@@ -120,7 +120,7 @@ trait livewireResource
         }
         $this->whileEditing();
 
-        $this->screen = 'edit';
+        $this->screen = 'create';
     }
 
     public function afterUpdate()
@@ -129,9 +129,9 @@ trait livewireResource
 
     public function delete($id)
     {
-        if (!$this->beforeDelete($id)) {
-            return;
-        }
+        // if (!$this->beforeDelete($id)) {
+        //     return;
+        // }
 
         $delete = $this->model::findOrFail($id);
         $delete->delete();
@@ -154,6 +154,6 @@ trait livewireResource
 
     public function removeAttachment($key)
     {
-        unset($this->attachments[$key]);
+        unset($this->products_images[$key]);
     }
 }

@@ -154,11 +154,15 @@
                             @error('image')<span class="text-danger">{{ $message }}</span>@enderror
                         </div>
                         <!-- Image Preview -->
-                        @if ($image)
-                            <div class="mt-2">
-                                <img src="{{ $image->temporaryUrl() }}" alt="Image Preview" class="img-thumbnail" width="150">
-                            </div>
-                        @endif
+                        <div class="mt-2">
+                            @if ($image instanceof \Illuminate\Http\UploadedFile)
+                                <img src="{{ $image->temporaryUrl() }}" class="img-thumbnail" width="100" />
+                            @elseif (is_string($image) && !empty($image))
+                                <img src="{{ display_file($image) }}" class="img-thumbnail" width="100" />
+                            @else
+                                <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="100" />
+                            @endif
+                        </div>
                     </div>
 
                     <div class="col-md-12">
@@ -170,7 +174,7 @@
                     <div class="col-12">
                         <div class="inp-holder">
                             <label>المرفقات</label>
-                            <input type="file" multiple class="form-control" wire:model.live="products_images">
+                            <input type="file" multiple class="form-control" wire:model.live="products_images" accept="image/*">
                         </div>
                         {{-- {{ $obj }} --}}
                         @if ($products_images)

@@ -1,5 +1,32 @@
+{{-- @php
+    $fileExtension = is_string($file)
+    ? pathinfo($file, PATHINFO_EXTENSION)
+    : $file->getClientOriginalExtension();
+@endphp --}}
+
 @php
-    $fileExtension = is_string($file) ? pathinfo($file, PATHINFO_EXTENSION) : $file->getClientOriginalExtension();
+    // Check what type of object we're dealing with
+    if ($file instanceof \Illuminate\Http\UploadedFile) {
+        // For newly uploaded files
+        $fileExtension = $file->getClientOriginalExtension();
+        $fileUrl = $file->temporaryUrl();
+        $isNewUpload = true;
+    } elseif ($file instanceof \App\Models\Image) {
+        // For existing Image model instances
+        $fileExtension = pathinfo($file->path, PATHINFO_EXTENSION);
+        $fileUrl = display_file($file->path);
+        $isNewUpload = false;
+    } elseif (is_string($file)) {
+        // For string paths
+        $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+        $fileUrl = display_file($file);
+        $isNewUpload = false;
+    } else {
+        // Fallback
+        $fileExtension = '';
+        $fileUrl = '#';
+        $isNewUpload = false;
+    }
 @endphp
 
 <div class="d-inline-block me-2 mb-2">
