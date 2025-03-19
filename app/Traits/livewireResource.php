@@ -105,11 +105,16 @@ trait livewireResource
 
     public function delete($id)
     {
+        if (!$this->beforeDelete($id)) {
+            return;
+        }
+    
         $delete = $this->model::findOrFail($id);
         $delete->delete();
-        // $this->dispatch('alert', ['type' => 'success', 'message' => __('Deleted.')]);
+    
         session()->flash('success', 'تم الحذف بنجاح');
     }
+    
 
     public function updatedScreen()
     {

@@ -60,4 +60,13 @@ class Users extends Component
             ->extends('admin.layouts.master')
             ->section('content');
     }
+    public function beforeDelete($id)
+{
+    if (auth()->id() === (int) $id) {
+        session()->flash('error', 'لا يمكنك حذف حسابك الحالي.');
+        return false;
+    }
+    return true;
+}
+
 }

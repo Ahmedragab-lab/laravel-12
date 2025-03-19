@@ -20,6 +20,15 @@
                 <span class="app-menu__label">الرئيسية</span>
             </a>
         </li>
+        <li>
+    <a class="app-menu__item {{ Route::is('users') ? 'active' : '' }}" href="{{ route('users') }}">
+        <i class="app-menu__icon fa fa-users"></i>
+        <span class="app-menu__label">المستخدمين</span>
+
+        <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::count() }}</span>
+    </a>
+</li>
+
         {{-- <li>
             <a class="app-menu__item {{ request()->is('*roles*') ? 'active' : '' }}" href="{{ route('roles.index') }}">
                 <i class="app-menu__icon fa fa-dashboard"></i>
