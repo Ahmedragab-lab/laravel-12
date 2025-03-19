@@ -1,5 +1,6 @@
 <div>
     @if($screen =='index')
+    <x-messages></x-messages>
         <div class="row">
             <div class="col-md-12">
                 <div class="tile shadow">
@@ -60,8 +61,8 @@
                                             <th>براند</th>
                                             <th>الالوان</th>
                                             <th>المقاسات</th>
-                                            <th>الحاله</th>
                                             <th>المسؤال</th>
+                                            <th>الحاله</th>
                                             <th>تاريخ انشاء</th>
                                             <th>@lang('site.action')</th>
                                         </tr>
@@ -103,7 +104,16 @@
                                                 <td>{{ $product->admin?->name }}</td>
                                                 <td>{{ $product->status == 1 ? 'متاح' : 'غير متاح' }}</td>
                                                 <td>{{ $product->created_at->format('Y-m-d') }}</td>
-                                                <td></td>
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $product->id }})'>
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-sm btn-warning" wire:click='show({{ $product->id }})'>
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                    @include('livewire.admin.products2.barcode')
+                                                    <x-delete-modal :item="$product" />
+                                                </td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -120,8 +130,85 @@
             </div><!-- end of col -->
         </div><!-- end of row -->
     @elseif($screen =='create')
-        @include('admin.products2.createOrUpdate')
+    @include('admin.products2.createOrUpdate')
+    @elseif($screen =='edit')
+    @include('admin.products2.createOrUpdate')
     @elseif($screen =='show')
         <h1>hi show</h1>
     @endif
+    @push('js')
+    <script>
+        console.log('hello');
+        document.addEventListener('livewire:initialized', () => {
+            initSelect2();
+            Livewire.hook('morph.updated', ({ el }) => {
+                initSelect2();
+            });
+        });
+
+        function initSelect2() {
+            $('.select2.multiple').select2({
+                placeholder: "اختر ",
+                allowClear: true,
+                multiple: true // Enable multi-select
+            }).on('change', function (e) {
+                const data = $(this).select2("val");
+                if('color_id'){
+                    @this.set('color_id', data);
+                }else if('size_id'){
+                    @this.set('size_id', data);
+                }
+            });
+
+            if (fieldId === 'color_id' && @this.get('color_id')) {
+                $(this).val(@this.get('color_id')).trigger('change');
+            } else if (fieldId === 'size_id' && @this.get('size_id')) {
+                $(this).val(@this.get('size_id')).trigger('change');
+            }
+        }
+
+    </script>
+    {{-- <script>
+        document.addEventListener('livewire:initialized', () => {
+            initSelect2();
+
+            // Listen for a custom event to refresh Select2
+            Livewire.on('refreshSelect2', () => {
+                initSelect2();
+            });
+
+            Livewire.hook('morph.updated', ({ el }) => {
+                initSelect2();
+            });
+        });
+
+        function initSelect2() {
+            $('.select2.multiple').each(function() {
+                let fieldId = $(this).attr('id');
+
+                $(this).select2({
+                    placeholder: "اختر ",
+                    allowClear: true,
+                    multiple: true
+                }).on('change', function (e) {
+                    const data = $(this).select2("val");
+
+                    // Send the selected values to Livewire
+                    if (fieldId === 'color_id') {
+                        @this.set('color_id', data);
+                    } else if (fieldId === 'size_id') {
+                        @this.set('size_id', data);
+                    }
+                });
+
+                // This is important - after initializing Select2, update its value from Livewire component
+                if (fieldId === 'color_id' && @this.get('color_id')) {
+                    $(this).val(@this.get('color_id')).trigger('change');
+                } else if (fieldId === 'size_id' && @this.get('size_id')) {
+                    $(this).val(@this.get('size_id')).trigger('change');
+                }
+            });
+        }
+    </script> --}}
+    @endpush
 </div>
