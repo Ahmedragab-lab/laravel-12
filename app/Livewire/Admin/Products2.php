@@ -144,12 +144,14 @@ class Products2 extends Component
         // $this->dispatch('refreshSelect2');
     }
 
-    public function mount(){
-        if ($this->obj) {
-            $this->color_id = $this->obj->color->pluck('id')->toArray();
-            $this->size_id = $this->obj->size->pluck('id')->toArray();
-            $this->products_images = $this->obj->images()->get();
-        }
+
+    public function afterSubmit(){
+        // $this->render();
+        return redirect()->route('products2');
+        // return redirect()->back()->with('success', 'تم الحفظ بنجاح');
+        // $this->screen = 'index';
+        // session()->flash('success', 'تم الحفظ بنجاح');
+
     }
     public function saveCategory()
     {
@@ -227,48 +229,5 @@ class Products2 extends Component
         // LivewireAlert::title('تم الاضافة بنجاح')->success()->show();
         session()->flash('success', 'تم الاضافة بنجاح');
     }
-
-    // public function submit()
-    // {
-    //     $data = $this->validate([
-    //         'product_name' => 'required|string|max:255',
-    //         'category_id' => 'required|exists:categories,id',
-    //         'brand_id' => 'required|exists:brands,id',
-    //         'size_id' => 'required|exists:sizes,id',
-    //         'color_id' => 'required|exists:colors,id',
-    //         'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-    //     ]);
-    //     dd($data);
-
-    //     if ($this->image instanceof UploadedFile) {
-    //         $imagePath = store_file($this->image, 'products');
-    //     }
-
-    //     $product = Product::create([
-    //         'product_name' => $this->product_name,
-    //         'category_id' => $this->category_id,
-    //         'brand_id' => $this->brand_id,
-    //         'expiration_date' => $this->expiration_date,
-    //         'discount' => $this->discount,
-    //         'price' => $this->price,
-    //         'stock' => $this->stock,
-    //         'slug' => Str::slug($this->product_name),
-    //         'status' => $this->status,
-    //         'image' => $imagePath ?? null, // حفظ مسار الصورة في قاعدة البيانات
-    //     ]);
-
-    //     if (!empty($this->size_id)) {
-    //         $product->size()->sync($this->size_id);
-    //     }
-
-    //     if (!empty($this->color_id)) {
-    //         $product->color()->sync($this->color_id);
-    //     }
-
-    //     $this->reset(['product_name', 'category_id', 'brand_id', 'expiration_date', 'discount', 'price', 'stock', 'description', 'size_id', 'color_id', 'image']);
-
-    //     session()->flash('success', 'تم حفظ المنتج بنجاح.');
-    // }
-
 
 }

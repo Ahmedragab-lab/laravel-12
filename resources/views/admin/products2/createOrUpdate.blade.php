@@ -15,7 +15,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>@lang('products.name')<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="" wire:model.live="product_name">{{ $product_name }}
+                            <input type="text" class="form-control" id="" wire:model.live="product_name">
                         </div>
                         @error('product_name')<span class="text-danger">{{ $message }}</span>@enderror
                     </div>
@@ -207,5 +207,6 @@
         </button>
     </div>
 </div>
+
 </div>
 

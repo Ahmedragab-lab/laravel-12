@@ -61,13 +61,13 @@ trait livewireResource
             $this->obj = $this->model::create($this->data);
             $this->afterCreate();
         }
-        $this->handleAttachments();
+        // $this->handleAttachments();
         $this->afterSubmit();
         $this->obj = null;
         $this->resetInputs();
         $this->screen = 'index';
-        // $this->dispatch('alert', ['ss','sss']);
         session()->flash('success', 'تم الحفظ بنجاح');
+        // dd($this->data);
     }
     protected function handleAttachments()
     {
@@ -125,7 +125,7 @@ trait livewireResource
         }
         $this->whileEditing();
 
-        $this->screen = 'edit';
+        $this->screen = 'create';
     }
 
     public function afterUpdate()

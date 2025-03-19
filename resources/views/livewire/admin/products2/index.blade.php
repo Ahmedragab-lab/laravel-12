@@ -1,6 +1,6 @@
 <div>
     @if($screen =='index')
-    <x-messages></x-messages>
+        <x-messages></x-messages>
         <div class="row">
             <div class="col-md-12">
                 <div class="tile shadow">
@@ -137,78 +137,30 @@
         <h1>hi show</h1>
     @endif
     @push('js')
-    <script>
-        console.log('hello');
-        document.addEventListener('livewire:initialized', () => {
-            initSelect2();
-            Livewire.hook('morph.updated', ({ el }) => {
+        <script>
+            console.log('hello');
+            document.addEventListener('livewire:initialized', () => {
                 initSelect2();
-            });
-        });
-
-        function initSelect2() {
-            $('.select2.multiple').select2({
-                placeholder: "اختر ",
-                allowClear: true,
-                multiple: true // Enable multi-select
-            }).on('change', function (e) {
-                const data = $(this).select2("val");
-                if('color_id'){
-                    @this.set('color_id', data);
-                }else if('size_id'){
-                    @this.set('size_id', data);
-                }
+                Livewire.hook('morph.updated', ({ el }) => {
+                    initSelect2();
+                });
             });
 
-            if (fieldId === 'color_id' && @this.get('color_id')) {
-                $(this).val(@this.get('color_id')).trigger('change');
-            } else if (fieldId === 'size_id' && @this.get('size_id')) {
-                $(this).val(@this.get('size_id')).trigger('change');
-            }
-        }
-
-    </script>
-    {{-- <script>
-        document.addEventListener('livewire:initialized', () => {
-            initSelect2();
-
-            // Listen for a custom event to refresh Select2
-            Livewire.on('refreshSelect2', () => {
-                initSelect2();
-            });
-
-            Livewire.hook('morph.updated', ({ el }) => {
-                initSelect2();
-            });
-        });
-
-        function initSelect2() {
-            $('.select2.multiple').each(function() {
-                let fieldId = $(this).attr('id');
-
-                $(this).select2({
+            function initSelect2() {
+                $('.select2.multiple').select2({
                     placeholder: "اختر ",
                     allowClear: true,
-                    multiple: true
+                    multiple: true // Enable multi-select
                 }).on('change', function (e) {
                     const data = $(this).select2("val");
-
-                    // Send the selected values to Livewire
-                    if (fieldId === 'color_id') {
+                    if('color_id'){
                         @this.set('color_id', data);
-                    } else if (fieldId === 'size_id') {
+                    }else if('size_id'){
                         @this.set('size_id', data);
                     }
                 });
+            }
 
-                // This is important - after initializing Select2, update its value from Livewire component
-                if (fieldId === 'color_id' && @this.get('color_id')) {
-                    $(this).val(@this.get('color_id')).trigger('change');
-                } else if (fieldId === 'size_id' && @this.get('size_id')) {
-                    $(this).val(@this.get('size_id')).trigger('change');
-                }
-            });
-        }
-    </script> --}}
+        </script>
     @endpush
 </div>
