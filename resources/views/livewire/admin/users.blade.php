@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                             </div>
-     <div class="col-md-12">
+                            <div class="col-md-12">
                                 <label>الاسم</label>
                                 <input type="text" class="form-control" wire:model='name' />
                             </div>
@@ -77,7 +77,9 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>الصورة</th>
                                     <th>الاسم</th>
+                                    <th>عدد تسجيلات الدخول</th>
                                     <th>البريد الإلكتروني</th>
                                     <th>النوع</th>
                                     <th>الإجراءات</th>
@@ -87,7 +89,15 @@
                                 @foreach($users as $index => $user)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
+                                        <td>
+                                        @if ($user->image)
+                                            <img src="{{ display_file($user->image) }}" class="img-thumbnail" width="50" />
+                                        @else
+                                            <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="50" />
+                                        @endif
+                                       </td>
                                         <td>{{ $user->name }}</td>
+                                        <td>{{ $user->visit_count }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->type }}</td>
                                         <td>
