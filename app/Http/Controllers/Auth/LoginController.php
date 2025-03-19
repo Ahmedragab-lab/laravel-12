@@ -16,7 +16,6 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'user_type' => 'required|in:admin,user',
         ]);
     }
 
@@ -24,7 +23,6 @@ class LoginController extends Controller
     protected function credentials(Request $request)
     {
         $credentials = $request->only($this->username(), 'password');
-        $credentials['type'] = $request->user_type;
         
         return $credentials;
     }

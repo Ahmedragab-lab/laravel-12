@@ -18,20 +18,7 @@
                 @csrf
                 <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
                 
-                <!-- User Type Selection -->
-                <div class="form-group">
-                    <label class="control-label">User Type</label>
-                    <select name="user_type" class="form-control @error('user_type') is-invalid @enderror">
-                        <option value="">Select User Type</option>
-                        <option value="admin">Administrator</option>
-                        <option value="user">Regular User</option>
-                    </select>
-                    @error('user_type')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
+              
                 
                 <div class="form-group">
                     <label class="control-label">{{ __('E-Mail Address') }}</label>

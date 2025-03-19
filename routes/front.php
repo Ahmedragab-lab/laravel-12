@@ -8,6 +8,9 @@ use App\Livewire\Front\Contacts;
 use App\Livewire\Front\ProductDetails;
 use App\Livewire\Front\Shop;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+Route::get('/login_user', function () {
+    return view('livewire.front.user_login')->extends('front.layouts.master')->section('content');
+})->name('login_user');
 // Login Route
 Route::group(
     [
