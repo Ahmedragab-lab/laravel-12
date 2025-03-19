@@ -107,6 +107,11 @@ trait livewireResource
     {
     }
 
+    public function show($id){
+        $show = $this->model::findOrFail($id);
+        $this->obj = $show;
+        $this->screen = 'show';
+    }
     public function edit($id)
     {
         $edit = $this->model::findOrFail($id);
@@ -120,7 +125,7 @@ trait livewireResource
         }
         $this->whileEditing();
 
-        $this->screen = 'create';
+        $this->screen = 'edit';
     }
 
     public function afterUpdate()
