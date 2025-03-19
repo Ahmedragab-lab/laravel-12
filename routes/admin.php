@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ShiftsController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Livewire\Admin\Brands;
+use App\Livewire\Admin\Users;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Products;
 use App\Livewire\Admin\Colors;
@@ -39,6 +40,8 @@ Route::group(
             Route::get('categories', Categories::class)->name('categories');
             Route::get('colors', Colors::class)->name('colors');
             Route::get('sizes', Sizes::class)->name('sizes');
+            Route::get('users', Users::class)->name('users');
+
 
             // Route::get('/about_us', AboutUs::class)->name('AboutUs');
 
