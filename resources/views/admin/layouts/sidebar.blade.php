@@ -25,9 +25,17 @@
         <i class="app-menu__icon fa fa-users"></i>
         <span class="app-menu__label">المستخدمين</span>
 
-        <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::count() }}</span>
+        <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::where('type', 'user')->count() }}</span>
     </a>
-</li>
+   </li>
+    <li>
+        <a class="app-menu__item {{ Route::is('admins') ? 'active' : '' }}" href="{{ route('admins') }}">
+            <i class="app-menu__icon fa fa-users"></i>
+            <span class="app-menu__label">المشرفين</span>
+
+            <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::where('type', 'admin')->count() }}</span>
+        </a>
+    </li>
 
         {{-- <li>
             <a class="app-menu__item {{ request()->is('*roles*') ? 'active' : '' }}" href="{{ route('roles.index') }}">

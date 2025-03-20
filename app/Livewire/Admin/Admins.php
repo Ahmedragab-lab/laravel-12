@@ -7,12 +7,12 @@ use Livewire\Component;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 
-class Users extends Component
+class Admins extends Component
 {
     use livewireResource;
-
-    public $name, $email, $password, $type, $image,$phone, $search;
-    public $user;
+    public $model = User::class;
+    public $name, $email, $password, $type, $image, $phone, $search;
+    public $admin;
     public $filter = '';
     public $sortBy = 'created_at';
     public $sortDir = 'DESC';
@@ -34,46 +34,48 @@ class Users extends Component
             'name' => 'required|unique:users,name,' . $this->obj?->id,
             'email' => 'required|email|unique:users,email,' . $this->obj?->id,
             'password' => 'nullable|min:6',
-            'image' => 'nullable|image|max:2048', // Validating image
+            // 'image' => 'nullable|image|max:2048',
             'phone' => 'nullable|numeric',
         ];
     }
 
     public function beforeSubmit()
     {
-        $this->data['type'] = 'user';
+        $this->data['type'] = 'admin';
         if ($this->password) {
             $this->data['password'] = bcrypt($this->password);
         } else {
             unset($this->data['password']);
         }
+
         if ($this->image && $this->image instanceof UploadedFile) {
             if ($this->obj && $this->obj->image !== $this->image) {
                 delete_file($this->obj->image);
             }
-            // dd($this->data);
-            $this->image = $this->data['image'] = store_file($this->image, 'users');
+            $this->image = $this->data['image'] = store_file($this->image, 'admins');
         }
-    }
-    
-public function beforeDelete($id)
-{
-    if (auth()->id() === (int) $id) {
-        session()->flash('error', 'لا يمكنك حذف حسابك الحالي.');
-        return false;
-    }
-    return true;
-}
-public function render()
-{
-    $users = User::where('type', 'user') // Filter only users with type 'user'
-        ->when($this->search, fn($q) => $q->where('name', 'LIKE', "%" . $this->search . "%"))
-        ->orderBy($this->sortBy, $this->sortDir)
-        ->paginate($this->perPage);
 
-    return view('livewire.admin.users', compact('users'))
-        ->extends('admin.layouts.master')
-        ->section('content');
-}
+    }
 
+    public function beforeDelete($id)
+    {
+        // dd(auth()->id());
+        if (auth()->id() === (int) $id) {
+            session()->flash('error', 'لا يمكنك حذف حسابك الحالي.');
+            return false;
+        }
+        return true;
+    }
+
+    public function render()
+    {
+        $admins = User::where('type', 'admin') 
+            ->when($this->search, fn($q) => $q->where('name', 'LIKE', "%" . $this->search . "%"))
+            ->orderBy($this->sortBy, $this->sortDir)
+            ->paginate($this->perPage);
+
+        return view('livewire.admin.admins', compact('admins'))
+            ->extends('admin.layouts.master')
+            ->section('content');
+    }
 }

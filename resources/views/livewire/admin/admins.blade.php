@@ -1,10 +1,10 @@
 <div>
     <div>
-        <h2>المستخدمين</h2>
+        <h2>المشرفين</h2>
     </div>
     <ul class="breadcrumb mt-2">
         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">@lang('site.home')</a></li>
-        <li class="breadcrumb-item">المستخدمين</li>
+        <li class="breadcrumb-item">المشرفين</li>
     </ul>
     <x-messages></x-messages>
     <div>
@@ -13,10 +13,10 @@
                 <div class="col-md-4">
                     <div class="tile shadow">
                         <div class="row">
-                        <div class="col-md-12">
-                        <label class="small-label" for="">
-                            صورة المستخدم
-                              <span class="text-danger">*</span>
+                            <div class="col-md-12">
+                                <label class="small-label" for="">
+                                    صورة المشرف
+                                    <span class="text-danger">*</span>
                                 </label>
                                 <div class="box-input">
                                     <input type="file" class="form-control" wire:model='image' id="" />
@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <label>الاسم</label>
+                                <label>اسم المشرف</label>
                                 <input type="text" class="form-control" wire:model='name' />
                             </div>
                             <div class="col-md-12">
@@ -45,14 +45,6 @@
                                 <label>كلمة المرور</label>
                                 <input type="password" class="form-control" wire:model='password' />
                             </div>
-                            <!-- <div class="col-md-12">
-                                <label>النوع</label>
-                                <select class="form-control" wire:model='type'>
-                                    <option value="">اختر النوع</option>
-                                    <option value="user">مستخدم</option>
-                                    <option value="admin">مشرف</option>
-                                </select>
-                            </div>-->
                             <div class="col-md-12">
                                 <label>الهاتف</label>
                                 <input type="text" class="form-control" wire:model='phone' />
@@ -82,39 +74,39 @@
                                 <tr>
                                     <th>#</th>
                                     <th>الصورة</th>
-                                    <th>الاسم</th>
+                                    <th>اسم المشرف</th>
                                     <th>عدد تسجيلات الدخول</th>
                                     <th>البريد الإلكتروني</th>
                                     <th>الهاتف</th>
-                                    <!-- <th>النوع</th> -->
                                     <th>الإجراءات</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($users as $index => $user)
+                                @foreach($admins as $index => $admin)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>
-                                        @if ($user->image)
-                                            <img src="{{ display_file($user->image) }}" class="img-thumbnail" width="50" />
-                                        @else
-                                            <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="50" />
-                                        @endif
-                                       </td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->visit_count }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->phone }}</td>
-                                        <!-- <td>{{ $user->type }}</td> -->
+                                            @if ($admin->image)
+                                                <img src="{{ display_file($admin->image) }}" class="img-thumbnail" width="50" />
+                                            @else
+                                                <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="50" />
+                                            @endif
+                                        </td>
+                                        <td>{{ $admin->name }}</td>
+                                        <td>{{ $admin->visit_count }}</td>
+                                        <td>{{ $admin->email }}</td>
+                                        <td>{{ $admin->phone }}</td>
                                         <td>
-                                            <button class="btn btn-info btn-sm" wire:click='edit({{ $user->id }})'>تعديل</button>
-                                            <button class="btn btn-danger btn-sm" wire:click='delete({{ $user->id }})'>حذف</button>
+                                            <button class="btn btn-info btn-sm" wire:click='edit({{ $admin->id }})'>تعديل</button>
+                                            @if ($admin->id != auth()->id())
+                                            <button class="btn btn-danger btn-sm" wire:click='delete({{ $admin->id }})'>حذف</button>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $users->links() }}
+                        {{ $admins->links() }}
                     </div>
                 </div>
             </div>
