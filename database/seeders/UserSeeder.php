@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'name' => 'Ahmed Ragab',
             'email' => 'admin@admin.com',
             'password' => bcrypt('123456'),
-            // 'phone' => '01021493036',
+            'phone' => '01021493036',
             'type' => 'admin', // Set the type as 'admin'
             // 'image'=> 'no-image.jpg',
             'active'=> 1,
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'name' => 'Omar Ahmed',
             'email' => 'user@user.com',
             'password' => bcrypt('123456'),
-            // 'phone' => '01021493036',
+            'phone' => '01004517035',
             'type' => 'user', // Set the type as 'admin'
             // 'image'=> 'no-image.jpg',
             'active'=> 1,

@@ -11,21 +11,32 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
+    public function username()
+    {
+        $login = request()->input('login');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+        request()->merge([$field => $login]);
+        return $field;
+    }
+
     // Override the login method to include user type validation
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            $this->username() => 'required|string',
+            'login' => 'required|string',
             'password' => 'required|string',
         ]);
     }
 
     protected function credentials(Request $request)
     {
-        $credentials = $request->only($this->username(), 'password');
+        $login = $request->get('login');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
         
-        return $credentials;
-    }
+        return [
+            $field => $login,
+            'password' => $request->get('password')
+        ];    }
 
     protected function authenticated(Request $request, $user)
     {

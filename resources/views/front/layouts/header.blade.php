@@ -75,13 +75,27 @@
           </div>
 
           <div class="header-tools__item hover-container">
-            <a href="{{ route('login_user') }}" class="header-tools__item">
-              <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+    @auth
+        <!-- If the user is authenticated (logged in) -->
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="header-tools__item">
+            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
                 <use href="#icon_user" />
-              </svg>
-            </a>
-          </div>
+            </svg>
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
+    @else
+        <a href="{{ route('login_user') }}" class="header-tools__item">
+            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <use href="#icon_user" />
+            </svg>
+        </a>
+    @endauth
+</div>
+
 
           <a href="wishlist.html" class="header-tools__item">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
