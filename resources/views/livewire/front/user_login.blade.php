@@ -14,7 +14,7 @@
             <form method="POST" action="{{ route('login_user_post') }}" name="login-form" class="needs-validation" novalidate="">
             @csrf
               <div class="form-floating mb-3">
-                <input class="form-control form-control_gray " name="email" value="" required="" autocomplete="email"
+                <input class="form-control form-control_gray " name="email" value="" required="" autocomplete="Email or Phone"
                   autofocus="">
                 <label for="email">Email address *</label>
               </div>

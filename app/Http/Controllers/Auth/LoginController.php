@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -19,7 +20,6 @@ class LoginController extends Controller
         ]);
     }
 
-    // Add user type to the credentials used for authentication
     protected function credentials(Request $request)
     {
         $credentials = $request->only($this->username(), 'password');
@@ -27,9 +27,15 @@ class LoginController extends Controller
         return $credentials;
     }
 
-    // Redirect users based on their type after login
     protected function authenticated(Request $request, $user)
     {
+           $requestUri = $request->getRequestUri();
+
+           if (str_contains($requestUri, 'login_user') && $user->type === 'admin') {
+               Auth::logout();
+            //    session()->flash('error', 'Admins cannot log in from this page.');
+               return redirect()->route('login_user');
+           }
         // $request->getRequestUri();
         if ($user->type === 'admin') {
             return redirect()->route('admin.home');
