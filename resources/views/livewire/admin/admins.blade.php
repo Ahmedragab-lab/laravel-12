@@ -75,7 +75,7 @@
                                     <th>#</th>
                                     <th>الصورة</th>
                                     <th>اسم المشرف</th>
-                                    <th>عدد تسجيلات الدخول</th>
+                                    <!-- <th>عدد تسجيلات الدخول</th> -->
                                     <th>البريد الإلكتروني</th>
                                     <th>الهاتف</th>
                                     <th>الإجراءات</th>
@@ -93,7 +93,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $admin->name }}</td>
-                                        <td>{{ $admin->visit_count }}</td>
+                                        <!-- <td>{{ $admin->visit_count }}</td> -->
                                         <td>{{ $admin->email }}</td>
                                         <td>{{ $admin->phone }}</td>
                                         <td>
