@@ -69,40 +69,45 @@
                       <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Sweatshirt</a></li>
                     </ul>
                   </div>
-
                   <div class="search-result row row-cols-5"></div>
                 </div>
               </form>
             </div>
+            </div>
+            @auth
+              <!-- If the user is authenticated (logged in) -->
+              <div class="dropdown">
+                <a href="#" class="header-tools__item dropdown-toggle" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-person-circle" style="font-size: 20px;"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  <li><a class="dropdown-item" href="#">Orders</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- Logout Form -->
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+              </form>
+            @else
+            <div class="dropdown">
+            <a href="#" class="header-tools__item dropdown-toggle" id="guestMenu" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person" style="font-size: 20px;"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="guestMenu">
+              <li><a class="dropdown-item" href="{{ route('login_user') }}">Login</a></li>
+              <li><a class="dropdown-item" href="{{ route('register_user') }}">Register</a></li>
+            </ul>
+          </div>           
+          @endauth
           </div>
-
-          <div class="header-tools__item hover-container">
-    @auth
-        <!-- If the user is authenticated (logged in) -->
-        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="header-tools__item">
-    <i class="bi bi-door-open" style="font-size: 20px;"></i>
-</a>
-<!-- Logout Form -->
-<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-    @csrf
-</form>
-
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-        </form>
-    @else
-        <a href="{{ route('login_user') }}" class="header-tools__item">
-            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                 xmlns="http://www.w3.org/2000/svg">
-                <use href="#icon_user" />
-            </svg>
-        </a>
-    @endauth
-</div>
-
-
-          <a href="wishlist.html" class="header-tools__item">
+           <a href="wishlist.html" class="header-tools__item">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <use href="#icon_heart" />
             </svg>
