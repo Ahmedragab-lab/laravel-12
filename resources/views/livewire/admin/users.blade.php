@@ -81,6 +81,7 @@
                                     <th>الاسم</th>
                                     <th>عدد تسجيلات الدخول</th>
                                     <th>البريد الإلكتروني</th>
+                                    <th>الهاتف</th>
                                     <th>النوع</th>
                                     <th>الإجراءات</th>
                                 </tr>
@@ -99,6 +100,7 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->visit_count }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone }}</td>
                                         <td>{{ $user->type }}</td>
                                         <td>
                                             <button class="btn btn-info btn-sm" wire:click='edit({{ $user->id }})'>تعديل</button>
