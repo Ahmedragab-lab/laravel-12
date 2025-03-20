@@ -9,11 +9,17 @@ use App\Livewire\Front\ProductDetails;
 use App\Livewire\Front\Shop;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/login_user', function () {
     return view('livewire.front.user_login');
 })->middleware('guest')->name('login_user');
 
+Route::get('/register_user', function () {
+    return view('livewire.front.register');
+})->middleware('guest')->name('register_user');
+
+Route::post('/register_user', [RegisterController::class, 'register'])->name('register_user_post');
 Route::post('/login_user', [LoginController::class, 'login'])->name('login_user_post');
 
 // Login Route

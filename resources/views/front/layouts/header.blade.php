@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
 <header id="header" class="header header-fullwidth header-transparent-bg">
     <div class="container">
       <div class="header-desk header-desk_type_1">
@@ -78,10 +80,13 @@
     @auth
         <!-- If the user is authenticated (logged in) -->
         <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="header-tools__item">
-            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                 xmlns="http://www.w3.org/2000/svg">
-                <use href="#icon_user" />
-            </svg>
+    <i class="bi bi-door-open" style="font-size: 20px;"></i>
+</a>
+<!-- Logout Form -->
+<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+    @csrf
+</form>
+
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
             @csrf
