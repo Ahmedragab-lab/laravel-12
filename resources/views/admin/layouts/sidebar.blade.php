@@ -94,10 +94,15 @@
                 <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
             </a>
          </li>
+         <div class="app-sidebar__user">
+            <div>
+                <p class="app-sidebar__user-name">تجارب</p>
+            </div>
+        </div>
           <li>
             <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="{{ route('products2') }}">
                 <i class="app-menu__icon fa fa-list"></i>
-                <span class="app-menu__label">المنتجات</span>
+                <span class="app-menu__label">المنتجات livewire test</span>
 
                 <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
             </a>
