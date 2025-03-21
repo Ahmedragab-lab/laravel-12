@@ -5,6 +5,8 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
+
+
 class Setting extends Component
 {
     use WithFileUploads;
@@ -129,8 +131,9 @@ class Setting extends Component
             $data['icon_img']=setting('icon_img');
         }
         setting($data)->save();
-        // $this->alert('success', 'Settings updated successfully',['position' => 'center']);
-        LivewireAlert::title('Changes saved!')->success()->show();
+        // $this->emitTo('admin.website-name','refreshComponent');
+        $this->dispatch('refreshComponent');
+        LivewireAlert::title('تم التعديل بنجاح')->success()->show();
 
     }
 

@@ -147,17 +147,23 @@
         });
 
         function initSelect2() {
-            $('.select2.multiple').select2({
-                placeholder: "اختر ",
+            $('#color_id').select2({
+                placeholder: "اختر اللون",
                 allowClear: true,
-                multiple: true // Enable multi-select
+                multiple: true
             }).on('change', function (e) {
                 const data = $(this).select2("val");
-                if('color_id'){
-                    @this.set('color_id', data);
-                }else if('size_id'){
-                    @this.set('size_id', data);
-                }
+                @this.set('color_id', data);
+            });
+
+            // Initialize size select
+            $('#size_id').select2({
+                placeholder: "اختر مقاس",
+                allowClear: true,
+                multiple: true
+            }).on('change', function (e) {
+                const data = $(this).select2("val");
+                @this.set('size_id', data);
             });
         }
 

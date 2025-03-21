@@ -41,7 +41,16 @@ class Products2 extends Component
         $this->sortBy = $sortByField;
         $this->sortDir = 'DESC';
     }
+    protected $listeners = ['refreshColors' => '$refresh', 'refreshSizes' => '$refresh'];
+    public function refreshColors()
+    {
+        $this->emit('refreshColors');
+    }
 
+    public function refreshSizes()
+    {
+        $this->emit('refreshSizes');
+    }
     public function rules()
     {
         return [

@@ -65,7 +65,7 @@
                         <div class="form-group">
                             <label>@lang('products.color')<span class="text-danger">*</span></label>
                             <div class="input-group">
-                                <select name="color_id[]" id="color_id" wire:model.live="color_id" class="form-control select2 multiple" multiple>
+                                <select name="color_id[]" id="color_id" wire:model.defer="color_id" class="form-control select2 multiple" multiple>
                                     <option value="">اختر اللون</option>
                                     @foreach ($colors as $color)
                                         <option
