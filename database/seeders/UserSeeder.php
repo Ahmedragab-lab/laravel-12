@@ -29,8 +29,8 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
             'email_verified_at' => now(),
         ]);
-        $superadmin->addRole('superadministrator');
-        $superadmin = User::create([
+        $superadmin->addRole('admin');
+        $user = User::create([
             'name' => 'Omar Ahmed',
             'email' => 'user@user.com',
             'password' => bcrypt('123456'),

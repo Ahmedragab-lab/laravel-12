@@ -21,32 +21,31 @@
             </a>
         </li>
         <li>
-    <a class="app-menu__item {{ Route::is('users') ? 'active' : '' }}" href="{{ route('users') }}">
-        <i class="app-menu__icon fa fa-users"></i>
-        <span class="app-menu__label">المستخدمين</span>
-
-        <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::where('type', 'user')->count() }}</span>
-    </a>
-   </li>
-    <li>
-        <a class="app-menu__item {{ Route::is('admins') ? 'active' : '' }}" href="{{ route('admins') }}">
-            <i class="app-menu__icon fa fa-users"></i>
-            <span class="app-menu__label">المشرفين</span>
-
-            <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::where('type', 'admin')->count() }}</span>
-        </a>
-    </li>
-
-        {{-- <li>
             <a class="app-menu__item {{ request()->is('*roles*') ? 'active' : '' }}" href="{{ route('roles.index') }}">
                 <i class="app-menu__icon fa fa-dashboard"></i>
-                <span class="app-menu__label">roles</span>
+                <span class="app-menu__label">الصلاحيات</span>
             </a>
-        </li> --}}
+        </li>
         <li>
             <a class="app-menu__item {{ request()->is('*settings*') ? 'active' : '' }}" href="{{ route('settings') }}">
                 <i class="app-menu__icon fa fa-cogs"></i>
                 <span class="app-menu__label">@lang('settings.settings')</span>
+            </a>
+        </li>
+        <li>
+            <a class="app-menu__item {{ Route::is('users') ? 'active' : '' }}" href="{{ route('users') }}">
+                <i class="app-menu__icon fa fa-users"></i>
+                <span class="app-menu__label">المستخدمين</span>
+
+                <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::where('type', 'user')->count() }}</span>
+            </a>
+        </li>
+        <li>
+            <a class="app-menu__item {{ Route::is('admins') ? 'active' : '' }}" href="{{ route('admins') }}">
+                <i class="app-menu__icon fa fa-users"></i>
+                <span class="app-menu__label">المشرفين</span>
+
+                <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::where('type', 'admin')->count() }}</span>
             </a>
         </li>
         <li>

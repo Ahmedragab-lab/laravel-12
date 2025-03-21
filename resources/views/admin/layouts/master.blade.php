@@ -8,7 +8,7 @@
   </head>
   <body class="app sidebar-mini">
     @include('include.flash')
-     {{-- @include('sweetalert::alert') --}}
+     @include('sweetalert::alert')
      @include('admin.layouts.navbar')
      @include('admin.layouts.sidebar')
      <main class="app-content">

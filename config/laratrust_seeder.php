@@ -12,27 +12,26 @@ return [
     'truncate_tables' => true,
 
     'roles_structure' => [
-        'superadministrator' => [
+        'admin' => [
+            'roles' => 'c,r,u,d',
+            'admins' => 'c,r,u,d',
             'users' => 'c,r,u,d',
-            // 'payments' => 'c,r,u,d',
-            // 'profile' => 'r,u',
-        ],
-    //     'administrator' => [
-    //         'users' => 'c,r,u,d',
-    //         'profile' => 'r,u',
-    //     ],
-    //     'user' => [
-    //         'profile' => 'r,u',
-    //     ],
-    //     'role_name' => [
-    //         'module_1_name' => 'c,r,u,d',
-    //     ],
-    // ],
+            'settings' => 'c,r,u,d',
+            'products' => 'c,r,u,d',
+            'categories' => 'c,r,u,d',
+            'colors' => 'c,r,u,d',
+            'sizes' => 'c,r,u,d',
 
-    // 'permissions_map' => [
-    //     'c' => 'create',
-    //     'r' => 'read',
-    //     'u' => 'update',
-    //     'd' => 'delete',
+        ],
+        'user' => [
+
+        ],
+    ],
+
+    'permissions_map' => [
+        'c' => 'create',
+        'r' => 'read',
+        'u' => 'update',
+        'd' => 'delete',
     ],
 ];

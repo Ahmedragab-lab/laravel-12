@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RoleRequest;
+use App\Http\Requests\Admin\RoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class RoleController extends Controller
 {
-    protected $models = ['roles', 'admins', 'users', 'settings'];
+    protected $models = ['roles', 'admins', 'users', 'settings', 'products', 'categories','colors','sizes'];
     protected $permissionMaps = ['create', 'read', 'update', 'delete'];
     public function index()
     {
