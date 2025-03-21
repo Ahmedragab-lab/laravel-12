@@ -49,7 +49,7 @@
                                 <label>الهاتف</label>
                                 <input type="text" class="form-control" wire:model='phone' />
                             </div>
-                            <div class="col-md-12 mt-3"> 
+                            <div class="col-md-12 mt-3">
                                 <button wire:click='submit' class="btn btn-primary">@lang('settings.Save')</button>
                             </div>
                         </div>

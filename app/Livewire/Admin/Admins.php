@@ -34,7 +34,7 @@ class Admins extends Component
             'name' => 'required|unique:users,name,' . $this->obj?->id,
             'email' => 'required|email|unique:users,email,' . $this->obj?->id,
             'password' => 'nullable|min:6',
-            // 'image' => 'nullable|image|max:2048',
+            'image' => 'nullable',
             'phone' => 'nullable|numeric',
         ];
     }
@@ -57,19 +57,11 @@ class Admins extends Component
 
     }
 
-    public function beforeDelete($id)
-    {
-        // dd(auth()->id());
-        if (auth()->id() === (int) $id) {
-            session()->flash('error', 'لا يمكنك حذف حسابك الحالي.');
-            return false;
-        }
-        return true;
-    }
+    
 
     public function render()
     {
-        $admins = User::where('type', 'admin') 
+        $admins = User::where('type', 'admin')
             ->when($this->search, fn($q) => $q->where('name', 'LIKE', "%" . $this->search . "%"))
             ->orderBy($this->sortBy, $this->sortDir)
             ->paginate($this->perPage);

@@ -1,9 +1,11 @@
 <aside class="app-sidebar">
     <div class="app-sidebar__user">
-        {{-- <img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image"> --}}
+        <img class="app-sidebar__user-avatar" src="{{auth()->user()->image ?display_file(auth()->user()->image) : asset('no-image.jpg')}}"
+        alt="{{ auth()->user()->name}}">
         <div>
             <p class="app-sidebar__user-name">{{ Auth::user()->name }}</p>
-            {{-- <p class="app-sidebar__user-designation">Frontend Developer</p> --}}
+            <p class="app-sidebar__user-designation">{{ Auth::user()->email }}</p>
+            <p class="app-sidebar__user-designation">{{ auth()->user()->phone}}</p>
         </div>
     </div>
     <ul class="app-menu">
@@ -26,28 +28,34 @@
                 <span class="app-menu__label">الصلاحيات</span>
             </a>
         </li>
-        <li>
-            <a class="app-menu__item {{ request()->is('*settings*') ? 'active' : '' }}" href="{{ route('settings') }}">
-                <i class="app-menu__icon fa fa-cogs"></i>
-                <span class="app-menu__label">@lang('settings.settings')</span>
-            </a>
-        </li>
-        <li>
-            <a class="app-menu__item {{ Route::is('users') ? 'active' : '' }}" href="{{ route('users') }}">
-                <i class="app-menu__icon fa fa-users"></i>
-                <span class="app-menu__label">المستخدمين</span>
+        @if (auth()->user()->hasPermission('read_settings'))
+            <li>
+                <a class="app-menu__item {{ request()->is('*settings*') ? 'active' : '' }}" href="{{ route('settings') }}">
+                    <i class="app-menu__icon fa fa-cogs"></i>
+                    <span class="app-menu__label">@lang('settings.settings')</span>
+                </a>
+            </li>
+        @endif
+        @if (auth()->user()->hasPermission('read_users'))
+            <li>
+                <a class="app-menu__item {{ Route::is('users') ? 'active' : '' }}" href="{{ route('users') }}">
+                    <i class="app-menu__icon fa fa-users"></i>
+                    <span class="app-menu__label">المستخدمين</span>
 
-                <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::where('type', 'user')->count() }}</span>
-            </a>
-        </li>
-        <li>
-            <a class="app-menu__item {{ Route::is('admins') ? 'active' : '' }}" href="{{ route('admins') }}">
-                <i class="app-menu__icon fa fa-users"></i>
-                <span class="app-menu__label">المشرفين</span>
+                    <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::where('type', 'user')->count() }}</span>
+                </a>
+            </li>
+        @endif
+        @if (auth()->user()->hasPermission('read_admins'))
+            <li>
+                <a class="app-menu__item {{ Route::is('admins') ? 'active' : '' }}" href="{{ route('admins') }}">
+                    <i class="app-menu__icon fa fa-users"></i>
+                    <span class="app-menu__label">المشرفين</span>
 
-                <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::where('type', 'admin')->count() }}</span>
-            </a>
-        </li>
+                    <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\User::where('type', 'admin')->count() }}</span>
+                </a>
+            </li>
+        @endif
         <li>
             <a class="app-menu__item {{ request()->is('*brands*') ? 'active' : '' }}" href="{{ route('brands') }}">
                 <i class="app-menu__icon fa fa-cogs"></i>

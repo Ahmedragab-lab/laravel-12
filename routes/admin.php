@@ -36,13 +36,13 @@ Route::group(
                 return Route::post('/livewire/update', $handle);
             });
             Route::get('/', [HomeController::class, 'index'])->name('admin.home');
-            Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+            Route::get('/settings', [SettingController::class, 'index'])->name('settings')->middleware('permission:read_settings');
+            Route::get('admins', Admins::class)->name('admins')->middleware('permission:read_admins');
+            Route::get('users', Users::class)->name('users')->middleware('permission:read_users');
             Route::get('brands', Brands::class)->name('brands');
             Route::get('categories', Categories::class)->name('categories');
             Route::get('colors', Colors::class)->name('colors');
             Route::get('sizes', Sizes::class)->name('sizes');
-            Route::get('users', Users::class)->name('users');
-            Route::get('admins', Admins::class)->name('admins');
 
 
 

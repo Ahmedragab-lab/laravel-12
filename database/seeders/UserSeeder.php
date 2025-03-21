@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('123456'),
             'phone' => '01021493036',
             'type' => 'admin', // Set the type as 'admin'
-            // 'image'=> 'no-image.jpg',
+            'image'=> 'users/mypic.jpg',
             'active'=> 1,
             'username'=>'username',
             'com_code'=>'1',
