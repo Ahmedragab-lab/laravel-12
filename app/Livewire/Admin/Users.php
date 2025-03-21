@@ -34,7 +34,7 @@ class Users extends Component
             'name' => 'required|unique:users,name,' . $this->obj?->id,
             'email' => 'required|email|unique:users,email,' . $this->obj?->id,
             'password' => 'nullable|min:6',
-            'image' => 'nullable|image|max:2048', // Validating image
+            'image' => 'nullable', // Validating image
             'phone' => 'nullable|numeric',
         ];
     }
