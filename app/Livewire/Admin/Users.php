@@ -35,7 +35,7 @@ class Users extends Component
             'email' => 'required|email|unique:users,email,' . $this->obj?->id,
             'password' => 'nullable|min:6',
             'image' => 'nullable', // Validating image
-            'phone' => 'nullable|numeric',
+            'phone' => 'nullable|numeric|unique:users,phone,' . $this->obj?->id,
         ];
     }
 
@@ -55,7 +55,7 @@ class Users extends Component
             $this->image = $this->data['image'] = store_file($this->image, 'users');
         }
     }
-    
+
 public function beforeDelete($id)
 {
     if (auth()->id() === (int) $id) {

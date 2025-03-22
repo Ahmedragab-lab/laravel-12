@@ -18,6 +18,8 @@ use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Products;
 use App\Livewire\Admin\Colors;
 use App\Livewire\Admin\Products2;
+use App\Livewire\Admin\Products\CreateProduct;
+use App\Livewire\Admin\Products\UpdateProduct;
 use App\Livewire\Admin\Sizes;
 use App\Models\Product;
 // use App\Livewire\Admin\AboutUs;
@@ -58,8 +60,10 @@ Route::group(
                 Route::post('/products/remove_cert','remove_cert')->name('products.remove_cert');
                 Route::resource('products',ProductController::class);
             });
-            Route::get('/products2',[ProductController2::class,'index'])->name('products2');
-            // Route::get('/products2',Products2::class)->name('products2');
+            // Route::get('/products2',[ProductController2::class,'index'])->name('products2');
+            Route::get('/products2',Products2::class)->name('products2');
+            Route::get('/products2/create',CreateProduct::class)->name('products2.create');
+            Route::get('/products2/update/{id}',UpdateProduct::class)->name('products2.update');
 
 
 

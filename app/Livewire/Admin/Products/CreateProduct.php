@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\Products;
 
 use App\Models\Size;
 use App\Models\Brand;
@@ -9,14 +9,12 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
 use Illuminate\Support\Str;
-use App\Traits\livewireResource;
-use Illuminate\Support\Facades\Auth;
-use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
-use Illuminate\Http\UploadedFile;
-use Carbon\Carbon;
 use Livewire\Attributes\On;
-
-class Products2 extends Component
+use App\Traits\livewireResource;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+class CreateProduct extends Component
 {
     use livewireResource;
     public $search ,$name,$color_code;
@@ -44,25 +42,25 @@ class Products2 extends Component
         $this->sortBy = $sortByField;
         $this->sortDir = 'DESC';
     }
-    #[On('colorUpdated')]
-    public function updateColor($data)
-    {
-        $this->color_id = $data['color_id'];
-        $this->dispatch('refreshSelect2'); // Reinitialize Select2 after update
-    }
+    // #[On('colorUpdated')]
+    // public function updateColor($data)
+    // {
+    //     $this->color_id = $data['color_id'];
+    //     $this->dispatch('refreshSelect2'); // Reinitialize Select2 after update
+    // }
 
-    #[On('sizeUpdated')]
-    public function updateSize($data)
-    {
-        $this->size_id = $data['size_id'];
-        $this->dispatch('refreshSelect2'); // Reinitialize Select2 after update
-    }
-    #[On('editorUpdated')]
-    public function updateEditor($data)
-    {
-        $this->description = $data['content'];
-        $this->dispatch('refreshEditor'); // Reinitialize CKEditor after update
-    }
+    // #[On('sizeUpdated')]
+    // public function updateSize($data)
+    // {
+    //     $this->size_id = $data['size_id'];
+    //     $this->dispatch('refreshSelect2'); // Reinitialize Select2 after update
+    // }
+    // #[On('editorUpdated')]
+    // public function updateEditor($data)
+    // {
+    //     $this->description = $data['content'];
+    //     $this->dispatch('refreshEditor'); // Reinitialize CKEditor after update
+    // }
     public function rules()
     {
         return [
@@ -84,14 +82,9 @@ class Products2 extends Component
         $brands = Brand::latest()->get();
         $colors = Color::latest()->get();
         $sizes  = Size::latest()->get();
-        $products = Product::with(['category','brand','color','size','images'])
-        ->orderBy($this->sortBy,$this->sortDir)
-        ->paginate($this->perPage);
-        return view('livewire.admin.products2.index', compact('products','categories','brands','colors','sizes'))
-        ->extends('admin.layouts.master')
+        return view('livewire.admin.products2.create-product', compact('categories','brands','colors','sizes'))->extends('admin.layouts.master')
         ->section('content');
     }
-
 
     public function beforeSubmit()
     {
@@ -252,5 +245,4 @@ class Products2 extends Component
         // LivewireAlert::title('تم الاضافة بنجاح')->success()->show();
         session()->flash('success', 'تم الاضافة بنجاح');
     }
-
 }

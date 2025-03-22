@@ -45,19 +45,12 @@
                                 <label>كلمة المرور</label>
                                 <input type="password" class="form-control" wire:model='password' />
                             </div>
-                            <!-- <div class="col-md-12">
-                                <label>النوع</label>
-                                <select class="form-control" wire:model='type'>
-                                    <option value="">اختر النوع</option>
-                                    <option value="user">مستخدم</option>
-                                    <option value="admin">مشرف</option>
-                                </select>
-                            </div>-->
                             <div class="col-md-12">
                                 <label>الهاتف</label>
-                                <input type="text" class="form-control" wire:model='phone' />
+                                <input type="text" class="form-control" wire:model='phone'
+                                maxlength="11" minlength="11"  onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
                             </div>
-                            <div class="col-md-12 mt-3"> 
+                            <div class="col-md-12 mt-3">
                                 <button wire:click='submit' class="btn btn-primary">@lang('settings.Save')</button>
                             </div>
                         </div>
@@ -105,10 +98,11 @@
                                         <td>{{ $user->visit_count }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone }}</td>
-                                        <!-- <td>{{ $user->type }}</td> -->
                                         <td>
-                                            <button class="btn btn-info btn-sm" wire:click='edit({{ $user->id }})'>تعديل</button>
-                                            <button class="btn btn-danger btn-sm" wire:click='delete({{ $user->id }})'>حذف</button>
+                                            <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $user->id }})'>
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <x-delete-modal :item="$user" />
                                         </td>
                                     </tr>
                                 @endforeach
