@@ -22,6 +22,7 @@ use App\Livewire\Admin\Products\CreateProduct;
 use App\Livewire\Admin\Products\UpdateProduct;
 use App\Livewire\Admin\Sizes;
 use App\Models\Product;
+use App\Livewire\Admin\Animals;
 // use App\Livewire\Admin\AboutUs;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -45,6 +46,7 @@ Route::group(
             Route::get('categories', Categories::class)->name('categories');
             Route::get('colors', Colors::class)->name('colors');
             Route::get('sizes', Sizes::class)->name('sizes');
+            Route::get('animals', Animals::class)->name('animals');
 
 
 
