@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Admin\Products;
 
+use Livewire\Component;
 use App\Models\Size;
 use App\Models\Brand;
 use App\Models\Color;
 use App\Models\Product;
-use Livewire\Component;
 use App\Models\Category;
 use Illuminate\Support\Str;
-use App\Traits\livewireResource;
-use Illuminate\Support\Facades\Auth;
-use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
-use Illuminate\Http\UploadedFile;
-use Carbon\Carbon;
 use Livewire\Attributes\On;
-
-class Products2 extends Component
+use App\Traits\livewireResource;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+class UpdateProduct extends Component
 {
     use livewireResource;
     public $search ,$name,$color_code;
@@ -44,32 +42,30 @@ class Products2 extends Component
         $this->sortBy = $sortByField;
         $this->sortDir = 'DESC';
     }
-    #[On('colorUpdated')]
-    public function updateColor($data)
-    {
-        $this->color_id = $data['color_id'];
-        $this->dispatch('refreshSelect2'); // Reinitialize Select2 after update
-    }
 
-    #[On('sizeUpdated')]
-    public function updateSize($data)
-    {
-        $this->size_id = $data['size_id'];
-        $this->dispatch('refreshSelect2'); // Reinitialize Select2 after update
-    }
-    #[On('editorUpdated')]
-    public function updateEditor($data)
-    {
-        $this->description = $data['content'];
-        $this->dispatch('refreshEditor'); // Reinitialize CKEditor after update
+    public function mount($id){
+        $product = Product::findOrFail($id);
+        $this->obj = $product;
+        $this->product_name = $product->product_name;
+        $this->category_id = $product->category_id;
+        $this->brand_id = $product->brand_id;
+        $this->expiration_date = $product->expiration_date;
+        $this->discount = $product->discount;
+        $this->price = $product->price;
+        $this->stock = $product->stock;
+        $this->status = $product->status;
+        $this->description = $product->description;
+        $this->color_id = $product->color->pluck('id')->toArray();
+        $this->size_id = $product->size->pluck('id')->toArray();
+        $this->products_images = $product->images()->get();
     }
     public function rules()
     {
         return [
             // 'name' => 'required|unique:brands,name,' . $this->obj?->id,
-            'product_name' => 'required',
-            'category_id' => 'required',
-            'brand_id' => 'required',
+            'product_name' => 'required|unique:products,product_name,' . $this->obj?->id,
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
             'expiration_date' => 'nullable',
             'discount' => 'nullable',
             'price' => 'nullable',
@@ -84,14 +80,10 @@ class Products2 extends Component
         $brands = Brand::latest()->get();
         $colors = Color::latest()->get();
         $sizes  = Size::latest()->get();
-        $products = Product::with(['category','brand','color','size','images'])
-        ->orderBy($this->sortBy,$this->sortDir)
-        ->paginate($this->perPage);
-        return view('livewire.admin.products2.index', compact('products','categories','brands','colors','sizes'))
+        return view('livewire.admin.products2.update-product', compact('categories','brands','colors','sizes'))
         ->extends('admin.layouts.master')
         ->section('content');
     }
-
 
     public function beforeSubmit()
     {
@@ -163,6 +155,7 @@ class Products2 extends Component
             $this->color_id = $this->obj->color->pluck('id')->toArray();
             $this->size_id = $this->obj->size->pluck('id')->toArray();
             $this->products_images = $this->obj->images()->get();
+            $this->description = $this->obj->description;
         }
         // $this->dispatch('refreshSelect2');
     }
@@ -253,4 +246,10 @@ class Products2 extends Component
         session()->flash('success', 'تم الاضافة بنجاح');
     }
 
+    public function hydrate()
+{
+    if ($this->obj && $this->obj->exists) {
+        $this->obj->load(['color', 'size', 'images']);
+    }
+}
 }
