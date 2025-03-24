@@ -19,7 +19,7 @@ use Livewire\Attributes\On;
 class Products2 extends Component
 {
     use livewireResource;
-    public $search ,$name,$color_code;
+    public $name,$color_code;
     public $product_name, $category_id, $brand_id, $expiration_date, $discount, $price, $stock,$status, $description;
     public $new_category_name = '',$new_category_image = null;
     public $new_brand_name = '',$new_brand_image = null;
@@ -35,6 +35,7 @@ class Products2 extends Component
     public $sortBy = 'created_at';
     public $sortDir = 'DESC';
     public $perPage = 10;
+    public $search = '', $search_brand = '', $search_category = '';
     protected $model = Product::class;
     public function setSortBy($sortByField){
         if($this->sortBy === $sortByField){
@@ -80,14 +81,37 @@ class Products2 extends Component
     }
     public function render()
     {
+        $active = Product::where('status',1)->count();
+        $unactive = Product::where('status',0)->count();
         $categories = Category::latest()->get();
         $brands = Brand::latest()->get();
         $colors = Color::latest()->get();
         $sizes  = Size::latest()->get();
-        $products = Product::with(['category','brand','color','size','images'])
-        ->orderBy($this->sortBy,$this->sortDir)
-        ->paginate($this->perPage);
-        return view('livewire.admin.products2.index', compact('products','categories','brands','colors','sizes'))
+        $query = Product::with(['category','brand','color','size','images']);
+        if (request()->filled('brand_id')) {
+            $query = $query->where('brand_id', request('brand_id'));
+        }
+        if ($this->search) {
+            $query = $query->where('product_name', 'like', '%' . $this->search . '%');
+        }
+        if ($this->search_brand) {
+            $query = $query->whereHas('brand', function ($q) {
+                $q->where('name', 'like', '%' . $this->search_brand . '%');
+            });
+        }
+        if ($this->search_category) {
+            $query = $query->whereHas('category', function ($q) {
+                $q->where('name', 'like', '%' . $this->search_category . '%');
+            });
+        }
+        if ($this->filter=='active') {
+            $query = $query->where('status', 1);
+        }elseif ($this->filter=='unactive') {
+            $query = $query->where('status', 0);
+        }
+        $products = $query->orderBy($this->sortBy,$this->sortDir)
+                          ->paginate($this->perPage);
+        return view('livewire.admin.products2.index', compact('products','categories','brands','colors','sizes','active','unactive'))
         ->extends('admin.layouts.master')
         ->section('content');
     }

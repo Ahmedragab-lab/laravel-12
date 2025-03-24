@@ -98,7 +98,7 @@
                                                     <td>{{ $brand->name }}</td>
                                                     {{-- <td class="btn btn-success btn-sm">{{ $brand->products_count }}</td> --}}
                                                     <td>
-                                                        <a href="{{ route('products.index', ['brand_id' => $brand->id]) }}" class="btn btn-success btn-sm">
+                                                        <a href="{{ route('products2', ['brand_id' => $brand->id]) }}" class="btn btn-success btn-sm">
                                                             {{ $brand->products_count }}
                                                         </a>
                                                     </td>

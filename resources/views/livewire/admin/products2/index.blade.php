@@ -5,12 +5,8 @@
             <div class="col-md-12">
                 <div class="tile shadow">
                     <div class="row mb-2">
-                        <div class="col-md-2">
-                            {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                                wire:click="$set('screen','create')">
-                                اضافه منتج جديد
-                                <i class="fa fa-plus"></i>
-                            </button> --}}
+                        {{-- <p>test product by livewire</p> --}}
+                        <div class="col-md-1">
                             <a href="{{ route('products2.create') }}" class="btn btn-primary">
                                 <i class="fa fa-plus"></i> @lang('site.create')</a>
                         </div>
@@ -24,22 +20,35 @@
                                 <option value="100">100</option>
                             </select>
                         </div>
-                        {{-- <div class="col-md-2">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <input type="text" id="data-table-search" class="form-control" autofocus
-                                    placeholder="اسم البرند" wire:model.live='search'>
-                            </div>
-                        </div> --}}
-
-                    </div><!-- end of row -->
-                    <div class="row mb-2">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <input type="text" id="data-table-search" class="form-control" autofocus
-                                    placeholder="@lang('site.search')">
+                                    placeholder="اسم المنتج" wire:model.live='search'>
                             </div>
                         </div>
-                    </div><!-- end of row -->
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" id="data-table-search" class="form-control" autofocus
+                                    placeholder="اسم البراند" wire:model.live='search_brand'>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="text" id="data-table-search" class="form-control" autofocus
+                                    placeholder="اسم القسم" wire:model.live='search_category'>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button class="btn btn-primary" wire:click="set('filter', 'active')">المفعلين {{ $active }}</button>
+                                <button class="btn btn-danger"  wire:click="set('filter', 'unactive')">غير مفعلين {{ $unactive }}</button>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
@@ -110,7 +119,9 @@
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $product->admin?->name }}</td>
-                                                <td>{{ $product->status == 1 ? 'متاح' : 'غير متاح' }}</td>
+                                                <td class="badge badge-sm {{ $product->status == 1 ? 'badge-primary' : 'badge-danger' }} mb-2"
+                                                    style="margin-top: 15px">
+                                                    {{ $product->status == 1 ? 'مفعل' : 'غير مفعل' }}</td>
                                                 <td>{{ $product->created_at->format('Y-m-d') }}</td>
                                                 <td>
                                                     {{-- <button type="button" class="btn btn-sm btn-info"
