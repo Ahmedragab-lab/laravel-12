@@ -51,9 +51,9 @@ Route::group(
             Route::get('products3', Products3::class)->name('products3');
             // Route::get('/admin/products3/create', \App\Livewire\Admin\Products3::class)->name('admin.products.create');
             // Route::get('/admin/products/update/{id}', \App\Livewire\Admin\Products3::class)->name('admin.products.update')->middleware('AdminOnly');
-            Route::get('/admin/products/create', \App\Livewire\Admin\CreateProduct3::class)
+            Route::get('/products3/create', \App\Livewire\Admin\CreateProduct3::class)
             ->name('products3.create');        
-        Route::get('/admin/products/edit/{id}', \App\Livewire\Admin\CreateProduct3::class)
+        Route::get('/products/edit/{id}', \App\Livewire\Admin\CreateProduct3::class)
             ->name('products3.edit');        
 
 

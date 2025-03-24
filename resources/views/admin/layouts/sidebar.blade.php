@@ -107,6 +107,14 @@
                 <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
             </a>
          </li>
+         <li>
+            <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="{{ route('products3') }}">
+                <i class="app-menu__icon fa fa-list"></i>
+                <span class="app-menu__label">المنتجات livewire test</span>
+
+                <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
+            </a>
+         </li>
         {{-- <li>
             <a class="app-menu__item {{ request()->is('*units*') ? 'active' : '' }}" href="{{ route('units') }}">
                 <i class="app-menu__icon fa fa-shopping-bag"></i>
