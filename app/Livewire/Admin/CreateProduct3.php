@@ -12,6 +12,8 @@ class CreateProduct3 extends Component
 {
     public $productId, $product_name, $description, $price, $category_id, $brand_id;
     public $categories = [], $brands = [];
+    public $colors = [], $sizes = []; // Added properties for colors and sizes
+
     public $isEditMode = false;
 
     public function mount($id = null)
@@ -33,6 +35,8 @@ class CreateProduct3 extends Component
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
+            'colors' => 'array', // Validation for colors
+            'sizes' => 'array',  // Validation for sizes
         ];
     }
 
@@ -46,6 +50,8 @@ class CreateProduct3 extends Component
         $this->price = $product->price;
         $this->category_id = $product->category_id;
         $this->brand_id = $product->brand_id;
+        $this->colors = $product->colors ?? []; // Assuming colors are stored as an array
+        $this->sizes = $product->sizes ?? [];   // Assuming sizes are stored as an array
     }
 
     public function submit()
@@ -59,13 +65,14 @@ class CreateProduct3 extends Component
             'price' => $this->price,
             'category_id' => $this->category_id,
             'brand_id' => $this->brand_id,
+            'colors' => $this->colors, // Save colors
+            'sizes' => $this->sizes,   // Save sizes
         ];
 
         if ($this->isEditMode) {
             Product::find($this->productId)->update($data);
             session()->flash('success', 'تم التحديث بنجاح');
         } else {
-            // dd($data);
             Product::create($data);
             session()->flash('success', 'تم الإنشاء بنجاح');
         }

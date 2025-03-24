@@ -14,7 +14,6 @@ class Products3 extends Component
     public $productToDelete;
     public $obj;
     public $data = [];
-
     public function rules()
     {
         return [
