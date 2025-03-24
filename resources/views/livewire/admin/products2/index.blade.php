@@ -148,7 +148,7 @@
     @elseif($screen == 'show')
         <h1>hi show</h1>
     @endif --}}
-    @push('js')
+    {{-- @push('js')
         <!-- Load jQuery -->
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
@@ -281,5 +281,5 @@
                       });
               }
           </script>
-    @endpush
+    @endpush --}}
 </div>
