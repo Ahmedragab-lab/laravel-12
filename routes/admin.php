@@ -43,6 +43,7 @@ Route::group(
             Route::get('/settings', [SettingController::class, 'index'])->name('settings')->middleware('permission:read_settings');
             Route::get('admins', Admins::class)->name('admins')->middleware('permission:read_admins');
             Route::get('users', Users::class)->name('users')->middleware('permission:read_users');
+            Route::resource('/roles', RoleController::class)->except('show');
             Route::get('brands', Brands::class)->name('brands');
             Route::get('categories', Categories::class)->name('categories');
             Route::get('colors', Colors::class)->name('colors');
@@ -51,10 +52,10 @@ Route::group(
             Route::get('products3', Products3::class)->name('products3');
             // Route::get('/admin/products3/create', \App\Livewire\Admin\Products3::class)->name('admin.products.create');
             // Route::get('/admin/products/update/{id}', \App\Livewire\Admin\Products3::class)->name('admin.products.update')->middleware('AdminOnly');
-            Route::get('/admin/products/create', \App\Livewire\Admin\CreateProduct3::class)
-            ->name('products3.create');        
-        Route::get('/admin/products/edit/{id}', \App\Livewire\Admin\CreateProduct3::class)
-            ->name('products3.edit');        
+            Route::get('/products3/create', \App\Livewire\Admin\CreateProduct3::class)
+            ->name('products3.create');
+        Route::get('/products/edit/{id}', \App\Livewire\Admin\CreateProduct3::class)
+            ->name('products3.edit');
 
 
             // Route::get('/about_us', AboutUs::class)->name('AboutUs');
@@ -115,7 +116,7 @@ Route::group(
 
 
             //
-            Route::resource('/roles', RoleController::class)->except('show');
+
         });
     }
 );
