@@ -1,3 +1,203 @@
+
+
+@media print {
+    .not-print {
+        display: none !important;
+    }
+
+    .ar {
+        font-size: 19px !important;
+    }
+
+    .print-content {
+        direction: rtl;
+    }
+
+    .main-table {
+        width: 100%;
+        border-radius: 8px 8px 0px 0px;
+        border: 1px solid #e0e0e0;
+
+        thead {
+            background: #fff;
+            color: #000000;
+            border: 1px solid #e0e0e0;
+
+            tr {
+                th {
+                    padding: 10px;
+                    font-size: 9px;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    padding: 10px;
+                    font-size: 8px;
+
+                    .btn-light-purple {
+                        padding: 4px 12px;
+                        font-size: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    .patientFile {
+        .row>* {
+            width: 20%;
+        }
+
+        .check {
+            width: 50% !important;
+        }
+
+        .data-content {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            width: 100%;
+
+            div {
+                width: 50%;
+
+                p {
+                    font-size: 10px;
+                    white-space: nowrap;
+                }
+            }
+        }
+
+        .wrapper {
+            display: flex;
+
+            .parent {
+                display: flex;
+                flex-direction: column;
+
+                .data-content {
+                    div {
+                        width: 100%;
+
+                        textarea {
+                            min-height: 140px !important;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .data-content {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        width: 100% !important;
+
+        div {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100% !important;
+
+            div {
+                width: 50%;
+
+                p {
+                    font-size: 8px !important;
+                    white-space: wrap !important;
+                }
+
+                &.holder {
+                    width: 100% !important;
+
+                    .special {
+                        width: 100% !important;
+
+                        textarea {
+                            width: 100% !important;
+                            min-height: 100px !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    .casher-invoice {
+        .invoice-content {
+            .logo-holder {
+                .the_image {
+                    width: 10px !important;
+                }
+            }
+
+            .invoice-name {
+                font-size: 10px !important;
+            }
+        }
+
+        .the_address {
+            p {
+                font-size: 11px !important;
+            }
+        }
+
+        .tax {
+            font-size: 11px;
+        }
+
+        .the_date {
+            font-size: 11px;
+        }
+
+        div {
+            b {
+                font-size: 11px !important;
+            }
+        }
+
+
+        .bototm-table {
+            .dd {
+                font-size: 11px !important;
+
+                .nn {
+                    font-size: 11px !important;
+                }
+            }
+        }
+
+        .wel {
+            margin: auto !important;
+            padding: 0 !important;
+            font-size: 12px !important;
+            text-align: center !important;
+        }
+
+        .bar_code_holder {
+            width: 40% !important;
+
+            svg {
+                width: 100% !important;
+                height: 100% !important;
+            }
+        }
+
+        .parent-boxes-info {
+            margin-top: 10px !important;
+            width: 60% !important;
+        }
+    }
+}
+
 .form-control {
     padding: 0.20rem 0.75rem;
 }

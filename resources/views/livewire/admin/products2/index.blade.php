@@ -41,22 +41,26 @@
 
                     </div>
                     <div class="row mb-2">
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <button class="btn btn-primary" wire:click="set('filter', 'active')">المفعلين {{ $active }}</button>
-                                <button class="btn btn-danger"  wire:click="set('filter', 'unactive')">غير مفعلين {{ $unactive }}</button>
+                                <button class="btn btn-warning btn-sm" wire:click="set('filter', '')">الكل {{ \App\Models\Product::count() }}</button>
+                                <button class="btn btn-primary btn-sm" wire:click="set('filter', 'active')">المفعلين {{ $active }}</button>
+                                <button class="btn btn-danger btn-sm"  wire:click="set('filter', 'unactive')">غير مفعلين {{ $unactive }}</button>
+                                <button class="btn btn-warning btn-sm" id="btn-prt-content">
+                                    <i class="fa fa-print"></i>
+                                </button>
                             </div>
                         </div>
 
                     </div>
-                    <div class="row">
+                    <div class="row" id="prt-content">
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table  datatable data-table table-striped table-bordered table-sm"
                                     id="products-table">
                                     <thead>
                                         <tr>
-                                            <th>
+                                            <th class="not-print">
                                                 <div class="animated-checkbox">
                                                     <label class="m-0">
                                                         <input type="checkbox" name="select_all" id="select-all">
@@ -77,13 +81,13 @@
                                             <th>المسؤال</th>
                                             <th>الحاله</th>
                                             <th>تاريخ انشاء</th>
-                                            <th>@lang('site.action')</th>
+                                            <th class="not-print">@lang('site.action')</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($products as $index=>$product)
                                             <tr>
-                                                <td>
+                                                <td class="not-print">
                                                     <div class="animated-checkbox">
                                                         <label class="m-0">
                                                             <input type="checkbox" value="{{ $product->id }}"
@@ -119,15 +123,14 @@
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $product->admin?->name }}</td>
-                                                <td class="badge badge-sm {{ $product->status == 1 ? 'badge-primary' : 'badge-danger' }} mb-2"
-                                                    style="margin-top: 15px">
-                                                    {{ $product->status == 1 ? 'مفعل' : 'غير مفعل' }}</td>
-                                                <td>{{ $product->created_at->format('Y-m-d') }}</td>
                                                 <td>
-                                                    {{-- <button type="button" class="btn btn-sm btn-info"
-                                                        wire:click='edit({{ $product->id }})'>
-                                                        <i class="fa fa-edit"></i>
-                                                    </button> --}}
+                                                    <span class="badge badge-pill {{ $product->status == 1 ? 'badge-primary' : 'badge-danger' }} mb-2"
+                                                        style="margin-top: 15px">
+
+                                                        {{ $product->status == 1 ? 'مفعل' : 'غير مفعل' }}</td>
+                                                    </span>
+                                                <td>{{ $product->created_at->format('Y-m-d') }}</td>
+                                                <td class="not-print">
                                                     <a href="{{ route('products2.update', $product->id ) }}" class="btn btn-sm btn-info">
                                                         <i class="fa fa-edit"></i></a>
                                                     <button type="button" class="btn btn-sm btn-warning"
@@ -139,13 +142,16 @@
                                                 </td>
                                             </tr>
                                         @empty
-                                            <tr>
+                                            <tr >
                                                 <td colspan="12">لا يوجد منتجات</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
-                                {{ $products->links() }}
+                                <div class="not-print">
+
+                                    {{ $products->links() }}
+                                </div>
                             </div><!-- end of table responsive -->
                         </div><!-- end of col -->
                     </div><!-- end of row -->

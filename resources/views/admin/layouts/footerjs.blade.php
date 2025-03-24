@@ -82,3 +82,50 @@ $(function() {
 	<script type="text/javascript">
 		CKEDITOR.config.language ="{{ app()->getLocale() }}";
 	</script>
+{{-- <script>
+    // print
+if (document.getElementById("prt-content")) {
+    const btnPrtContent = document.getElementById("btn-prt-content");
+    btnPrtContent.addEventListener("click", printDiv);
+
+    function printDiv() {
+        const prtContent = document.getElementById("prt-content");
+        const langAttribute = document.documentElement.getAttribute("lang")|| "{{ app()->getLocale() }}";
+        newWin = window.open("");
+        newWin.document.head.replaceWith(document.head.cloneNode(true));
+        newWin.document.body.appendChild(prtContent.cloneNode(true));
+        if (langAttribute) {
+            newWin.document.documentElement.setAttribute("lang", langAttribute);
+        }
+        setTimeout(() => {
+            newWin.print();
+            newWin.close();
+        }, 600);
+    }
+}
+</script> --}}
+<script>
+    // Print Functionality
+    if (document.getElementById("prt-content")) {
+        const btnPrtContent = document.getElementById("btn-prt-content");
+        btnPrtContent.addEventListener("click", printDiv);
+
+        function printDiv() {
+            const prtContent = document.getElementById("prt-content");
+            const langAttribute = document.documentElement.getAttribute("lang") || "ar";
+
+            const newWin = window.open("", "_blank");
+            newWin.document.write(`<!DOCTYPE html>
+            <html lang="${langAttribute}">
+            <head>${document.head.innerHTML}</head>
+            <body>${prtContent.outerHTML}</body>
+            </html>`);
+
+            setTimeout(() => {
+                newWin.document.close();
+                newWin.print();
+                newWin.close();
+            }, 600);
+        }
+    }
+</script>
