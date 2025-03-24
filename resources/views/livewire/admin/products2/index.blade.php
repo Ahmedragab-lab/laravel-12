@@ -38,14 +38,24 @@
                                     placeholder="اسم القسم" wire:model.live='search_category'>
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <select name="" id="" class="form-control" wire:model.live='search_admin' id="">
+                                    <option value="">المسؤل</option>
+                                    @foreach ($admins as $admin)
+                                        <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <button class="btn btn-warning btn-sm" wire:click="set('filter', '')">الكل {{ \App\Models\Product::count() }}</button>
-                                <button class="btn btn-primary btn-sm" wire:click="set('filter', 'active')">المفعلين {{ $active }}</button>
-                                <button class="btn btn-danger btn-sm"  wire:click="set('filter', 'unactive')">غير مفعلين {{ $unactive }}</button>
+                                <button class="btn btn-warning btn-sm" wire:click="$set('filter', '')">الكل {{ \App\Models\Product::count() }}</button>
+                                <button class="btn btn-primary btn-sm" wire:click="$set('filter', 'active')">المفعلين {{ $active }}</button>
+                                <button class="btn btn-danger btn-sm"  wire:click="$set('filter', 'unactive')">غير مفعلين {{ $unactive }}</button>
                                 <button class="btn btn-warning btn-sm" id="btn-prt-content">
                                     <i class="fa fa-print"></i>
                                 </button>

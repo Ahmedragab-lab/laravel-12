@@ -8,6 +8,7 @@ use App\Models\Color;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Support\Str;
 use App\Traits\livewireResource;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,7 @@ class Products2 extends Component
     public $sortBy = 'created_at';
     public $sortDir = 'DESC';
     public $perPage = 10;
-    public $search = '', $search_brand = '', $search_category = '';
+    public $search = '', $search_brand = '', $search_category = '',$search_admin = '';
     protected $model = Product::class;
     public function setSortBy($sortByField){
         if($this->sortBy === $sortByField){
@@ -81,6 +82,7 @@ class Products2 extends Component
     }
     public function render()
     {
+        $admins = User::where('type','admin')->get();
         $active = Product::where('status',1)->count();
         $unactive = Product::where('status',0)->count();
         $categories = Category::latest()->get();
@@ -104,6 +106,9 @@ class Products2 extends Component
                 $q->where('name', 'like', '%' . $this->search_category . '%');
             });
         }
+        if ($this->search_admin) {
+            $query = $query->where('creator', 'like', '%' . $this->search_admin . '%');
+        }
         if ($this->filter=='active') {
             $query = $query->where('status', 1);
         }elseif ($this->filter=='unactive') {
@@ -111,7 +116,7 @@ class Products2 extends Component
         }
         $products = $query->orderBy($this->sortBy,$this->sortDir)
                           ->paginate($this->perPage);
-        return view('livewire.admin.products2.index', compact('products','categories','brands','colors','sizes','active','unactive'))
+        return view('livewire.admin.products2.index', compact('products','categories','brands','colors','sizes','active','unactive','admins'))
         ->extends('admin.layouts.master')
         ->section('content');
     }
