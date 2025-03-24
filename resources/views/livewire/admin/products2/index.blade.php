@@ -48,6 +48,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <select name="" id="" class="form-control" wire:model.live='search_brand_id' id="">
+                                    <option value="">البراند</option>
+                                    @foreach (App\Models\Brand::all() as $brand)
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="row mb-2">
@@ -59,6 +69,8 @@
                                 <button class="btn btn-warning btn-sm" id="btn-prt-content">
                                     <i class="fa fa-print"></i>
                                 </button>
+                                <button wire:click="resetFilters" class="btn btn-dark btn-sm">
+                                    <i class="fa fa-filter"></i></button>
                             </div>
                         </div>
 

@@ -36,8 +36,15 @@ class Products2 extends Component
     public $sortBy = 'created_at';
     public $sortDir = 'DESC';
     public $perPage = 10;
-    public $search = '', $search_brand = '', $search_category = '',$search_admin = '';
+    public $search = '', $search_brand = '', $search_category = '',$search_admin = '',$search_brand_id = '';
     protected $model = Product::class;
+    public function resetFilters(){
+        $this->search = '';
+        $this->search_brand = '';
+        $this->search_category = '';
+        $this->search_admin = '';
+        $this->search_brand_id = '';
+    }
     public function setSortBy($sortByField){
         if($this->sortBy === $sortByField){
             $this->sortDir = ($this->sortDir == "ASC") ? 'DESC' : "ASC";
@@ -100,6 +107,9 @@ class Products2 extends Component
             $query = $query->whereHas('brand', function ($q) {
                 $q->where('name', 'like', '%' . $this->search_brand . '%');
             });
+        }
+        if($this->search_brand_id){
+            $query = $query->where('brand_id', $this->search_brand_id);
         }
         if ($this->search_category) {
             $query = $query->whereHas('category', function ($q) {
