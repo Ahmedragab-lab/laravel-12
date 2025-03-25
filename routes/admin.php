@@ -17,13 +17,15 @@ use App\Livewire\Admin\Admins;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Products;
 use App\Livewire\Admin\Colors;
-use App\Livewire\Admin\Products2;
+
 use App\Livewire\Admin\Products3;
 use App\Livewire\Admin\Products\CreateProduct;
 use App\Livewire\Admin\Products\UpdateProduct;
 use App\Livewire\Admin\Sizes;
 use App\Models\Product;
 use App\Livewire\Admin\Animals;
+use App\Livewire\Admin\Products\Products2;
+use App\Livewire\Admin\Products\ShowProduct;
 // use App\Livewire\Admin\AboutUs;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -74,6 +76,8 @@ Route::group(
             Route::get('/products2',Products2::class)->name('products2');
             Route::get('/products2/create',CreateProduct::class)->name('products2.create');
             Route::get('/products2/update/{id}',UpdateProduct::class)->name('products2.update');
+            Route::get('/products2/show/{id}',ShowProduct::class)->name('products2.show');
+
 
 
 
