@@ -107,6 +107,14 @@
                 <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
             </a>
          </li> --}}
+         <li>
+                    <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="{{ route('animals') }}">
+                        <i class="app-menu__icon fa fa-list"></i>
+                        <span class="app-menu__label">الحيواتات</span>
+                        <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Animal::count() }}</span>
+                    </a>
+                 </li>
+
          <li class="treeview  {{ Route::is('products2') || Route::is('products2.create') ? 'is-expanded' : '' }}">
             <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop ">
                 </i><span class="app-menu__label">المنتجات لايف وير</span><i class="treeview-indicator fa fa-angle-right"></i>
@@ -116,6 +124,13 @@
                     <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="{{ route('products2') }}">
                         <i class="app-menu__icon fa fa-list"></i>
                         <span class="app-menu__label">المنتجات livewire test</span>
+                        <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
+                    </a>
+                 </li>
+                 <li>
+                    <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="{{ route('products3') }}">
+                        <i class="app-menu__icon fa fa-list"></i>
+                        <span class="app-menu__label">المنتجات3</span>
                         <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
                     </a>
                  </li>
