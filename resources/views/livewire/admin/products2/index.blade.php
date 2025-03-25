@@ -38,6 +38,14 @@
                                     placeholder="اسم القسم" wire:model.live='search_category'>
                             </div>
                         </div>
+
+
+
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-2">
+
+                        </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <select name="" id="" class="form-control" wire:model.live='search_admin' id="">
@@ -58,7 +66,36 @@
                                 </select>
                             </div>
                         </div>
-
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <select name="" id="" class="form-control" wire:model.live='search_category_id' id="">
+                                    <option value="">القسم</option>
+                                    @foreach (App\Models\Category::all() as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <select name="" id="" class="form-control" wire:model.live='search_color_id' id="">
+                                    <option value="">الالوان</option>
+                                    @foreach (App\Models\Color::all() as $color)
+                                        <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <select name="" id="" class="form-control" wire:model.live='search_size_id' id="">
+                                    <option value="">المقاسات</option>
+                                    @foreach (App\Models\Size::all() as $size)
+                                        <option value="{{ $size->id }}">{{ $size->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-4">
@@ -92,17 +129,15 @@
                                             </th>
                                             <th>#</th>
                                             <th>صوره االمنتج </th>
-                                            <th>الاسم</th>
-                                            <th>
-                                                <span class=" badge  badge-warning mb-2">القسم</span>
-                                            </th>
-                                            <th>السعر</th>
+                                            <th wire:click="setSortBy('product_name')">الاسم {!! getSortIcon($sortBy, $sortDir,$name='product_name') !!}</th>
+                                            <th><span class=" badge  badge-warning mb-2">القسم</span></th>
+                                            <th wire:click="setSortBy('price')">السعر {!! getSortIcon($sortBy, $sortDir,$name='price') !!}</th>
                                             <th>براند</th>
-                                            <th>الالوان</th>
+                                            <th width="200">الالوان</th>
                                             <th>المقاسات</th>
-                                            <th>المسؤال</th>
+                                            <th>المسؤل</th>
                                             <th>الحاله</th>
-                                            <th>تاريخ انشاء</th>
+                                            <th wire:click="setSortBy('created_at')">تاريخ الانشاء {!! getSortIcon($sortBy, $sortDir,$name='created_at') !!}</th>
                                             <th class="not-print">@lang('site.action')</th>
                                         </tr>
                                     </thead>
@@ -151,7 +186,12 @@
 
                                                         {{ $product->status == 1 ? 'مفعل' : 'غير مفعل' }}</td>
                                                     </span>
-                                                <td>{{ $product->created_at->format('Y-m-d') }}</td>
+                                                <td>
+                                                    {{ $product->created_at->format('Y-m-d') }}
+                                                    <br>
+                                                    {{ $product->created_at->format('h:i') }}
+                                                    {{ $product->created_at->format('A') === 'AM' ? 'صباحا ' : 'مساء' }}
+                                                </td>
                                                 <td class="not-print">
                                                     <a href="{{ route('products2.update', $product->id ) }}" class="btn btn-sm btn-info">
                                                         <i class="fa fa-edit"></i></a>

@@ -36,7 +36,8 @@ class Products2 extends Component
     public $sortBy = 'created_at';
     public $sortDir = 'DESC';
     public $perPage = 10;
-    public $search = '', $search_brand = '', $search_category = '',$search_admin = '',$search_brand_id = '';
+    public $search = '', $search_brand = '', $search_category = '',$search_admin = '',$search_brand_id = '',
+    $search_category_id = '',$search_color_id = '',$search_size_id = '';
     protected $model = Product::class;
     public function resetFilters(){
         $this->search = '';
@@ -44,6 +45,9 @@ class Products2 extends Component
         $this->search_category = '';
         $this->search_admin = '';
         $this->search_brand_id = '';
+        $this->search_category_id = '';
+        $this->search_color_id = '';
+        $this->search_size_id = '';
     }
     public function setSortBy($sortByField){
         if($this->sortBy === $sortByField){
@@ -110,6 +114,19 @@ class Products2 extends Component
         }
         if($this->search_brand_id){
             $query = $query->where('brand_id', $this->search_brand_id);
+        }
+        if($this->search_category_id){
+            $query = $query->where('category_id', $this->search_category_id);
+        }
+        if($this->search_color_id){
+            $query = $query->whereHas('color', function ($q) {
+                $q->where('colors.id', $this->search_color_id);
+            });
+        }
+        if($this->search_size_id){
+            $query = $query->whereHas('size', function ($q) {
+                $q->where('sizes.id', $this->search_size_id);
+            });
         }
         if ($this->search_category) {
             $query = $query->whereHas('category', function ($q) {
