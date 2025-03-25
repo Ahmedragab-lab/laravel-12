@@ -22,16 +22,7 @@
                 <div class="row mb-2">
                     {{-- <p>test product by livewire</p> --}}
 
-                    <div class="col-md-1">
-                        <select class="form-control" wire:model.live='perPage'>
-                            <option value="">---</option>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </div>
+
                     <div class="col-md-2">
                         <div class="form-group">
                             <input type="text" id="data-table-search" class="form-control" autofocus
@@ -108,6 +99,16 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-1">
+                        <select class="form-control" wire:model.live='perPage'>
+                            <option value="">---</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-md-4">
@@ -121,6 +122,7 @@
                             <button wire:click="resetFilters" class="btn btn-dark btn-sm">
                                 <i class="fa fa-filter"></i></button>
                         </div>
+
                     </div>
 
                 </div>
