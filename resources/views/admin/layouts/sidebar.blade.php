@@ -99,6 +99,30 @@
                 <p class="app-sidebar__user-name">تجارب</p>
             </div>
         </div>
+
+
+
+        <li class="treeview  {{ Route::is('products2') || Route::is('products2.create') ? 'is-expanded' : '' }}">
+            <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop ">
+                </i><span class="app-menu__label">المنتجات لايف وير</span><i class="treeview-indicator fa fa-angle-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="{{ route('products2') }}">
+                        <i class="app-menu__icon fa fa-list"></i>
+                        <span class="app-menu__label">المنتجات livewire test</span>
+                        <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
+                    </a>
+                 </li>
+
+                <li>
+                    <a class="app-menu__item {{ Route::is('products2.create') ? 'active' : '' }}" href="{{ route('products2.create') }}">
+                        <i class="icon fa fa-circle-o"></i>
+                        <span class="app-menu__label">اضافة منتج</span>
+                    </a>
+                 </li>
+            </ul>
+        </li>
           {{-- <li>
             <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="{{ route('products2') }}">
                 <i class="app-menu__icon fa fa-list"></i>
@@ -115,33 +139,15 @@
                     </a>
                  </li>
 
-         <li class="treeview  {{ Route::is('products2') || Route::is('products2.create') ? 'is-expanded' : '' }}">
-            <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop ">
-                </i><span class="app-menu__label">المنتجات لايف وير</span><i class="treeview-indicator fa fa-angle-right"></i>
+
+
+        <li>
+            <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="{{ route('products3') }}">
+                <i class="app-menu__icon fa fa-list"></i>
+                <span class="app-menu__label">المنتجات3</span>
+                <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
             </a>
-            <ul class="treeview-menu">
-                <li>
-                    <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="{{ route('products2') }}">
-                        <i class="app-menu__icon fa fa-list"></i>
-                        <span class="app-menu__label">المنتجات livewire test</span>
-                        <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
-                    </a>
-                 </li>
-                 <li>
-                    <a class="app-menu__item {{ Route::is('products2') ? 'active' : '' }}" href="{{ route('products3') }}">
-                        <i class="app-menu__icon fa fa-list"></i>
-                        <span class="app-menu__label">المنتجات3</span>
-                        <span class="app-menu__label badge badge-pill badge-success">{{ \App\Models\Product::count() }}</span>
-                    </a>
-                 </li>
-                <li>
-                    <a class="app-menu__item {{ Route::is('products2.create') ? 'active' : '' }}" href="{{ route('products2.create') }}">
-                        <i class="icon fa fa-circle-o"></i>
-                        <span class="app-menu__label">اضافة منتج</span>
-                    </a>
-                 </li>
-            </ul>
-        </li>
+         </li>
         {{-- <li>
             <a class="app-menu__item {{ request()->is('*units*') ? 'active' : '' }}" href="{{ route('units') }}">
                 <i class="app-menu__icon fa fa-shopping-bag"></i>
