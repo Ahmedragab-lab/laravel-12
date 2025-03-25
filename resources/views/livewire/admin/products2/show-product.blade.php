@@ -147,22 +147,7 @@
                                     <input type="text" class="form-control" id="" value="{{ $product->brand?->name }}" disabled>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>@lang('products.color')</label>
-                                    <input type="text" class="form-control"
-                                           value="{{ $product->color->count() > 0 ? $product->color->pluck('name')->implode(', ') : '' }}"
-                                           disabled>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>@lang('products.size')</label>
-                                    <input type="text" class="form-control"
-                                           value="{{ $product->size->count() > 0 ? $product->size->pluck('name')->implode(', ') : '' }}"
-                                           disabled>
-                                </div>
-                            </div>
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>@lang('products.expiration_date')</label>
@@ -200,6 +185,22 @@
                                     <label>@lang('products.status')</label>
                                     <input type="text" class="form-control"
                                            value="{{ $product->status == 1 ? 'متوفر' : 'غير متوفر' }}"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>الوان المنتج</label>
+                                    <input type="text" class="form-control"
+                                           value="{{ $product->color->count() > 0 ? $product->color->pluck('name')->implode(', ') : '' }}"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>مقاسات المنتج</label>
+                                    <input type="text" class="form-control"
+                                           value="{{ $product->size->count() > 0 ? $product->size->pluck('name')->implode(', ') : '' }}"
                                            disabled>
                                 </div>
                             </div>

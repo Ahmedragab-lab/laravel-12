@@ -198,7 +198,10 @@
                     <div class="col-md-6">
                         <div class="inp-holder" wire:ignore>
                             <label for="">الوصف</label>
-                            <textarea wire:model.defer="description" class="ckeditor form-control" cols="30" rows="10"  ></textarea>
+                            {{-- <textarea wire:model.live="description" class="ckeditor form-control" cols="30" rows="10"  ></textarea> --}}
+                            <textarea wire:model.live="description" class=" form-control" cols="30" rows="10">
+                                {{ old('description', $description ?? '') }}
+                            </textarea>
                         </div>
                     </div>
 
@@ -318,6 +321,77 @@
         </script>
           <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
           <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                initializeCKEditor();
+            });
+
+            document.addEventListener("livewire:navigated", function () {
+                initializeCKEditor();
+            });
+
+            Livewire.on('refreshEditor', function () {
+                initializeCKEditor();
+            });
+
+            function initializeCKEditor() {
+                let editorElement = document.querySelector('.ckeditor');
+
+                if (!editorElement) {
+                    console.error("CKEditor element not found.");
+                    return;
+                }
+
+                if (editorElement.ckeditorInstance) {
+                    editorElement.ckeditorInstance.destroy().then(() => {
+                        createCKEditor(editorElement);
+                    }).catch(error => {
+                        console.error("Error destroying CKEditor:", error);
+                    });
+                } else {
+                    createCKEditor(editorElement);
+                }
+            }
+
+            function createCKEditor(element) {
+                ClassicEditor
+                    .create(element, {
+                        toolbar: {
+                            items: [
+                                'undo', 'redo',
+                                '|', 'heading',
+                                '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
+                                '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
+                            ],
+                            shouldNotGroupWhenFull: false
+                        }
+                    })
+                    .then(editor => {
+                        element.ckeditorInstance = editor;
+
+                        // Set initial value from Livewire
+                        let description = @json($description);
+                        if (description) {
+                            editor.setData(description);
+                        }
+
+                        let debounceTimer;
+                        editor.model.document.on('change:data', () => {
+                            clearTimeout(debounceTimer);
+                            debounceTimer = setTimeout(() => {
+                                Livewire.dispatch('editorUpdated', { description: editor.getData() });
+                            }, 300);
+                        });
+
+                        console.log("CKEditor initialized successfully");
+                    })
+                    .catch(error => {
+                        console.error("CKEditor initialization error:", error);
+                    });
+            }
+        </script>
+          {{-- <script>
               document.addEventListener("DOMContentLoaded", function () {
                   console.log("DOM fully loaded - Initializing CKEditor");
                   initializeCKEditor();
@@ -389,7 +463,7 @@
                           console.error("CKEditor initialization error:", error);
                       });
               }
-          </script>
+          </script> --}}
     @endpush
     </div>
 </div>

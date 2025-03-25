@@ -19,7 +19,7 @@ class UpdateProduct extends Component
 {
     use livewireResource;
     public $search ,$name,$color_code;
-    public $product_name, $category_id, $brand_id, $expiration_date, $discount, $price, $stock,$status, $description;
+    public $product_name, $category_id, $brand_id, $expiration_date, $discount, $price, $stock,$status;
     public $new_category_name = '',$new_category_image = null;
     public $new_brand_name = '',$new_brand_image = null;
     public $new_color_name = '',$new_color_code = '';
@@ -35,6 +35,19 @@ class UpdateProduct extends Component
     public $sortDir = 'DESC';
     public $perPage = 10;
     protected $model = Product::class;
+    public $description = ''; // Ensure default is an empty string, not null
+    public $product;
+    #[On('editorUpdated')]
+    public function updateDescription($data)
+    {
+        $this->description = $data['description'] ?? '';
+    }
+
+    // public function submit()
+    // {
+    //     $this->data = $this->validate();
+    //     dd($this->data);
+    // }
     public function setSortBy($sortByField){
         if($this->sortBy === $sortByField){
             $this->sortDir = ($this->sortDir == "ASC") ? 'DESC' : "ASC";
@@ -45,21 +58,21 @@ class UpdateProduct extends Component
     }
 
     public function mount($id){
-        $product = Product::findOrFail($id);
-        $this->obj = $product;
-        $this->product_name = $product->product_name;
-        $this->category_id = $product->category_id;
-        $this->brand_id = $product->brand_id;
-        $this->expiration_date = $product->expiration_date;
-        $this->discount = $product->discount;
-        $this->price = $product->price;
-        $this->stock = $product->stock;
-        $this->status = $product->status;
-        $this->description = $product->description;
-        $this->image = $product->image;
-        $this->color_id = $product->color->pluck('id')->toArray();
-        $this->size_id = $product->size->pluck('id')->toArray();
-        $this->products_images = $product->images->toArray();
+        $this->product = Product::findOrFail($id);
+        $this->obj = $this->product;
+        $this->product_name = $this->product->product_name;
+        $this->category_id = $this->product->category_id;
+        $this->brand_id = $this->product->brand_id;
+        $this->expiration_date = $this->product->expiration_date;
+        $this->discount = $this->product->discount;
+        $this->price = $this->product->price;
+        $this->stock = $this->product->stock;
+        $this->status = $this->product->status;
+        $this->description = $this->product->description;
+        $this->image = $this->product->image;
+        $this->color_id = $this->product->color->pluck('id')->toArray();
+        $this->size_id = $this->product->size->pluck('id')->toArray();
+        $this->products_images = $this->product->images->toArray();
     }
     public function rules()
     {
@@ -93,6 +106,8 @@ class UpdateProduct extends Component
         $this->data['slug'] = Str::slug($this->product_name);
         $this->data['creator'] = Auth::user()->id;
         $this->data['code'] = 'ECO-' . Carbon::now()->year . '-' . uniqid();
+        $this->data['sku'] = 'SKU' . Carbon::now()->year . '-' . uniqid();
+        $this->data['description'] = $this->description;
     }
     public function beforeCreate()
     {
@@ -157,7 +172,7 @@ class UpdateProduct extends Component
             $this->color_id = $this->obj->color->pluck('id')->toArray();
             $this->size_id = $this->obj->size->pluck('id')->toArray();
             $this->products_images = $this->obj->images()->get();
-            $this->description = $this->obj->description;
+            // $this->description = $this->obj->description;
         }
         // $this->dispatch('refreshSelect2');
     }

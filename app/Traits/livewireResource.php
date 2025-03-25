@@ -50,6 +50,7 @@ trait livewireResource
     public function submit()
     {
         $this->data = $this->validate();
+        // dd($this->data);
         $this->beforeSubmit();
 
         if ($this->obj) {

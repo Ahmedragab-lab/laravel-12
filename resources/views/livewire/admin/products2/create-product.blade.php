@@ -198,7 +198,7 @@
                     <div class="col-md-12">
                         <div class="inp-holder" wire:ignore>
                             <label for="">الوصف</label>
-                            <textarea wire:model.live="description" class="ckeditor form-control" rows="3"></textarea>
+                            <textarea wire:model.live="description" class=" form-control" rows="3"></textarea>
                         </div>
                     </div>
 
