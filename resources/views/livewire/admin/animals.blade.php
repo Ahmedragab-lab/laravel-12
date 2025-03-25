@@ -1,10 +1,10 @@
 <div>
     <div>
-        <h2>البرندات</h2>
+        <h2>الحيوانات</h2>
     </div>
     <ul class="breadcrumb mt-2">
         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">@lang('site.home')</a></li>
-        <li class="breadcrumb-item">البرندات</li>
+        <li class="breadcrumb-item">الحيوانات</li>
     </ul>
     <x-messages></x-messages>
     <div>
@@ -15,21 +15,20 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="small-label" for="">
-                                    لوجو
-                                    <span class="text-danger">*</span>
-                                </label>
-                                <div class="box-input">
-                                    <input type="file" class="form-control" wire:model='logo' id="" />
-                                </div>
-                          
-                            </div>
-                            <div class="col-md-12">
-                                <label class="small-label" for="">
-                                    اسم البرند
+                                    اسم الحيوان
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="box-input">
                                     <input type="text" class="form-control" wire:model='name' id="" />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small-label" for="">
+                                    العمر
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="box-input">
+                                    <input type="number" class="form-control" wire:model='age' id="" />
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center mt-4">
@@ -41,15 +40,14 @@
                 <div class="col-md-8">
                     <div class="tile shadow">
                         <div class="row">
-
                             <div class="col-md-2">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" wire:click='resetInputs'>
-                                   برند جديد
+                                   حيوان جديد
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                             <div class="col-md-1">
-                                <select  class="form-control" wire:model.live='perPage'>
+                                <select class="form-control" wire:model.live='perPage'>
                                     <option value="">---</option>
                                     <option value="5">5</option>
                                     <option value="10">10</option>
@@ -61,10 +59,9 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <input type="text" id="data-table-search" class="form-control" autofocus
-                                        placeholder="اسم البرند" wire:model.live='search'>
+                                        placeholder="اسم الحيوان" wire:model.live='search'>
                                 </div>
                             </div>
-
                         </div><!-- end of row -->
                         <div class="row">
                             <div class="col-md-12">
@@ -73,35 +70,28 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <!-- <th>لوجو</th> -->
-                                                <th wire:click="setSortBy('name')">اسم البرند {!! getSortIcon($sortBy, $sortDir,$name='name') !!}</th>
-                                                <th>العمر </th>
-                                                <th wire:click="setSortBy('created_at')">تاريخ الانشاء {!! getSortIcon($sortBy, $sortDir,$name='created_at') !!}</th>
+                                                <th wire:click="setSortBy('name')">اسم الحيوان {!! getSortIcon($sortBy, $sortDir, $name='name') !!}</th>
+                                                <th wire:click="setSortBy('age')">العمر {!! getSortIcon($sortBy, $sortDir, $name='age') !!}</th>
+                                                <th wire:click="setSortBy('created_at')">تاريخ الانشاء {!! getSortIcon($sortBy, $sortDir, $name='created_at') !!}</th>
                                                 <th>@lang('site.action')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($animals as $index => $brand)
+                                            @forelse ($animals as $index => $animal)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
-                                                    <td><img src="{{ $brand->logo? display_file($brand->logo):asset('assets/no-image.png') }}" alt="" style="width: 50px"></td>
-                                                    <td>{{ $brand->name }}</td>
-                                                    <!-- {{-- <td class="btn btn-success btn-sm">{{ $brand->products_count }}</td> --}} -->
+                                                    <td>{{ $animal->name }}</td>
+                                                    <td>{{ $animal->age }}</td>
                                                     <td>
-                                                        <a href="{{ route('products.index', ['brand_id' => $brand->id]) }}" class="btn btn-success btn-sm">
-                                                            {{ $brand->products_count }}
-                                                        </a>
+                                                        {{ $animal->created_at->format('Y-m-d') }} <br>
+                                                        {{ $animal->created_at->format('h:i') }}
+                                                        {{ $animal->created_at->format('A') === 'AM' ? 'صباحا ' : 'مساء' }} <br>
                                                     </td>
                                                     <td>
-                                                        {{ $brand->created_at->format('Y-m-d') }} <br>
-                                                        {{ $brand->created_at->format('h:i') }}
-                                                        {{ $brand->created_at->format('A') === 'AM' ? 'صباحا ' : 'مساء' }} <br>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $brand->id }})'>
+                                                        <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $animal->id }})'>
                                                             <i class="fa fa-edit"></i>
                                                         </button>
-                                                        <x-delete-modal :item="$brand" />
+                                                        <x-delete-modal :item="$animal" />
                                                     </td>
                                                 </tr>
                                             @empty
@@ -116,7 +106,6 @@
                                         </tbody>
                                     </table>
                                     {{ $animals->links() }}
-
                                 </div><!-- end of table responsive -->
                             </div><!-- end of col -->
                         </div><!-- end of row -->

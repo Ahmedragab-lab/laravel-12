@@ -67,7 +67,8 @@
                 @endforelse
             </tbody>
         </table>
-        {{ $products->links() }}
+        <!-- Livewire Pagination -->
+        {{ $products->links('pagination::bootstrap-4') }}
     </div>
     @include('livewire.admin.products.delete-modal')
 
