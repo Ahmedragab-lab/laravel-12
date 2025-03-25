@@ -206,14 +206,29 @@
                     <div class="col-12">
                         <div class="inp-holder">
                             <label>المرفقات</label>
-                            <input type="file" multiple class="form-control" wire:model.live="products_images"
-                                accept="image/*">
+                            <input type="file" multiple class="form-control" wire:model.live="products_images" accept="image/*">
                         </div>
 
-                        {{-- {{ $obj }} --}}
-                        @if ($products_images)
+                        @if ($products_images && count($products_images) > 0)
                             @foreach ($products_images as $key => $attachment)
-                                <x-file-preview :file="$attachment" :key="$key" />
+                                <div class="d-inline-block me-2 mb-2">
+                                    <div class="position-relative">
+                                        @if (is_array($attachment) && isset($attachment['file_name']))
+                                            <img src="{{ display_file('products_images/' . $attachment['file_name']) }}"
+                                            class="img-thumbnail" width="100" />
+                                        @elseif ($attachment instanceof \Illuminate\Http\UploadedFile)
+                                            <img src="{{ $attachment->temporaryUrl() }}" class="img-thumbnail" width="100" />
+                                        @else
+                                            <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="100" />
+                                        @endif
+                                        <button type="button"
+                                                class="btn btn-sm btn-danger position-absolute"
+                                                style="top: 5px; right: 5px;"
+                                                wire:click="removeAttachment({{ $key }})">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             @endforeach
                         @endif
                     </div>

@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Color;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Image;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use App\Traits\livewireResource;
@@ -55,9 +56,10 @@ class UpdateProduct extends Component
         $this->stock = $product->stock;
         $this->status = $product->status;
         $this->description = $product->description;
+        $this->image = $product->image;
         $this->color_id = $product->color->pluck('id')->toArray();
         $this->size_id = $product->size->pluck('id')->toArray();
-        $this->products_images = $product->images()->get();
+        $this->products_images = $product->images->toArray();
     }
     public function rules()
     {
@@ -247,9 +249,18 @@ class UpdateProduct extends Component
     }
 
     public function hydrate()
-{
-    if ($this->obj && $this->obj->exists) {
-        $this->obj->load(['color', 'size', 'images']);
+    {
+        if ($this->obj && $this->obj->exists) {
+            $this->obj->load(['color', 'size', 'images']);
+        }
     }
-}
+    public function removeAttachment($index)
+    {
+
+        if (isset($this->products_images[$index])) {
+            Image::where('id', $this->products_images[$index]['id'])->delete();
+            unset($this->products_images[$index]);
+            $this->products_images = array_values($this->products_images);
+        }
+    }
 }
