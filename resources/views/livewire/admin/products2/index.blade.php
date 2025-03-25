@@ -4,11 +4,24 @@
         <div class="col-md-12">
             <div class="tile shadow">
                 <div class="row mb-2">
-                    {{-- <p>test product by livewire</p> --}}
                     <div class="col-md-1">
                         <a href="{{ route('products2.create') }}" class="btn btn-primary">
-                            <i class="fa fa-plus"></i> @lang('site.create')</a>
+                            <i class="fa fa-plus"></i> @lang('site.create')
+                        </a>
+
                     </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger" id="btn_delete_all" data-toggle="modal"
+                                data-target="#bulkdelete" {{ count($selected_ids) == 0 ? 'disabled' : '' }} >
+                                <i class="fa fa-trash"></i>
+                                @lang('site.bulk_delete')({{ count($selected_ids) }})
+                        </button>
+                        @include('livewire.admin.products2.__bulkDeleteModal')
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    {{-- <p>test product by livewire</p> --}}
+
                     <div class="col-md-1">
                         <select class="form-control" wire:model.live='perPage'>
                             <option value="">---</option>
@@ -42,9 +55,9 @@
 
                 </div>
                 <div class="row mb-2">
-                    <div class="col-md-2">
+                    {{-- <div class="col-md-2">
 
-                    </div>
+                    </div> --}}
                     <div class="col-md-2">
                         <div class="form-group">
                             <select name="" id="" class="form-control" wire:model.live='search_admin' id="">
@@ -121,7 +134,7 @@
                                         <th class="not-print">
                                             <div class="animated-checkbox">
                                                 <label class="m-0">
-                                                    <input type="checkbox" name="select_all" id="select-all">
+                                                    <input type="checkbox" name="select_all" wire:model.live="selectAll" id="select-all">
                                                     <span class="label-text"></span>
                                                 </label>
                                             </div>
@@ -147,6 +160,8 @@
                                                 <div class="animated-checkbox">
                                                     <label class="m-0">
                                                         <input type="checkbox" value="{{ $product->id }}"
+                                                            wire:model.live="selected_ids"
+                                                            value="{{ $product->id }}"
                                                             name="selected_ids[]" class="selected_ids">
                                                         <span class="label-text"></span>
                                                     </label>
@@ -218,3 +233,18 @@
         </div><!-- end of col -->
     </div><!-- end of row -->
 </div>
+@push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Checkbox select all toggle
+    const selectAllCheckbox = document.getElementById('select-all');
+    const individualCheckboxes = document.querySelectorAll('.selected_ids');
+
+    selectAllCheckbox.addEventListener('change', function() {
+        individualCheckboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+    });
+});
+</script>
+@endpush

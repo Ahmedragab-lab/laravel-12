@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 use Illuminate\Http\UploadedFile;
 use Carbon\Carbon;
+use DB;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\File;
 
 class Products2 extends Component
 {
@@ -29,6 +31,56 @@ class Products2 extends Component
     public $search = '', $search_brand = '', $search_category = '',$search_admin = '',$search_brand_id = '',
     $search_category_id = '',$search_color_id = '',$search_size_id = '';
     protected $model = Product::class;
+    public $selected_ids = [];
+    public $selectAll = false;
+    public $allproducts = '';
+
+    // Bulk delete method
+    public function deleteBulk()
+    {
+        // Validate that some products are selected
+        if (empty($this->selected_ids)) {
+            session()->flash('error', 'Please select products to delete');
+            return;
+        }
+        // dd($this->selected_ids);
+        $products = Product::whereIn('id', $this->selected_ids)->get();
+        try {
+            DB::beginTransaction();
+            foreach ($products as $product) {
+                if ($product->image && $product->image != 'courses/LOGO.png') {
+                    delete_file($product->getRawOriginal('image'));
+                }
+                if ($product->images()->count() > 0) {
+                    foreach ($product->images as $media) {
+                        $imagePath = 'uploads/products_images/' . $media->file_name;
+                        if (File::exists($imagePath)) {
+                            File::delete($imagePath);
+                        }
+                        $media->delete();
+                    }
+                }
+                $product->delete();
+            }
+            DB::commit();
+            $this->selected_ids = [];
+            $this->selectAll = false;
+            session()->flash('success', count($products) . ' products deleted successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Bulk delete error: ' . $e->getMessage());
+            session()->flash('error', 'Failed to delete products. ' . $e->getMessage());
+        }
+        $this->resetPage();
+    }
+    public function updatedSelectAll($value)
+    {
+        if ($value) {
+            $this->selected_ids = Product::pluck('id')->toArray();
+        } else {
+            $this->selected_ids = [];
+        }
+    }
     public function resetFilters(){
         $this->search = '';
         $this->search_brand = '';
@@ -110,6 +162,17 @@ class Products2 extends Component
     public function delete($id)
     {
         $product = Product::findOrFail($id);
+        if ($product->image != 'courses/LOGO.png') {
+            delete_file($product->getRawOriginal('image'));
+        }
+        if($product->images()->count() > 0){
+            foreach ($product->images as $media){
+                if (File::exists('uploads/products_images/'. $media->file_name)){
+                    unlink('uploads/products_images/'. $media->file_name);
+                }
+                $media->delete();
+            }
+        }
         $product->delete();
         session()->flash('success', 'تم الحذف بنجاح');
     }

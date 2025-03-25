@@ -2,7 +2,7 @@
     <x-messages></x-messages>
     <div>
         <h2>{{ $product->product_name }}</h2>
-        <h4>{!! DNS1D::getBarcodeHTML($product->code . '', 'C128') !!}</h4>
+        {{-- <h4>{!! DNS1D::getBarcodeHTML($product->code . '', 'C128') !!}</h4> --}}
 
         <a href="{{ route('products2') }}" class="btn btn-sm btn-primary">back</a>
         <button class="btn btn-warning btn-sm" id="btn-prt-content">
