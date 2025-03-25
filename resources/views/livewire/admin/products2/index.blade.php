@@ -20,9 +20,6 @@
                     </div>
                 </div>
                 <div class="row mb-2">
-                    {{-- <p>test product by livewire</p> --}}
-
-
                     <div class="col-md-2">
                         <div class="form-group">
                             <input type="text" id="data-table-search" class="form-control" autofocus
@@ -41,14 +38,8 @@
                                 placeholder="اسم القسم" wire:model.live='search_category'>
                         </div>
                     </div>
-
-
-
                 </div>
                 <div class="row mb-2">
-                    {{-- <div class="col-md-2">
-
-                    </div> --}}
                     <div class="col-md-2">
                         <div class="form-group">
                             <select name="" id="" class="form-control" wire:model.live='search_admin' id="">
@@ -122,9 +113,7 @@
                             <button wire:click="resetFilters" class="btn btn-dark btn-sm">
                                 <i class="fa fa-filter"></i></button>
                         </div>
-
                     </div>
-
                 </div>
                 <div class="row" id="prt-content">
                     <div class="col-md-12">

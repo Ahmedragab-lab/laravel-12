@@ -38,7 +38,6 @@ class Products2 extends Component
     // Bulk delete method
     public function deleteBulk()
     {
-        // Validate that some products are selected
         if (empty($this->selected_ids)) {
             session()->flash('error', 'Please select products to delete');
             return;
