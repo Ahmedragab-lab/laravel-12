@@ -8,11 +8,11 @@
                 </button>
             </div>
             <div class="modal-body">
-    <div class="form-group">
-        <label>اسم اللون <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" wire:model.live="new_color_name">
-        @error('new_color_name')<span class="text-danger">{{ $message }}</span>@enderror
-    </div>
+                <div class="form-group">
+                    <label>اسم اللون <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" wire:model.live="new_color_name">
+                    @error('new_color_name')<span class="text-danger">{{ $message }}</span>@enderror
+                </div>
                 <div class="col-md-12 mb-3">
                     <label class="small-label">
                         تحديد اللون
@@ -30,6 +30,10 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" data-dismiss="modal">@lang('site.close')</button>
                 <button type="button" class="btn btn-primary" wire:click="saveColor" data-dismiss="modal">@lang('site.save')</button>
+                {{-- <button wire:loading.attr="disabled" type="submit" class="btn btn-success" wire:click="saveColor" data-dismiss="modal">
+                    <span wire:loading.remove> @lang('site.save')</span>
+                    <span wire:loading>Processing...</span>
+                </button> --}}
             </div>
         </div>
     </div>

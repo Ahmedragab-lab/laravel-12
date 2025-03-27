@@ -108,9 +108,12 @@ class Products2 extends Component
         $brands = Brand::latest()->get();
         $colors = Color::latest()->get();
         $sizes  = Size::latest()->get();
-        $query = Product::with(['category','brand','color','size','images']);
+        $query = Product::with(['category','brand','colors','sizes','images']);
         if (request()->filled('brand_id')) {
             $query = $query->where('brand_id', request('brand_id'));
+        }
+        if (request()->filled('category_id')) {
+            $query = $query->where('category_id', request('category_id'));
         }
         if ($this->search) {
             $query = $query->where('product_name', 'like', '%' . $this->search . '%');

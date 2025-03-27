@@ -32,7 +32,7 @@
 <div class="d-inline-block me-2 mb-2">
     @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
         <div class="position-relative">
-            <img width="70" src="{{ is_string($file) ? display_file($file) : $file->temporaryUrl() }}"
+            <img width="70" src="{{ is_string($file) ? display_file('products_images/' . $file->file_name) : $file->temporaryUrl() }}"
                  alt="Uploaded File"
                  class="img-fluid rounded shadow"
                  style="max-width: 200px; height: 70px; object-fit: cover;">

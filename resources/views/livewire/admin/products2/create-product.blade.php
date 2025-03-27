@@ -25,21 +25,19 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>@lang('products.Category')<span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <select name="category_id" id="category_id" wire:model.live="category_id"
-                                    class="form-control">
-                                    <option value="">اختر القسم</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#addCategoryModal">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
+                           <div class="row">
+                                <div class="col-md-10">
+                                    <x-select2  wire:model="category_id" :options="$categories" option-label="name" option-value="id" />
                                 </div>
-                            </div>
+                                <div class="col-md-2">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#addCategoryModal">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                           </div>
                         </div>
                         @error('category_id')
                             <span class="text-danger">{{ $message }}</span>
@@ -49,18 +47,25 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>@lang('products.brand')<span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <select name="brand_id" id="brand_id" wire:model.live="brand_id" class="form-control">
-                                    <option value="">اختر البراند</option>
-                                    @foreach ($brands as $brand)
-                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#addbrandModal">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <x-select2  wire:model="brand_id" :options="$brands" option-label="name" option-value="id" />
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        {{-- <select name="brand_id" id="brand_id" wire:model.live="brand_id" class="form-control">
+                                            <option value="">اختر البراند</option>
+                                            @foreach ($brands as $brand)
+                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                            @endforeach
+                                        </select> --}}
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#addbrandModal">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -70,26 +75,33 @@
                     </div>
 
                     <!-- color -->
-                    <div class="col-md-3">
-                        <div class="form-group" wire:ignore>
+                    <div class="col-md-3" wire:ignore>
+                        <div class="form-group" >
                             <label>@lang('products.color')<span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <select name="color_id[]" id="color_id" wire:model.defer="color_id"
-                                    class="form-control select2 multiple" multiple>
-                                    <option value="">اختر اللون</option>
-                                    @foreach ($colors as $color)
-                                        <option value="{{ $color->id }}">{{ $color->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#addcolorModal">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <x-select2  wire:model.live="color_ids" multiple :options="$colors" option-label="name" option-value="id" />
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        {{-- <select  id="color_id" wire:model.defer="color_ids"
+                                            class="form-control select2 multiple" multiple>
+                                            <option value="">اختر اللون</option>
+                                            @foreach ($colors as $color)
+                                                <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                            @endforeach
+                                        </select> --}}
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#addcolorModal">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        @error('color_id')
+                        @error('color_ids')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -97,23 +109,31 @@
                     <div class="col-md-3" wire:ignore>
                         <div class="form-group">
                             <label>@lang('products.size')<span class="text-danger">*</span></label>
-                            <div class="input-group" >
-                                <select name="size_id[]" id="size_id" wire:model="size_id"
-                                    class="form-control select2 multiple" multiple>
-                                    <option value="">اختر مقاس</option>
-                                    @foreach ($sizes as $size)
-                                        <option value="{{ $size->id }}">{{ $size->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#addsizeModal">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <x-select2  wire:model="size_ids" multiple :options="$sizes" option-label="name" option-value="id" />
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="input-group" >
+                                        {{-- <select  id="size_id" wire:model="size_ids"
+                                            class="form-control select2 multiple" multiple>
+                                            <option value="">اختر مقاس</option>
+                                            @foreach ($sizes as $size)
+                                                <option value="{{ $size->id }}">{{ $size->name }}</option>
+                                            @endforeach
+                                        </select> --}}
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#addsizeModal">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                        @error('size_id')
+                        @error('size_ids')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -216,10 +236,6 @@
                             @endforeach
                         @endif
                     </div>
-
-
-
-
                 </div>
                 @include('admin.products2.__addCategoryModal')
                 @include('admin.products2.__addBrandModal')
@@ -228,45 +244,37 @@
 
                 <div class="col-md-12 mt-3">
                     <div class="form-group text-center">
-                        <button type="button" class="btn btn-success" wire:click="submit">
+                        {{-- <button type="button" class="btn btn-success" wire:click="submit">
                             @lang('site.save')
+                        </button> --}}
+                        <button wire:loading.attr="disabled" type="submit" class="btn btn-success" wire:click="submit">
+                            <span wire:loading.remove> @lang('site.save')</span>
+                            <span wire:loading>Processing...</span>
                         </button>
                     </div>
                 </div>
-
-
-                <!-- end of tile -->
             </div><!-- end of col -->
         </div><!-- end of row -->
-        <!-- Save Button -->
-
-
         @push('js')
         <!-- Load jQuery -->
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
         <!-- Load Select2 -->
         <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script> --}}
 
         <!-- Livewire Hooks -->
-        <script>
+
+        {{-- <script>
             document.addEventListener("DOMContentLoaded", function() {
-                console.log("DOM fully loaded - Initializing Select2");
-
                 initSelect2();
             });
 
-            document.addEventListener("livewire:navigated", function() {
-                console.log("Livewire component updated - Reinitializing Select2");
-
-                initSelect2();
-            });
-
-            // Listen for refresh event to reinitialize Select2
-            Livewire.on('refreshSelect2', function() {
-                console.log("Received refreshSelect2 event - Reinitializing Select2");
-                initSelect2();
+            document.addEventListener("livewire:init", () => {
+                Livewire.on('refreshSelect2', () => {
+                    console.log('Refreshing Select2');
+                    refreshSelect2();
+                });
             });
 
             function initSelect2() {
@@ -281,8 +289,78 @@
                     multiple: true
                 }).on('change', function() {
                     let selectedColors = $(this).val();
+                    Livewire.dispatch('colorUpdated', { color_ids: selectedColors });
+                });
+
+                $('#size_id').select2({
+                    placeholder: "اختر مقاس",
+                    allowClear: true,
+                    multiple: true
+                }).on('change', function() {
+                    let selectedSizes = $(this).val();
+                    Livewire.dispatch('sizeUpdated', { size_ids: selectedSizes });
+                });
+
+                console.log("Select2 initialized successfully!");
+            }
+
+            function refreshSelect2() {
+                $('#color_id').select2('destroy').select2({
+                    placeholder: "اختر اللون",
+                    allowClear: true,
+                    multiple: true
+                }).trigger('change');
+
+                $('#size_id').select2('destroy').select2({
+                    placeholder: "اختر مقاس",
+                    allowClear: true,
+                    multiple: true
+                }).trigger('change');
+            }
+
+        </script> --}}
+        {{-- <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                console.log("DOM fully loaded - Initializing Select2");
+                initSelect2();
+            });
+
+            document.addEventListener("livewire:navigated", function() {
+                console.log("Livewire component updated - Reinitializing Select2");
+                initSelect2();
+            });
+
+            // Listen for refresh event to reinitialize Select2
+            Livewire.on('refreshSelect2', function() {
+                console.log("Received refreshSelect2 event - Reinitializing Select2");
+                initSelect2();
+            });
+            Livewire.on('refreshColors', function() {
+                console.log("تم تحديث الألوان، إعادة تحميل Select2");
+
+                // إعادة تحميل Select2 مع القيم الجديدة
+                $('#color_id').select2('destroy').select2({
+                    placeholder: "اختر اللون",
+                    allowClear: true,
+                    multiple: true
+                }).trigger('change');
+            });
+
+
+            function initSelect2() {
+                if (!$.fn.select2) {
+                    console.error("Select2 is not loaded.");
+                    return;
+                }
+
+                $('#color_id').select2({
+                    placeholder: "اختر اللون",
+                    allowClear: true,
+                    multiple: true
+                }).on('change', function() {
+                    let selectedColors = $(this).val();
                     Livewire.dispatch('colorUpdated', {
-                        color_id: selectedColors
+                        color_ids: selectedColors
                     });
                 });
 
@@ -293,14 +371,14 @@
                 }).on('change', function() {
                     let selectedSizes = $(this).val();
                     Livewire.dispatch('sizeUpdated', {
-                        size_id: selectedSizes
+                        size_ids: selectedSizes
                     });
                 });
 
                 console.log("Select2 initialized successfully!");
             }
-        </script>
-          <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+        </script> --}}
+          {{-- <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
           <script>
               document.addEventListener("DOMContentLoaded", function () {
                   console.log("DOM fully loaded - Initializing CKEditor");
@@ -373,7 +451,7 @@
                           console.error("CKEditor initialization error:", error);
                       });
               }
-          </script>
+          </script> --}}
     @endpush
     </div>
 </div>

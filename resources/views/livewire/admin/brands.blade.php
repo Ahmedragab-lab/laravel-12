@@ -86,7 +86,7 @@
                                                 <th>لوجو</th>
                                                 <th wire:click="setSortBy('name')">اسم البرند {!! getSortIcon($sortBy, $sortDir,$name='name') !!}</th>
                                                 <th>عدد المنتجات</th>
-                                                <th wire:click="setSortBy('created_at')">تاريخ الانشاء {!! getSortIcon($sortBy, $sortDir,$name='created_at') !!}</th>
+$
                                                 <th>@lang('site.action')</th>
                                             </tr>
                                         </thead>

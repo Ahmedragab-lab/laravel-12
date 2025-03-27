@@ -192,7 +192,7 @@
                                 <div class="form-group">
                                     <label>الوان المنتج</label>
                                     <input type="text" class="form-control"
-                                           value="{{ $product->color->count() > 0 ? $product->color->pluck('name')->implode(', ') : '' }}"
+                                           value="{{ $product->colors->count() > 0 ? $product->colors->pluck('name')->implode(', ') : '' }}"
                                            disabled>
                                 </div>
                             </div>
@@ -200,7 +200,7 @@
                                 <div class="form-group">
                                     <label>مقاسات المنتج</label>
                                     <input type="text" class="form-control"
-                                           value="{{ $product->size->count() > 0 ? $product->size->pluck('name')->implode(', ') : '' }}"
+                                           value="{{ $product->sizes->count() > 0 ? $product->sizes->pluck('name')->implode(', ') : '' }}"
                                            disabled>
                                 </div>
                             </div>

@@ -79,7 +79,7 @@ class ProductController extends Controller
     {
         // dd(request('brand_id'));
         if (request()->ajax()) {
-            $products = Product::with(['category', 'brand', 'color', 'images', 'size', 'admin']);
+            $products = Product::with(['category', 'brand', 'colors', 'images', 'sizes', 'admin']);
             if (request()->filled('brand_id')) {
                 $products = $products->where('brand_id', request('brand_id'));
             }

@@ -64,9 +64,9 @@
                                 <div class="form-group">
                                     <input type="text" id="data-table-search" class="form-control" autofocus
                                         placeholder="اسم القسم" wire:model.live='search'>
-                                        
+
                                 </div>
-                                
+
                             </div>
                         </div><!-- end of row -->
                         <div class="row">
@@ -89,7 +89,11 @@
                                                     <td>{{ $index + 1 }}</td>
                                                     <td><img src="{{ $category->image? display_file($category->image):asset('assets/no-image.png') }}" alt="" style="width: 50px"></td>
                                                     <td>{{ $category->name }}</td>
-                                                    <td class="btn btn-success btn-sm">{{ $category->products_count }}</td>
+                                                    <td>
+                                                        <a href="{{ route('products2', ['category_id' => $category->id]) }}" class="btn btn-success btn-sm">
+                                                            {{$category->products_count }}
+                                                        </a>
+                                                    </td>
                                                     <td>{{ $category->created_at->format('Y-m-d') }}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-info" wire:click='edit({{ $category->id }})'>

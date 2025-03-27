@@ -19,13 +19,13 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
-    public function color()
+    public function colors()
     {
-        return $this->belongsToMany(Color::class)->withTimestamps();
+        return $this->belongsToMany(Color::class, 'color_product')->withTimestamps();
     }
-    public function size()
+    public function sizes()
     {
-        return $this->belongsToMany(Size::class)->withTimestamps();
+        return $this->belongsToMany(Size::class, 'product_size')->withTimestamps();
     }
     public function admin()
     {

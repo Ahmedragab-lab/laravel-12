@@ -134,10 +134,10 @@
                                         <th>صوره االمنتج </th>
                                         <th wire:click="setSortBy('product_name')">الاسم {!! getSortIcon($sortBy, $sortDir,$name='product_name') !!}</th>
                                         <th><span class=" badge  badge-warning mb-2">القسم</span></th>
-                                        <th wire:click="setSortBy('price')">السعر {!! getSortIcon($sortBy, $sortDir,$name='price') !!}</th>
                                         <th>براند</th>
                                         <th width="200">الالوان</th>
                                         <th>المقاسات</th>
+                                        <th wire:click="setSortBy('price')">السعر {!! getSortIcon($sortBy, $sortDir,$name='price') !!}</th>
                                         <th>المسؤل</th>
                                         <th>الحاله</th>
                                         <th wire:click="setSortBy('created_at')">تاريخ الانشاء {!! getSortIcon($sortBy, $sortDir,$name='created_at') !!}</th>
@@ -165,10 +165,10 @@
                                             </td>
                                             <td>{{ $product->product_name }}</td>
                                             <td>{{ $product->category?->name }}</td>
-                                            <td>{{ Number::currency($product->price, 'EGP') }}</td>
+
                                             <td>{{ $product->brand?->name }}</td>
                                             <td>
-                                                @foreach ($product->color as $color)
+                                                @foreach ($product->colors as $color)
                                                     <span class=" badge  badge-primary mb-2"
                                                         style="width: 50px;height: 20px;font-size: 12px;">
                                                         {{ $color->name }}
@@ -177,13 +177,14 @@
                                             </td>
 
                                             <td>
-                                                @foreach ($product->size as $size)
+                                                @foreach ($product->sizes as $size)
                                                     <span class=" badge badge-pill badge-warning mb-2"
                                                         style="width: 30px;height: 20px;font-size: 12px;">
                                                         {{ $size->name }}
                                                     </span>
                                                 @endforeach
                                             </td>
+                                            <td>{{ Number::currency($product->price, 'EGP') }}</td>
                                             <td>{{ $product->admin?->name }}</td>
                                             <td>
                                                 <span class="badge badge-pill {{ $product->status == 1 ? 'badge-primary' : 'badge-danger' }} mb-2"
