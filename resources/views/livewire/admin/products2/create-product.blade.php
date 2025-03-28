@@ -75,22 +75,15 @@
                     </div>
 
                     <!-- color -->
-                    <div class="col-md-3" wire:ignore>
+                    <div class="col-md-3" >
                         <div class="form-group" >
                             <label>@lang('products.color')<span class="text-danger">*</span></label>
                             <div class="row">
-                                <div class="col-md-10">
+                                <div class="col-md-10" wire:ignore>
                                     <x-select2  wire:model="color_ids" multiple :options="$colors" option-label="name" option-value="id" />
                                 </div>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        {{-- <select  id="color_id" wire:model.defer="color_ids"
-                                            class="form-control select2 multiple" multiple>
-                                            <option value="">اختر اللون</option>
-                                            @foreach ($colors as $color)
-                                                <option value="{{ $color->id }}">{{ $color->name }}</option>
-                                            @endforeach
-                                        </select> --}}
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                                 data-target="#addcolorModal">
@@ -106,22 +99,15 @@
                         @enderror
                     </div>
                     <!-- size -->
-                    <div class="col-md-3" wire:ignore>
+                    <div class="col-md-3" >
                         <div class="form-group">
                             <label>@lang('products.size')<span class="text-danger">*</span></label>
                             <div class="row">
-                                <div class="col-md-10">
+                                <div class="col-md-10" wire:ignore>
                                     <x-select2  wire:model="size_ids" multiple :options="$sizes" option-label="name" option-value="id" />
                                 </div>
                                 <div class="col-md-2">
                                     <div class="input-group" >
-                                        {{-- <select  id="size_id" wire:model="size_ids"
-                                            class="form-control select2 multiple" multiple>
-                                            <option value="">اختر مقاس</option>
-                                            @foreach ($sizes as $size)
-                                                <option value="{{ $size->id }}">{{ $size->name }}</option>
-                                            @endforeach
-                                        </select> --}}
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                                 data-target="#addsizeModal">
@@ -186,8 +172,8 @@
                         <div class="form-group">
                             <label>@lang('products.status')<span class="text-danger">*</span></label>
                             <select name="status" class="form-control" wire:model="status">
-                                <option value="0">Off</option>
-                                <option value="1">On</option>
+                                <option value="0">غير مفعل</option>
+                                <option value="1">مفعل</option>
                             </select>
                         </div>
                         @error('status')
@@ -221,6 +207,9 @@
                                 {{ old('description', $description ?? '') }}
                             </textarea>
                         </div>
+                        @error('description')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 {{--
                     <div class="col-12">
@@ -264,7 +253,9 @@
                             <div class="dz-message">حدد الملفات <br><small class="text-info">(يمكنك إضافة مرفقات)</small></div>
                             @endif
                         </div>
-
+                        @error('products_images')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                 </div>

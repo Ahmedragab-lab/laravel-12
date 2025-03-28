@@ -46,7 +46,7 @@ class UpdateProduct extends Component
     public $brands = [];
     public $colors = [];
     public $sizes = [];
-   
+
     public function hydrate()
     {
         $this->dispatch('refreshSelect2');
@@ -83,10 +83,16 @@ class UpdateProduct extends Component
             'brand_id' => 'required|exists:brands,id',
             'expiration_date' => 'nullable',
             'discount' => 'nullable',
-            'price' => 'nullable',
+            'price' => 'required',
             'stock' => 'nullable',
-            'image' => 'nullable',
+            'image' => 'required',
             'description' => 'nullable',
+            'color_ids' => 'required|array',
+            'color_ids.*' => 'exists:colors,id',
+            'size_ids' => 'required|array',
+            'size_ids.*' => 'exists:sizes,id',
+            'products_images' => 'required|array',
+            'products_images.*' => 'nullable|max:2048',
         ];
     }
     public function updated($fields)
@@ -98,14 +104,17 @@ class UpdateProduct extends Component
             'product_name' => 'اسم المنتج',
             'category_id' => 'القسم',
             'brand_id' => 'العلامة التجارية',
+            'price' => 'السعر',
+            'stock' => 'الكمية',
+            'image' => 'الصورة',
+            'description' => 'الوصف',
+            'color_ids' => 'الالوان',
+            'size_ids' => 'المقاسات',
+            'products_images' => 'الصور',
         ];
     }
     public function render()
     {
-        // $categories = Category::latest()->get();
-        // $brands = Brand::latest()->get();
-        // $colors = Color::latest()->get();
-        // $sizes  = Size::latest()->get();
         return view('livewire.admin.products2.update-product')
         ->extends('admin.layouts.master')
         ->section('content');

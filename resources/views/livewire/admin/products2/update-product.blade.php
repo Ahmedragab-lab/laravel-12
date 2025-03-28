@@ -54,12 +54,6 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        {{-- <select name="brand_id" id="brand_id" wire:model.live="brand_id" class="form-control">
-                                            <option value="">اختر البراند</option>
-                                            @foreach ($brands as $brand)
-                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                            @endforeach
-                                        </select> --}}
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                                 data-target="#addbrandModal">
@@ -81,17 +75,10 @@
                             <label>@lang('products.color')<span class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-md-10">
-                                    <x-select2  wire:model.live="color_ids" multiple :options="$colors" option-label="name" option-value="id" />
+                                    <x-select2  wire:model="color_ids" multiple :options="$colors" option-label="name" option-value="id" />
                                 </div>
                                 <div class="col-md-2">
                                     <div class="input-group">
-                                        {{-- <select  id="color_id" wire:model.defer="color_ids"
-                                            class="form-control select2 multiple" multiple>
-                                            <option value="">اختر اللون</option>
-                                            @foreach ($colors as $color)
-                                                <option value="{{ $color->id }}">{{ $color->name }}</option>
-                                            @endforeach
-                                        </select> --}}
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                                 data-target="#addcolorModal">
@@ -116,13 +103,6 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="input-group" >
-                                        {{-- <select  id="size_id" wire:model="size_ids"
-                                            class="form-control select2 multiple" multiple>
-                                            <option value="">اختر مقاس</option>
-                                            @foreach ($sizes as $size)
-                                                <option value="{{ $size->id }}">{{ $size->name }}</option>
-                                            @endforeach
-                                        </select> --}}
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                                 data-target="#addsizeModal">
@@ -187,8 +167,8 @@
                         <div class="form-group">
                             <label>@lang('products.status')<span class="text-danger">*</span></label>
                             <select name="status" class="form-control" wire:model="status">
-                                <option value="0">Off</option>
-                                <option value="1">On</option>
+                                <option value="0">غير مفعل</option>
+                                <option value="1">مفعل</option>
                             </select>
                         </div>
                         @error('status')

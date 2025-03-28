@@ -75,10 +75,16 @@ class CreateProduct extends Component
             'brand_id' => 'required',
             'expiration_date' => 'nullable',
             'discount' => 'nullable',
-            'price' => 'nullable',
+            'price' => 'required|numeric',
             'stock' => 'nullable',
-            'image' => 'nullable',
+            'image' => 'required',
             'description' => 'nullable',
+            'color_ids' => 'required|array',
+            'color_ids.*' => 'exists:colors,id',
+            'size_ids' => 'required|array',
+            'size_ids.*' => 'exists:sizes,id',
+            'products_images' => 'required|array',
+            'products_images.*' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 
@@ -91,6 +97,13 @@ class CreateProduct extends Component
             'product_name' => 'اسم المنتج',
             'category_id' => 'القسم',
             'brand_id' => 'العلامة التجارية',
+            'price' => 'السعر',
+            'stock' => 'الكمية',
+            'image' => 'الصورة',
+            'description' => 'الوصف',
+            'color_ids' => 'الالوان',
+            'size_ids' => 'المقاسات',
+            'products_images' => 'الصور',
         ];
     }
     public function submit()
