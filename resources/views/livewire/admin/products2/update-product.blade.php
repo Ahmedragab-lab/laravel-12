@@ -219,15 +219,14 @@
                     <div class="col-md-6">
                         <div class="inp-holder" wire:ignore>
                             <label for="">الوصف</label>
-                            {{-- <textarea wire:model.live="description" class="ckeditor form-control" cols="30" rows="10"  ></textarea> --}}
-                            <textarea wire:model.live="description" class=" form-control" cols="30" rows="10">
+                            <textarea wire:model="description" class=" form-control ckeditor" cols="30" rows="10">
                                 {{ old('description', $description ?? '') }}
                             </textarea>
                         </div>
                     </div>
 
 
-                    <div class="col-12">
+                    <div class="col-12 ">
                         <div class="inp-holder">
                             <label>المرفقات</label>
                             <input type="file" multiple class="form-control" wire:model.live="products_images" accept="image/*">
@@ -235,15 +234,15 @@
 
                         @if ($products_images && count($products_images) > 0)
                             @foreach ($products_images as $key => $attachment)
-                                <div class="d-inline-block me-2 mb-2">
-                                    <div class="position-relative">
+                                <div class="d-inline-block me-2 mb-2 ">
+                                    <div class="position-relative ">
                                         @if (is_array($attachment) && isset($attachment['file_name']))
                                             <img src="{{ display_file('products_images/' . $attachment['file_name']) }}"
-                                            class="img-thumbnail" width="100" />
+                                            class="img-thumbnail" width="200" />
                                         @elseif ($attachment instanceof \Illuminate\Http\UploadedFile)
-                                            <img src="{{ $attachment->temporaryUrl() }}" class="img-thumbnail" width="100" />
+                                            <img src="{{ $attachment->temporaryUrl() }}" class="img-thumbnail" width="200" />
                                         @else
-                                            <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="100" />
+                                            <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="200" />
                                         @endif
                                         <button type="button"
                                                 class="btn btn-sm btn-danger position-absolute"
@@ -286,121 +285,11 @@
 
 
         @push('js')
-            <!-- Load jQuery -->
-            {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-            <!-- Load Select2 -->
-            <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
-            <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
             <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    initSelect2();
-                });
-
-                document.addEventListener("livewire:init", () => {
-                    Livewire.on('refreshSelect2', () => {
-                        console.log('Refreshing Select2');
-                        refreshSelect2();
-                    });
-                });
-
-                function initSelect2() {
-                    if (!$.fn.select2) {
-                        console.error("Select2 is not loaded.");
-                        return;
-                    }
-
-                    $('#color_id').select2({
-                        placeholder: "اختر اللون",
-                        allowClear: true,
-                        multiple: true
-                    }).on('change', function() {
-                        let selectedColors = $(this).val();
-                        Livewire.dispatch('colorUpdated', { color_ids: selectedColors });
-                    });
-
-                    $('#size_id').select2({
-                        placeholder: "اختر مقاس",
-                        allowClear: true,
-                        multiple: true
-                    }).on('change', function() {
-                        let selectedSizes = $(this).val();
-                        Livewire.dispatch('sizeUpdated', { size_ids: selectedSizes });
-                    });
-
-                    console.log("Select2 initialized successfully!");
-                }
-
-                function refreshSelect2() {
-                    $('#color_id').select2('destroy').select2({
-                        placeholder: "اختر اللون",
-                        allowClear: true,
-                        multiple: true
-                    }).trigger('change');
-
-                    $('#size_id').select2('destroy').select2({
-                        placeholder: "اختر مقاس",
-                        allowClear: true,
-                        multiple: true
-                    }).trigger('change');
-                }
-
-            </script> --}}
-            {{-- <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    console.log("DOM fully loaded - Initializing Select2");
-
-                    initSelect2();
-                });
-
-                document.addEventListener("livewire:navigated", function() {
-                    console.log("Livewire component updated - Reinitializing Select2");
-
-                    initSelect2();
-                });
-
-                // Listen for refresh event to reinitialize Select2
-                Livewire.on('refreshSelect2', function() {
-                    console.log("Received refreshSelect2 event - Reinitializing Select2");
-                    initSelect2();
-                });
-
-                function initSelect2() {
-                    if (!$.fn.select2) {
-                        console.error("Select2 is not loaded.");
-                        return;
-                    }
-
-                    $('#color_id').select2({
-                        placeholder: "اختر اللون",
-                        allowClear: true,
-                        multiple: true
-                    }).on('change', function() {
-                        let selectedColors = $(this).val();
-                        Livewire.dispatch('colorUpdated', {
-                            color_id: selectedColors
-                        });
-                    });
-
-                    $('#size_id').select2({
-                        placeholder: "اختر مقاس",
-                        allowClear: true,
-                        multiple: true
-                    }).on('change', function() {
-                        let selectedSizes = $(this).val();
-                        Livewire.dispatch('sizeUpdated', {
-                            size_id: selectedSizes
-                        });
-                    });
-
-                    console.log("Select2 initialized successfully!");
-                }
-            </script> --}}
-            {{-- <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    initializeCKEditor();
-                });
+                // document.addEventListener("DOMContentLoaded", function () {
+                //     initializeCKEditor();
+                // });
 
                 document.addEventListener("livewire:navigated", function () {
                     initializeCKEditor();
@@ -445,29 +334,15 @@
                             }
                         })
                         .then(editor => {
-                            element.ckeditorInstance = editor;
-
-                            // Set initial value from Livewire
-                            let description = @json($description);
-                            if (description) {
-                                editor.setData(description);
-                            }
-
-                            let debounceTimer;
                             editor.model.document.on('change:data', () => {
-                                clearTimeout(debounceTimer);
-                                debounceTimer = setTimeout(() => {
-                                    Livewire.dispatch('editorUpdated', { description: editor.getData() });
-                                }, 300);
+                                @this.set('description', editor.getData());
                             });
-
-                            console.log("CKEditor initialized successfully");
                         })
                         .catch(error => {
                             console.error("CKEditor initialization error:", error);
                         });
                 }
-            </script> --}}
+            </script>
         @endpush
     </div>
 </div>

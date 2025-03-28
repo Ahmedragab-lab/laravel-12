@@ -46,6 +46,11 @@ class UpdateProduct extends Component
     public $brands = [];
     public $colors = [];
     public $sizes = [];
+    #[On('editorUpdated')]
+    public function updateDescription($description)
+    {
+        $this->description = $description;
+    }
     public function hydrate()
     {
         $this->dispatch('refreshSelect2');

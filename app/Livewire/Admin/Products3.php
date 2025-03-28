@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\Color;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -99,4 +100,6 @@ class Products3 extends Component
         $product->delete();
         session()->flash('success', 'تم الحذف بنجاح');
     }
+
+    
 }

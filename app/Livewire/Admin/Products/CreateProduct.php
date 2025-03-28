@@ -19,7 +19,7 @@ use Livewire\WithFileUploads;
 class CreateProduct extends Component
 {
     use WithFileUploads;
-    public $product_name;
+    public $product_name,$productId;
     public $category_id;
     public $brand_id;
     public $expiration_date;
@@ -41,8 +41,11 @@ class CreateProduct extends Component
     public $brands = [];
     public $colors = [];
     public $sizes = [];
-    public function mount()
+
+    public $selectedColors = [], $selectedSizes = [];
+    public function mount($id = null)
     {
+        // $product = Product::findOrFail($id);
         $this->categories = Category::latest()->get();
         $this->brands = Brand::latest()->get();
         $this->colors = Color::latest()->get();
@@ -199,6 +202,7 @@ class CreateProduct extends Component
         session()->flash('success', 'تم الاضافة بنجاح');
         $this->dispatch('refreshSelect2');
     }
+
     public function saveColor()
     {
         $this->validate([
@@ -213,7 +217,6 @@ class CreateProduct extends Component
         ]);
         $this->color_ids[] = $color->id;
         $this->reset(['new_color_name', 'new_color_code']);
-        $this->colors = Color::latest()->get();
         session()->flash('success', 'تم الاضافة بنجاح');
         $this->dispatch('refreshSelect2');
     }

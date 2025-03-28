@@ -1,4 +1,4 @@
-{{-- <script src="{{ asset('admin') }}/js/jquery-3.3.1.min.js"></script> --}}
+<script src="{{ asset('admin') }}/js/jquery-3.3.1.min.js"></script>
 <script src="{{ asset('admin') }}/js/popper.min.js"></script>
 <script src="{{ asset('admin') }}/js/bootstrap.min.js"></script>
 <script src="{{ asset('admin') }}/js/main.js"></script>
@@ -13,6 +13,10 @@
 <script src="{{ asset('admin') }}/plugins/simplebar/js/simplebar.js"></script>
 <script src="{{ asset('admin') }}/plugins/metismenu/js/metisMenu.min.js"></script>
 <script src="{{ asset('admin') }}/plugins/select2/js/select2.min.js"></script>
+<script type="text/javascript" src="{{ asset('admin') }}/js/plugins/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="{{ asset('admin') }}/js/plugins/select2.min.js"></script>
+<script type="text/javascript" src="{{ asset('admin') }}/js/plugins/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="{{ asset('admin') }}/js/plugins/dropzone.js"></script>
 <script>
     $('.multiple-select').select2({
         // theme: 'bootstrap4',

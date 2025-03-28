@@ -4,7 +4,7 @@
 
 @endphp
 
-<div {{ $attributes->has('wire:model.live') ? 'wire:ignore' : '' }}>
+<div {{ $attributes->has('wire:model') ? 'wire:ignore' : '' }}>
     <select  class="{{$attributes->get('class')}} form-control" id="{{$selectId}}" {{ $attributes->except(['option_col', 'url']) }} >
         <option value="">اختر</option>
         @if(isset($options))
@@ -42,7 +42,6 @@
             select2Instance.select2('destroy');
         }
         select2Instance.select2({
-
             allowClear: true,
             width: '100%',
             @if(isset($url))
@@ -66,8 +65,9 @@
 
         select2Instance.on('change', function () {
             const data = $(this).val();
-            const name = $(this).attr('wire:model.live');
+            const name = $(this).attr('wire:model');
             @this.set(name, data);
         });
     }
+
 </script>

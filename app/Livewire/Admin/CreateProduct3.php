@@ -68,6 +68,24 @@ class CreateProduct3 extends Component
         $this->selectedColors = $data['color_id'];
         $this->dispatch('refreshSelect2'); // Reinitialize Select2 after update
     }
+    public function saveColor()
+    {
+        $this->validate([
+            'new_color_name' => 'required|string|max:255|unique:colors,name',
+            'new_color_code' => 'nullable|string|max:255',
+        ]);
+        $color = Color::create([
+            'name' => $this->new_color_name,
+            'color_code'=> $this->new_color_code,
+            'slug' => Str::slug($this->new_color_name),
+            'creator'=> auth()->user()->id,
+        ]);
+        // $this->color_ids[] = $color->id;
+        $this->reset(['new_color_name', 'new_color_code']);
+        // $this->colors = Color::latest()->get();
+        session()->flash('success', 'تم الاضافة بنجاح');
+        $this->dispatch('refreshSelect2');
+    }
 
     public function updateSize($data)
     {
@@ -78,23 +96,23 @@ class CreateProduct3 extends Component
     public function loadProduct($id)
     {
         $product = Product::findOrFail($id);
-    
+
         $this->productId = $product->id;
         $this->product_name = $product->product_name;
         $this->description = $product->description;
         $this->price = $product->price;
         $this->category_id = $product->category_id;
         $this->brand_id = $product->brand_id;
-    
+
         // Load existing colors and sizes for the product
-        $this->selectedColors = $product->color()->pluck('colors.id')->toArray();
-        $this->selectedSizes = $product->size()->pluck('sizes.id')->toArray();
-    
+        $this->selectedColors = $product->colors()->pluck('colors.id')->toArray();
+        $this->selectedSizes = $product->sizes()->pluck('sizes.id')->toArray();
+
         $this->discount = $product->discount;
         $this->stock = $product->stock;
         $this->status = $product->status;
     }
-    
+
 
     public function submit()
     {
@@ -127,7 +145,7 @@ class CreateProduct3 extends Component
 
         return redirect()->route('products3');
     }
-    
+
 
     public function render()
     {

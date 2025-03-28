@@ -29,7 +29,7 @@
     }
 @endphp
 
-<div class="d-inline-block me-2 mb-2">
+<div class="d-inline-block me-2 mb-2 ">
     @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
         <div class="position-relative">
             <img width="70" src="{{ is_string($file) ? display_file('products_images/' . $file->file_name) : $file->temporaryUrl() }}"

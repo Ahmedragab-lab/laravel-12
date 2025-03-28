@@ -80,7 +80,7 @@
                             <label>@lang('products.color')<span class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-md-10">
-                                    <x-select2  wire:model.live="color_ids" multiple :options="$colors" option-label="name" option-value="id" />
+                                    <x-select2  wire:model="color_ids" multiple :options="$colors" option-label="name" option-value="id" />
                                 </div>
                                 <div class="col-md-2">
                                     <div class="input-group">
@@ -215,10 +215,18 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <div class="inp-holder" wire:ignore>
                             <label for="">الوصف</label>
                             <textarea wire:model.live="description" class=" form-control" rows="3"></textarea>
+                        </div>
+                    </div> --}}
+                    <div class="col-md-6">
+                        <div class="inp-holder" wire:ignore>
+                            <label for="">الوصف</label>
+                            <textarea wire:model="description" class=" form-control ckeditor" cols="30" rows="10">
+                                {{ old('description', $description ?? '') }}
+                            </textarea>
                         </div>
                     </div>
 
@@ -236,6 +244,7 @@
                             @endforeach
                         @endif
                     </div>
+
                 </div>
                 @include('admin.products2.__addCategoryModal')
                 @include('admin.products2.__addBrandModal')
@@ -256,202 +265,64 @@
             </div><!-- end of col -->
         </div><!-- end of row -->
         @push('js')
-        <!-- Load jQuery -->
-        {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+        <script>
+            // document.addEventListener("DOMContentLoaded", function () {
+            //     initializeCKEditor();
+            // });
 
-        <!-- Load Select2 -->
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script> --}}
-
-        <!-- Livewire Hooks -->
-
-        {{-- <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                initSelect2();
+            document.addEventListener("livewire:navigated", function () {
+                initializeCKEditor();
             });
 
-            document.addEventListener("livewire:init", () => {
-                Livewire.on('refreshSelect2', () => {
-                    console.log('Refreshing Select2');
-                    refreshSelect2();
-                });
+            Livewire.on('refreshEditor', function () {
+                initializeCKEditor();
             });
 
-            function initSelect2() {
-                if (!$.fn.select2) {
-                    console.error("Select2 is not loaded.");
+            function initializeCKEditor() {
+                let editorElement = document.querySelector('.ckeditor');
+
+                if (!editorElement) {
+                    console.error("CKEditor element not found.");
                     return;
                 }
 
-                $('#color_id').select2({
-                    placeholder: "اختر اللون",
-                    allowClear: true,
-                    multiple: true
-                }).on('change', function() {
-                    let selectedColors = $(this).val();
-                    Livewire.dispatch('colorUpdated', { color_ids: selectedColors });
-                });
-
-                $('#size_id').select2({
-                    placeholder: "اختر مقاس",
-                    allowClear: true,
-                    multiple: true
-                }).on('change', function() {
-                    let selectedSizes = $(this).val();
-                    Livewire.dispatch('sizeUpdated', { size_ids: selectedSizes });
-                });
-
-                console.log("Select2 initialized successfully!");
-            }
-
-            function refreshSelect2() {
-                $('#color_id').select2('destroy').select2({
-                    placeholder: "اختر اللون",
-                    allowClear: true,
-                    multiple: true
-                }).trigger('change');
-
-                $('#size_id').select2('destroy').select2({
-                    placeholder: "اختر مقاس",
-                    allowClear: true,
-                    multiple: true
-                }).trigger('change');
-            }
-
-        </script> --}}
-        {{-- <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                console.log("DOM fully loaded - Initializing Select2");
-                initSelect2();
-            });
-
-            document.addEventListener("livewire:navigated", function() {
-                console.log("Livewire component updated - Reinitializing Select2");
-                initSelect2();
-            });
-
-            // Listen for refresh event to reinitialize Select2
-            Livewire.on('refreshSelect2', function() {
-                console.log("Received refreshSelect2 event - Reinitializing Select2");
-                initSelect2();
-            });
-            Livewire.on('refreshColors', function() {
-                console.log("تم تحديث الألوان، إعادة تحميل Select2");
-
-                // إعادة تحميل Select2 مع القيم الجديدة
-                $('#color_id').select2('destroy').select2({
-                    placeholder: "اختر اللون",
-                    allowClear: true,
-                    multiple: true
-                }).trigger('change');
-            });
-
-
-            function initSelect2() {
-                if (!$.fn.select2) {
-                    console.error("Select2 is not loaded.");
-                    return;
+                if (editorElement.ckeditorInstance) {
+                    editorElement.ckeditorInstance.destroy().then(() => {
+                        createCKEditor(editorElement);
+                    }).catch(error => {
+                        console.error("Error destroying CKEditor:", error);
+                    });
+                } else {
+                    createCKEditor(editorElement);
                 }
-
-                $('#color_id').select2({
-                    placeholder: "اختر اللون",
-                    allowClear: true,
-                    multiple: true
-                }).on('change', function() {
-                    let selectedColors = $(this).val();
-                    Livewire.dispatch('colorUpdated', {
-                        color_ids: selectedColors
-                    });
-                });
-
-                $('#size_id').select2({
-                    placeholder: "اختر مقاس",
-                    allowClear: true,
-                    multiple: true
-                }).on('change', function() {
-                    let selectedSizes = $(this).val();
-                    Livewire.dispatch('sizeUpdated', {
-                        size_ids: selectedSizes
-                    });
-                });
-
-                console.log("Select2 initialized successfully!");
             }
-        </script> --}}
-          {{-- <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
-          <script>
-              document.addEventListener("DOMContentLoaded", function () {
-                  console.log("DOM fully loaded - Initializing CKEditor");
-                  initializeCKEditor();
-              });
 
-              document.addEventListener("livewire:navigated", function () {
-                  console.log("Livewire component updated - Reinitializing CKEditor");
-                  initializeCKEditor();
-              });
-
-              Livewire.on('refreshEditor', function () {
-                  console.log("Received refreshEditor event - Reinitializing CKEditor");
-                  initializeCKEditor();
-              });
-
-              function initializeCKEditor() {
-                  let editorElement = document.querySelector('.ckeditor');
-
-                  if (!editorElement) {
-                      console.error("CKEditor element not found.");
-                      return;
-                  }
-
-                  // Destroy existing editor instance if present
-                  if (editorElement.ckeditorInstance) {
-                      console.log("Destroying existing CKEditor instance...");
-                      editorElement.ckeditorInstance.destroy().then(() => {
-                          console.log("CKEditor destroyed.");
-                          createCKEditor(editorElement);
-                      }).catch(error => {
-                          console.error("Error destroying CKEditor:", error);
-                      });
-                  } else {
-                      createCKEditor(editorElement);
-                  }
-              }
-
-              function createCKEditor(element) {
-                  ClassicEditor
-                      .create(element, {
-                          toolbar: {
-                              items: [
-                                  'undo', 'redo',
-                                  '|', 'heading',
-                                  '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
-                                  '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-                                  '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
-                                  '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
-                              ],
-                              shouldNotGroupWhenFull: false
-                          }
-                      })
-                      .then(editor => {
-                          console.log("CKEditor initialized successfully");
-                          element.ckeditorInstance = editor;
-
-                          // Sync CKEditor content with Livewire
-                          let debounceTimer;
-                          editor.model.document.on('change:data', () => {
-                              clearTimeout(debounceTimer);
-                              debounceTimer = setTimeout(() => {
-                                  const content = editor.getData();
-                                  console.log('Editor content changed:', content);
-                                  Livewire.dispatch('editorUpdated', { content: content });
-                              }, 300);
-                          });
-                      })
-                      .catch(error => {
-                          console.error("CKEditor initialization error:", error);
-                      });
-              }
-          </script> --}}
+            function createCKEditor(element) {
+                ClassicEditor
+                    .create(element, {
+                        toolbar: {
+                            items: [
+                                'undo', 'redo',
+                                '|', 'heading',
+                                '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
+                                '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
+                            ],
+                            shouldNotGroupWhenFull: false
+                        }
+                    })
+                    .then(editor => {
+                        editor.model.document.on('change:data', () => {
+                            @this.set('description', editor.getData());
+                        });
+                    })
+                    .catch(error => {
+                        console.error("CKEditor initialization error:", error);
+                    });
+            }
+        </script>
     @endpush
     </div>
 </div>
