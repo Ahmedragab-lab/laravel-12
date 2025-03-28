@@ -34,6 +34,7 @@ class Products2 extends Component
     public $selected_ids = [];
     public $selectAll = false;
     public $allproducts = '';
+    public $status = '';
 
     // Bulk delete method
     public function deleteBulk()
@@ -177,6 +178,16 @@ class Products2 extends Component
         }
         $product->delete();
         session()->flash('success', 'تم الحذف بنجاح');
+    }
+
+    public function toggleStatus(Product $product)
+    {
+        // dd($product->id);
+        if ($product) {
+            $product->status = !$product->status;
+            $product->save();
+            session()->flash('success', 'تم تغيير حالة المنتج بنجاح');
+        }
     }
 
 

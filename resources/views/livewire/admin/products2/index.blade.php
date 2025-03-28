@@ -189,9 +189,15 @@
                                             <td>
                                                 <span class="badge badge-pill {{ $product->status == 1 ? 'badge-primary' : 'badge-danger' }} mb-2"
                                                     style="margin-top: 15px">
-
-                                                    {{ $product->status == 1 ? 'مفعل' : 'غير مفعل' }}</td>
+                                                    {{ $product->status == 1 ? 'مفعل' : 'غير مفعل' }}
                                                 </span>
+                                                <div class="toggle">
+                                                    <label>
+                                                      <input type="checkbox" wire:click="toggleStatus({{ $product->id }})" {{ $product->status == 1 ? 'checked' : '' }}>
+                                                      <span class="button-indecator"></span>
+                                                    </label>
+                                                </div>
+                                            </td>
                                             <td>
                                                 {{ $product->created_at->format('Y-m-d') }}
                                                 <br>

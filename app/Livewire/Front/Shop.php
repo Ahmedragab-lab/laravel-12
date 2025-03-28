@@ -45,7 +45,7 @@ class Shop extends Component
         $brands = Brand::isActive()->withCount('products')->get();
         $colors = Color::all();  // جلب الألوان من الجدول
         $sizes = Size::all();
-        $products = Product::with(['category', 'brand', 'color','size', 'images'])
+        $products = Product::with(['category', 'brand', 'colors','sizes', 'images'])
         ->when($this->search, fn ($q) => $q->where('product_name', 'like', '%' . $this->search . '%'))
         ->when($this->selectedBrands, fn ($q) => $q->whereIn('brand_id', $this->selectedBrands))
         ->when($this->selectedCategories, fn ($q) => $q->whereIn('category_id', $this->selectedCategories))

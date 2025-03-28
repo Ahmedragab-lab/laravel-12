@@ -415,10 +415,10 @@
                                 </div>
 
                                 {{-- Product Color --}}
-                                @if ($product->color->isNotEmpty())
+                                @if ($product->colors->isNotEmpty())
                                     <div class="product-colors d-flex">
                                         <span>Available Colors:</span>
-                                        @foreach ($product->color as $color)
+                                        @foreach ($product->colors as $color)
                                             <a href="#"
                                                 class="swatch-color js-filter {{ in_array($color->id, $selectedColors) ? 'swatch_active' : '' }}"
                                                 style="color: {{ $color->color_code }}"></a>
@@ -427,10 +427,10 @@
                                 @endif
 
                                 {{-- Product Sizes --}}
-                                @if ($product->size->isNotEmpty())
+                                @if ($product->sizes->isNotEmpty())
                                     <div class="product-sizes d-flex mt-2">
                                         <span>Available Sizes:</span>
-                                        @foreach ($product->size as $size)
+                                        @foreach ($product->sizes as $size)
                                             <span
                                                 class="badge {{ in_array($size->id, $selectedSizes) ? 'bg-primary' : 'bg-secondary' }} ms-1">{{ $size->name }}</span>
                                         @endforeach
