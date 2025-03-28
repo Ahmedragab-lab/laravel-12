@@ -214,14 +214,7 @@
                             @endif
                         </div>
                     </div>
-
-                    {{-- <div class="col-md-12">
-                        <div class="inp-holder" wire:ignore>
-                            <label for="">الوصف</label>
-                            <textarea wire:model.live="description" class=" form-control" rows="3"></textarea>
-                        </div>
-                    </div> --}}
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="inp-holder" wire:ignore>
                             <label for="">الوصف</label>
                             <textarea wire:model="description" class=" form-control ckeditor" cols="30" rows="10">
@@ -229,20 +222,49 @@
                             </textarea>
                         </div>
                     </div>
-
+{{--
                     <div class="col-12">
                         <div class="inp-holder">
                             <label>المرفقات</label>
                             <input type="file" multiple class="form-control" wire:model.live="products_images"
                                 accept="image/*">
                         </div>
-
-                        {{-- {{ $obj }} --}}
                         @if ($products_images)
                             @foreach ($products_images as $key => $attachment)
                                 <x-file-preview :file="$attachment" :key="$key" />
                             @endforeach
                         @endif
+                    </div> --}}
+                    <div class="col-12 mt-3">
+                        <label>المرفقات</label>
+                        <input type="file" multiple  wire:model.live="products_images" accept="image/*">
+                        <div class="inp-holder dropzone">
+                            @if ($products_images && count($products_images) > 0)
+                                @foreach ($products_images as $key => $attachment)
+                                    <div class="d-inline-block me-2 mb-2 ">
+                                        <div class="position-relative ">
+                                            @if (is_array($attachment) && isset($attachment['file_name']))
+                                                <img src="{{ display_file('products_images/' . $attachment['file_name']) }}"
+                                                class="img-thumbnail" width="200" />
+                                            @elseif ($attachment instanceof \Illuminate\Http\UploadedFile)
+                                                <img src="{{ $attachment->temporaryUrl() }}" class="img-thumbnail" width="200" />
+                                            @else
+                                                <img src="{{ asset('no-image.jpg') }}" class="img-thumbnail" width="200" />
+                                            @endif
+                                            <button type="button"
+                                                    class="btn btn-sm btn-danger position-absolute"
+                                                    style="top: 5px; right: 5px;"
+                                                    wire:click="removeAttachment({{ $key }})">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                            <div class="dz-message">حدد الملفات <br><small class="text-info">(يمكنك إضافة مرفقات)</small></div>
+                            @endif
+                        </div>
+
                     </div>
 
                 </div>
@@ -264,65 +286,145 @@
                 </div>
             </div><!-- end of col -->
         </div><!-- end of row -->
-        @push('js')
-        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
-        <script>
-            // document.addEventListener("DOMContentLoaded", function () {
-            //     initializeCKEditor();
-            // });
+        {{-- @push('js')
+            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+            <script>
+                // document.addEventListener("DOMContentLoaded", function () {
+                //     initializeCKEditor();
+                // });
 
-            document.addEventListener("livewire:navigated", function () {
-                initializeCKEditor();
-            });
+                document.addEventListener("livewire:navigated", function () {
+                    initializeCKEditor();
+                });
 
-            Livewire.on('refreshEditor', function () {
-                initializeCKEditor();
-            });
+                Livewire.on('refreshEditor', function () {
+                    initializeCKEditor();
+                });
 
-            function initializeCKEditor() {
-                let editorElement = document.querySelector('.ckeditor');
+                function initializeCKEditor() {
+                    let editorElement = document.querySelector('.ckeditor');
 
-                if (!editorElement) {
-                    console.error("CKEditor element not found.");
-                    return;
-                }
+                    if (!editorElement) {
+                        console.error("CKEditor element not found.");
+                        return;
+                    }
 
-                if (editorElement.ckeditorInstance) {
-                    editorElement.ckeditorInstance.destroy().then(() => {
-                        createCKEditor(editorElement);
-                    }).catch(error => {
-                        console.error("Error destroying CKEditor:", error);
-                    });
-                } else {
-                    createCKEditor(editorElement);
-                }
-            }
-
-            function createCKEditor(element) {
-                ClassicEditor
-                    .create(element, {
-                        toolbar: {
-                            items: [
-                                'undo', 'redo',
-                                '|', 'heading',
-                                '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
-                                '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-                                '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
-                                '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
-                            ],
-                            shouldNotGroupWhenFull: false
-                        }
-                    })
-                    .then(editor => {
-                        editor.model.document.on('change:data', () => {
-                            @this.set('description', editor.getData());
+                    if (editorElement.ckeditorInstance) {
+                        editorElement.ckeditorInstance.destroy().then(() => {
+                            createCKEditor(editorElement);
+                        }).catch(error => {
+                            console.error("Error destroying CKEditor:", error);
                         });
-                    })
-                    .catch(error => {
-                        console.error("CKEditor initialization error:", error);
-                    });
-            }
-        </script>
-    @endpush
+                    } else {
+                        createCKEditor(editorElement);
+                    }
+                }
+
+                function createCKEditor(element) {
+                    ClassicEditor
+                        .create(element, {
+                            toolbar: {
+                                items: [
+                                    'undo', 'redo',
+                                    '|', 'heading',
+                                    '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                    '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                    '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
+                                    '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
+                                ],
+                                shouldNotGroupWhenFull: false
+                            }
+                        })
+                        .then(editor => {
+                            editor.model.document.on('change:data', () => {
+                                @this.set('description', editor.getData());
+                            });
+                        })
+                        .catch(error => {
+                            console.error("CKEditor initialization error:", error);
+                        });
+                }
+            </script>
+        @endpush --}}
+        @push('js')
+            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+            <script>
+                document.addEventListener("livewire:navigated", function () {
+                    initializeCKEditor();
+                });
+
+                Livewire.on('refreshEditor', function () {
+                    initializeCKEditor();
+                });
+
+                function initializeCKEditor() {
+                    let editorElement = document.querySelector('.ckeditor');
+
+                    if (!editorElement) {
+                        console.error("CKEditor element not found.");
+                        return;
+                    }
+
+                    // Destroy existing instance if it exists
+                    if (editorElement.ckeditorInstance) {
+                        editorElement.ckeditorInstance.destroy();
+                    }
+
+                    // Determine language based on app locale
+                    const currentLocale = @json(app()->getLocale());
+                    const language = currentLocale === 'ar' ? 'ar' : 'en';
+
+                    ClassicEditor
+                        .create(editorElement, {
+                            language: language,
+                            toolbar: {
+                                items: [
+                                    'undo', 'redo',
+                                    '|', 'heading',
+                                    '|', 'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
+                                    '|', 'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
+                                    '|', 'link', 'uploadImage', 'blockQuote', 'codeBlock',
+                                    '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
+                                ],
+                                shouldNotGroupWhenFull: false
+                            },
+                            // Increase height
+                            extraPlugins: [
+                                function(editor) {
+                                    editor.ui.view.editable.extendTemplate({
+                                        attributes: {
+                                            style: {
+                                                height: '300px',  // Increased height
+                                                overflowY: 'auto'
+                                            }
+                                        }
+                                    });
+                                }
+                            ]
+                        })
+                        .then(editor => {
+                            // Store reference to the editor instance
+                            editorElement.ckeditorInstance = editor;
+
+                            // Set initial value
+                            let initialDescription = @json($description);
+                            if (initialDescription) {
+                                editor.setData(initialDescription);
+                            }
+
+                            // Update Livewire model on content change
+                            editor.model.document.on('change:data', () => {
+                                @this.set('description', editor.getData());
+                            });
+                        })
+                        .catch(error => {
+                            console.error("CKEditor initialization error:", error);
+                        });
+                }
+
+                // Initialize on first load
+                document.addEventListener('DOMContentLoaded', initializeCKEditor);
+            </script>
+        @endpush
     </div>
 </div>
