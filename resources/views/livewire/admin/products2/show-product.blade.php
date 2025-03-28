@@ -127,7 +127,7 @@
                 </div> --}}
 
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -219,10 +219,10 @@
 
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <img src="{{ $product->image ? display_file($product->image) : asset('no-image.jpg') }}"
-                            class="img-thumbnail" width="500" height="1000" />
+                            class="img-thumbnail" width="600" height="1000" />
                         </div>
                     </div>
                 </div>
