@@ -49,6 +49,15 @@
                                 <label>الهاتف</label>
                                 <input type="text" class="form-control" wire:model='phone' />
                             </div>
+                            <div class="col-md-12">
+                                <label>الادوار</label>
+                                <select class="form-control" wire:model="role_id" id="">
+                                    <option value="">اختر المجموعة</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="col-md-12 mt-3">
                                 <button wire:click='submit' class="btn btn-primary">@lang('settings.Save')</button>
                             </div>
@@ -75,9 +84,9 @@
                                     <th>#</th>
                                     <th>الصورة</th>
                                     <th>اسم المشرف</th>
-                                    <!-- <th>عدد تسجيلات الدخول</th> -->
                                     <th>البريد الإلكتروني</th>
                                     <th>الهاتف</th>
+                                    <th>الدور</th>
                                     <th>الإجراءات</th>
                                 </tr>
                             </thead>
@@ -96,6 +105,7 @@
                                         <!-- <td>{{ $admin->visit_count }}</td> -->
                                         <td>{{ $admin->email }}</td>
                                         <td>{{ $admin->phone }}</td>
+                                        <td>{{ $admin->role?->name }}</td>
                                         <td>
                                             <button class="btn btn-info btn-sm" wire:click='edit({{ $admin->id }})'>تعديل</button>
                                             @if ($admin->id != auth()->id())
